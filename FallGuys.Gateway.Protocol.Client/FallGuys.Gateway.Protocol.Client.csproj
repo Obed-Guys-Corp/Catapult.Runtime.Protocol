@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>FallGuys.Gateway.Protocol.Client</AssemblyName>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Catapult.Modules.Items.Protocol\Catapult.Modules.Items.Protocol.csproj" />
+    <ProjectReference Include="..\Catapult.Protocol\Catapult.Protocol.csproj" />
+    <ProjectReference Include="..\FallGuys.Common.Debug.Protocol.Client\FallGuys.Common.Debug.Protocol.Client.csproj" />
+  </ItemGroup>
+</Project>

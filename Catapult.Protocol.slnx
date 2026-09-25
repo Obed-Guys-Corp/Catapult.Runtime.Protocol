@@ -1,0 +1,16 @@
+<Solution>
+  <Project Path="Catapult.Protocol/Catapult.Protocol.csproj" />
+  <Project Path="Catapult.Core/Catapult.Core.csproj" />
+  <Project Path="Catapult.Modules.Items.Protocol/Catapult.Modules.Items.Protocol.csproj" />
+  <Project Path="Catapult.Services.Gateway.Protocol.Client/Catapult.Services.Gateway.Protocol.Client.csproj" />
+  <Project Path="FallGuys.Common.Debug.Protocol.Client/FallGuys.Common.Debug.Protocol.Client.csproj" />
+  <Project Path="Catapult.Services.Login.Protocol.Client/Catapult.Services.Login.Protocol.Client.csproj" />
+  <Project Path="FallGuys.Common.Targeting.Protocol.Client/FallGuys.Common.Targeting.Protocol.Client.csproj" />
+  <Project Path="FallGuys.Gateway.Protocol.Client/FallGuys.Gateway.Protocol.Client.csproj" />
+  <Project Path="FallGuys.Level.Protocol.AuthTokens/FallGuys.Level.Protocol.AuthTokens.csproj" />
+  <Project Path="FallGuys.Lobby.Protocol.Client/FallGuys.Lobby.Protocol.Client.csproj" />
+  <Project Path="FallGuys.Lobby.Protocol.Common/FallGuys.Lobby.Protocol.Common.csproj" />
+  <Project Path="FallGuys.Match.Protocol.Client/FallGuys.Match.Protocol.Client.csproj" />
+  <Project Path="FallGuys.Player.Protocol.Client/FallGuys.Player.Protocol.Client.csproj" />
+  <Project Path="FallGuys.Store.Protocol.Client/FallGuys.Store.Protocol.Client.csproj" />
+</Solution>

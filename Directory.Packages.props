@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageVersion Include="floyzi.logger" Version="0.0.5" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageVersion Include="protobuf-net" Version="2.3.3" />
+    <PackageVersion Include="System.IO.Hashing" Version="10.0.12" />
+  </ItemGroup>
+</Project>
