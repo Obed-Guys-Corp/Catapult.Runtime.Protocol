@@ -37,5 +37,4 @@ public class MatchStatusDto
 
     [ProtoMember(10)]
     public GameServerConnectionDto? GameServerInfo { get; set; }
-    private static PollingStrategyDto DefaultPollingStrategy { get; }
 }

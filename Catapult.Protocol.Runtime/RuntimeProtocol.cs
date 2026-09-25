@@ -61,7 +61,7 @@ namespace Catapult.Protocol.Runtime
 
             try
             {
-                using var reader = new ProtoReader(new MemoryStream(data, 0, data.Length), null, null);
+                using var reader = ProtoReader.Create(new MemoryStream(data, 0, data.Length), null, null);
 
                 Message? res = null!;
                 List<MessageHeader>? headers = null!;
@@ -204,7 +204,8 @@ namespace Catapult.Protocol.Runtime
             AttachReplyHeaders(response, replyId);
 
             using var ms = new MemoryStream();
-            using (var writer = new ProtoWriter(ms, null, null))
+           
+            using (var writer = ProtoWriter.Create(ms, null, null))
             {
                 doWrite(writer);
                 WriteMessageHeaders(response.Headers, writer);

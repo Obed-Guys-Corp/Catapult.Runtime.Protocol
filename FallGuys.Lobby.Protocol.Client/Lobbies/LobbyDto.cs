@@ -24,7 +24,7 @@ public class LobbyDto
 
     [ProtoMember(5)]
     [Obsolete("use PrivateLobbyConfigDto instead")]
-    public List<string> ShowIds { get; }
+    public List<string> ShowIds { get; } = null!;
 
     [ProtoMember(6)]
     public int MinSizeToStart { get; set; }

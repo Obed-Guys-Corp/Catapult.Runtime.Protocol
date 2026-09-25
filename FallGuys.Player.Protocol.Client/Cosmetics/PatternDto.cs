@@ -8,7 +8,7 @@ namespace FallGuys.Player.Protocol.Client.Cosmetics;
 public class PatternDto : IOwnedCosmeticDto
 {
     [ProtoMember(1)]
-    public ItemDto Item { get; set; } = null!;
+    public ItemDto? Item { get; set; }
 
     [ProtoMember(2)]
     public DateTime EarnedAt { get; set; }

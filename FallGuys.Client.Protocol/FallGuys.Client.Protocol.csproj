@@ -1,25 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>FallGuys.Client.Protocol</AssemblyName>
-    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
-    <TargetFramework>net40</TargetFramework>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
-  <PropertyGroup>
-    <LangVersion>12.0</LangVersion>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup />
-  <ItemGroup />
   <ItemGroup>
-    <Reference Include="Il2CppDummyDll">
-      <HintPath>D:\Workspace\Progs\Il2cppDumper\DummyDll\Il2CppDummyDll.dll</HintPath>
-    </Reference>
-    <Reference Include="Catapult.Protocol">
-      <HintPath>D:\Workspace\Progs\Il2cppDumper\DummyDll\Catapult.Protocol.dll</HintPath>
-    </Reference>
-    <Reference Include="protobuf-net">
-      <HintPath>D:\Workspace\Progs\Il2cppDumper\DummyDll\protobuf-net.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\Catapult.Protocol\Catapult.Protocol.csproj" />
   </ItemGroup>
 </Project>
