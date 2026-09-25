@@ -1,6 +1,6 @@
 ﻿using ProtoBuf;
 
-namespace Catapult.Protocol.Custom.Serializers.Core
+namespace Catapult.Protocol.Runtime.Serializers.Core
 {
     internal interface ISerializer
     {

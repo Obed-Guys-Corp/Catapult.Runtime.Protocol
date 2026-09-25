@@ -1,4 +1,4 @@
-﻿namespace Catapult.Protocol.Custom.Attributes
+﻿namespace Catapult.Protocol.Runtime.Attributes
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
     internal class SerializerAttribute(Type serializer) : Attribute

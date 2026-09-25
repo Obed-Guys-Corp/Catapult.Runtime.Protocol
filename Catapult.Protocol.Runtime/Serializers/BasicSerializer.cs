@@ -1,11 +1,11 @@
-﻿using Catapult.Protocol.Custom.Attributes;
-using Catapult.Protocol.Custom.Serializers.Core;
+﻿using Catapult.Protocol.Runtime.Attributes;
+using Catapult.Protocol.Runtime.Serializers.Core;
 using ProtoBuf;
 using System.Collections;
 using System.Reflection;
-using static Logger.Logger;
+using static Catapult.Protocol.Runtime.Logger;
 
-namespace Catapult.Protocol.Custom.Serializers
+namespace Catapult.Protocol.Runtime.Serializers
 {
     internal class BasicSerializer : ISerializer
     {

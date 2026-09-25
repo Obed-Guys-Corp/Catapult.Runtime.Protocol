@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace Catapult.Protocol.Custom.Serializers.Core
+namespace Catapult.Protocol.Runtime.Serializers.Core
 {
     internal static class SerializersInstances
     {

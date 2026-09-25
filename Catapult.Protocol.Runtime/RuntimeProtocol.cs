@@ -1,16 +1,15 @@
-﻿using Catapult.Protocol.Custom.Attributes;
-using Catapult.Protocol.Custom.Serializers;
-using Catapult.Protocol.Custom.Serializers.Core;
-using Catapult.Protocol.Headers;
+﻿using Catapult.Protocol.Headers;
 using Catapult.Protocol.Internal;
+using Catapult.Protocol.Runtime.Attributes;
+using Catapult.Protocol.Runtime.Serializers;
+using Catapult.Protocol.Runtime.Serializers.Core;
 using ProtoBuf;
 using System.Buffers.Binary;
 using System.Reflection;
-using System.Reflection.PortableExecutable;
 using System.Text;
-using static Logger.Logger;
+using static Catapult.Protocol.Runtime.Logger;
 
-namespace Catapult.Protocol.Custom
+namespace Catapult.Protocol.Runtime
 {
     public static class RuntimeProtocol
     {
@@ -50,8 +49,10 @@ namespace Catapult.Protocol.Custom
                 }
             }
 
+#if DEBUG
             foreach (var ms in KnownMessages)
                 Console.WriteLine(ms.Key + " " + ms.Value);
+#endif
         }
 
         public static Message? ReadMessage(byte[] data)
