@@ -5,9 +5,7 @@
         <Company>Mediatonic Limited</Company>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="floyzi.logger" />
         <PackageReference Include="Newtonsoft.Json" />
         <PackageReference Include="protobuf-net" />
-        <PackageReference Include="System.IO.Hashing" />
     </ItemGroup>
 </Project>

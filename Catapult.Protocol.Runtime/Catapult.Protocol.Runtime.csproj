@@ -3,9 +3,13 @@
   <PropertyGroup>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<Company>Obed Guys Corp.</Company>
-	<AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Company>Obed Guys Corp.</Company>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="floyzi.logger" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Catapult.Core\Catapult.Core.csproj" />
@@ -23,5 +27,5 @@
     <ProjectReference Include="..\FallGuys.Player.Protocol.Client\FallGuys.Player.Protocol.Client.csproj" />
     <ProjectReference Include="..\FallGuys.Store.Protocol.Client\FallGuys.Store.Protocol.Client.csproj" />
   </ItemGroup>
-
+  
 </Project>
