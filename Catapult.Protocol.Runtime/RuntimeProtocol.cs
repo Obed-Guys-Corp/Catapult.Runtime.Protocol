@@ -116,9 +116,6 @@ namespace Catapult.Protocol.Runtime
                         continue;
                     }
 
-                    Console.WriteLine(f);
-                    Console.WriteLine(bType);
-
                     var bToken = ProtoReader.StartSubItem(reader);
                     int bField;
 
