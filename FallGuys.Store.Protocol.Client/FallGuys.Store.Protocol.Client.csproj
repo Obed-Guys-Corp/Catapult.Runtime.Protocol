@@ -1,16 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>FallGuys.Store.Protocol.Client</AssemblyName>
-    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
-    <TargetFramework>net10.0</TargetFramework>
-	  <Nullable>enable</Nullable>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
-  <PropertyGroup>
-    <LangVersion>12.0</LangVersion>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup />
   <ItemGroup>
     <ProjectReference Include="..\Catapult.Modules.Items.Protocol\Catapult.Modules.Items.Protocol.csproj" />
     <ProjectReference Include="..\FallGuys.Common.Debug.Protocol.Client\FallGuys.Common.Debug.Protocol.Client.csproj" />

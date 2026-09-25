@@ -1,3 +1,5 @@
+using System;
+
 namespace Catapult.Protocol.Internal;
 
 [Obsolete("No longer used")]

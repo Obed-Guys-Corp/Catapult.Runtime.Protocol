@@ -1,3 +1,5 @@
+using System;
+
 namespace Catapult.Protocol;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false)]
