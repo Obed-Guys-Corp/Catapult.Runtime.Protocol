@@ -9,6 +9,7 @@
     <Description>Catapult.Protocol.Runtime</Description>
     <Version>81.4.1.0</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<RepositoryUrl>https://github.com/floyzi/Catapult.Protocol</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
