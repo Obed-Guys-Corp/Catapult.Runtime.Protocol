@@ -4,6 +4,7 @@
     <AssemblyName>Catapult.Services.Gateway.Protocol.Client</AssemblyName>
     <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
     <TargetFramework>net10.0</TargetFramework>
+	  <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>

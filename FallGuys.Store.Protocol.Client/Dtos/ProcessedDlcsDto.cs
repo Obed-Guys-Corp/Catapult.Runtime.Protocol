@@ -16,7 +16,7 @@ public class ProcessedDlcsDto
 	{
 		get
 		{
-			return _itemsAdded ?? (_itemsAdded = new List<ItemAddedDto>());
+			return _itemsAdded ??= [];
 		}
 		set
 		{

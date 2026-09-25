@@ -20,7 +20,7 @@ public class ItemAddedDto
 	{
 		get
 		{
-			return _changes ?? (_changes = new List<ItemChangedDto>());
+			return _changes ??= [];
 		}
 		set
 		{
