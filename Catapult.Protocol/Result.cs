@@ -1,4 +1,3 @@
-using Catapult.Protocol.Custom.Attributes;
 using Catapult.Protocol.Internal;
 using ProtoBuf;
 using System.Globalization;

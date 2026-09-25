@@ -1,10 +1,11 @@
 <Solution>
-  <Project Path="Catapult.Protocol/Catapult.Protocol.csproj" />
   <Project Path="Catapult.Core/Catapult.Core.csproj" />
   <Project Path="Catapult.Modules.Items.Protocol/Catapult.Modules.Items.Protocol.csproj" />
+  <Project Path="Catapult.Protocol.Runtime/Catapult.Protocol.Runtime.csproj" Id="e9c18f37-7264-4105-b8e5-e7ba50798c40" />
+  <Project Path="Catapult.Protocol/Catapult.Protocol.csproj" />
   <Project Path="Catapult.Services.Gateway.Protocol.Client/Catapult.Services.Gateway.Protocol.Client.csproj" />
-  <Project Path="FallGuys.Common.Debug.Protocol.Client/FallGuys.Common.Debug.Protocol.Client.csproj" />
   <Project Path="Catapult.Services.Login.Protocol.Client/Catapult.Services.Login.Protocol.Client.csproj" />
+  <Project Path="FallGuys.Common.Debug.Protocol.Client/FallGuys.Common.Debug.Protocol.Client.csproj" />
   <Project Path="FallGuys.Common.Targeting.Protocol.Client/FallGuys.Common.Targeting.Protocol.Client.csproj" />
   <Project Path="FallGuys.Gateway.Protocol.Client/FallGuys.Gateway.Protocol.Client.csproj" />
   <Project Path="FallGuys.Level.Protocol.AuthTokens/FallGuys.Level.Protocol.AuthTokens.csproj" />

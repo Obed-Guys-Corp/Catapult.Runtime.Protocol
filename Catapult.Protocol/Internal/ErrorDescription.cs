@@ -1,5 +1,3 @@
-using Catapult.Protocol.Custom.Attributes;
-using Catapult.Protocol.Custom.Serializers;
 using Newtonsoft.Json;
 using ProtoBuf;
 using System.Globalization;

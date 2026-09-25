@@ -12,39 +12,42 @@ using static Logger.Logger;
 
 namespace Catapult.Protocol.Custom
 {
-    public static class Protocol
+    public static class RuntimeProtocol
     {
         static readonly Dictionary<uint, Type> KnownMessages;
 
-        static Protocol()
+        static RuntimeProtocol()
         {
             KnownMessages = [];
 
-            foreach (var contract in Assembly.GetExecutingAssembly().GetTypes().Where(t => t.GetCustomAttribute<ProtoContractAttribute>() != null))
+            foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
             {
-                if (contract == typeof(Message) || contract == typeof(Message<>) || contract == typeof(Result<>)) continue;
-
-                var name = contract.GetCustomAttribute<ProtoContractAttribute>()!.Name;
-
-                if (string.IsNullOrEmpty(name))
+                foreach (var contract in asm.GetTypes().Where(t => t.GetCustomAttribute<ProtoContractAttribute>() != null))
                 {
-                    LogLineWarn(typeof(Protocol), $"Model {contract.Name} lacks {nameof(ProtoContractAttribute)} name, it CANNOT be used in messaging!!");
-                    continue;
-                }
+                    if (contract == typeof(Message) || contract == typeof(Message<>) || contract == typeof(Result<>)) continue;
 
-                if (contract == typeof(Result) || typeof(MessageHeader).IsAssignableFrom(contract))
-                {
+                    var name = contract.GetCustomAttribute<ProtoContractAttribute>()!.Name;
+
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        LogLineWarn(typeof(RuntimeProtocol), $"Model {contract.Name} lacks {nameof(ProtoContractAttribute)} name, it CANNOT be used in messaging!!");
+                        continue;
+                    }
+
+                    if (contract == typeof(Result) || typeof(MessageHeader).IsAssignableFrom(contract))
+                    {
+                        KnownMessages[MarkMessage(name)] = contract;
+                        continue;
+                    }
+
                     KnownMessages[MarkMessage(name)] = contract;
-                    continue;
+
+                    var msgName = typeof(Message<>).GetCustomAttribute<ProtoContractAttribute>()!.Name;
+                    KnownMessages[MarkMessage(msgName + name)] = typeof(Message<>).MakeGenericType(contract);
+
+                    var resName = typeof(Result<>).GetCustomAttribute<ProtoContractAttribute>()!.Name;
+                    KnownMessages[MarkMessage(resName + name)] = typeof(Result<>).MakeGenericType(contract);
                 }
-
-                KnownMessages[MarkMessage(name)] = contract;
-
-                var msgName = typeof(Message<>).GetCustomAttribute<ProtoContractAttribute>()!.Name;
-                KnownMessages[MarkMessage(msgName + name)] = typeof(Message<>).MakeGenericType(contract);
-
-                var resName = typeof(Result<>).GetCustomAttribute<ProtoContractAttribute>()!.Name;
-                KnownMessages[MarkMessage(resName + name)] = typeof(Result<>).MakeGenericType(contract);
             }
 
             foreach (var ms in KnownMessages)
@@ -76,7 +79,7 @@ namespace Catapult.Protocol.Custom
                             {
                                 if (!KnownMessages.TryGetValue((uint)hField, out var hType))
                                 {
-                                    LogLineWarn(typeof(Protocol), $"Unknown message header with id={f}");
+                                    LogLineWarn(typeof(RuntimeProtocol), $"Unknown message header with id={f}");
                                     reader.SkipField();
                                     continue;
                                 }
@@ -107,7 +110,7 @@ namespace Catapult.Protocol.Custom
 
                     if (!KnownMessages.TryGetValue((uint)f, out var bType))
                     {
-                        LogLineWarn(typeof(Protocol), $"Unknown message with id={f}");
+                        LogLineWarn(typeof(RuntimeProtocol), $"Unknown message with id={f}");
                         reader.SkipField();
                         continue;
                     }
@@ -160,7 +163,7 @@ namespace Catapult.Protocol.Custom
             }
             catch (Exception e)
             {
-                LogLineError(typeof(Protocol), $"Unable to read message!\n{e}");
+                LogLineError(typeof(RuntimeProtocol), $"Unable to read message!\n{e}");
                 return null!;
             }
         }
@@ -219,14 +222,14 @@ namespace Catapult.Protocol.Custom
             id = Guid.Empty;
             if (replyTo.Headers == null || replyTo.Headers.Count == 0)
             {
-                LogLineError(typeof(Protocol), $"Attempt to reply to {replyTo.GetTypeName()} but message doesn't contain headers!");
+                LogLineError(typeof(RuntimeProtocol), $"Attempt to reply to {replyTo.GetTypeName()} but message doesn't contain headers!");
                 return false;
             }
 
             if (replyTo.TryGetHeader<OperationHeader>(out var h))
             {
                 if (h.Type != OperationType.Request)
-                    LogLineWarn(typeof(Protocol), $"Attempt to reply to a message that is not a request but {h.Type} instead ({replyTo.GetTypeName()})! Is this intended?");
+                    LogLineWarn(typeof(RuntimeProtocol), $"Attempt to reply to a message that is not a request but {h.Type} instead ({replyTo.GetTypeName()})! Is this intended?");
 
                 id = h.RequestId;
             }
