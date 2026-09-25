@@ -5,11 +5,31 @@
     <Nullable>enable</Nullable>
     <Company>Obed Guys Corp.</Company>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <PackageId>Catapult.Protocol.Runtime</PackageId>
+    <Description>Catapult.Protocol.Runtime</Description>
+    <Version>81.4.1.0</Version>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.IO.Hashing" />
     <PackageReference Include="floyzi.logger" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <TargetsForTfmSpecificBuildOutput>
+      $(TargetsForTfmSpecificBuildOutput);CopyReferences
+    </TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+
+  <Target Name="CopyReferences" DependsOnTargets="ResolveReferences">
+    <ItemGroup>
+      <BuildOutputInPackage
+        Include="@(ReferenceCopyLocalPaths)"
+        Condition="'%(ReferenceCopyLocalPaths.ReferenceSourceTarget)' == 'ProjectReference'"
+        TargetPath="%(ReferenceCopyLocalPaths.DestinationSubPath)" />
+    </ItemGroup>
+  </Target>
 
   <ItemGroup>
     <ProjectReference Include="..\Catapult.Core\Catapult.Core.csproj" />
@@ -27,5 +47,5 @@
     <ProjectReference Include="..\FallGuys.Player.Protocol.Client\FallGuys.Player.Protocol.Client.csproj" />
     <ProjectReference Include="..\FallGuys.Store.Protocol.Client\FallGuys.Store.Protocol.Client.csproj" />
   </ItemGroup>
-  
+
 </Project>
