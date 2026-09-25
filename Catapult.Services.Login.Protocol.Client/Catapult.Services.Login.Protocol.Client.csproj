@@ -2,8 +2,8 @@
   <PropertyGroup>
     <AssemblyName>Catapult.Services.Login.Protocol.Client</AssemblyName>
     <Nullable>enable</Nullable>
+	<AssemblyVersion>70.3.1.0</AssemblyVersion>
   </PropertyGroup>
-  <PropertyGroup />
   <ItemGroup>
     <ProjectReference Include="..\Catapult.Protocol\Catapult.Protocol.csproj" />
   </ItemGroup>
