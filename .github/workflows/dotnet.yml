@@ -1,0 +1,66 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  release:
+    types: [created]
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.release.tag_name }}
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore Catapult.Protocol.slnx
+      
+    - name: Build
+      run: dotnet build Catapult.Protocol.slnx --configuration Release --no-restore
+      
+    - name: Test
+      run: dotnet test Catapult.Protocol.slnx --configuration Release --no-build --verbosity normal
+
+    - name: Verify version
+      shell: bash
+      run: |
+        PROJECT_VERSION=$(dotnet msbuild Catapult.Protocol.Runtime/Catapult.Protocol.Runtime.csproj -getProperty:Version -nologo -v:q)
+        RELEASE_VERSION="${{ github.event.release.tag_name }}"
+        RELEASE_VERSION="${RELEASE_VERSION#v}"
+
+        if [ "$PROJECT_VERSION" != "$RELEASE_VERSION" ]; then
+          echo "Invalid ver"
+          exit 1
+        fi
+        
+    - name: Pack
+      run: dotnet pack Catapult.Protocol.Runtime/Catapult.Protocol.Runtime.csproj --configuration Release --no-build --output ./packages
+      
+    - name: Publish Package
+      run: dotnet nuget push "./packages/*.nupkg" --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --api-key "${{ github.token }}" --skip-duplicate
+      
+    - name: Upload
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: gh release upload "${{ github.event.release.tag_name }}" ./packages/*.nupkg
+
+    - name: Publish
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: gh release edit "${{ github.event.release.tag_name }}" --draft=false
+    
+
+
