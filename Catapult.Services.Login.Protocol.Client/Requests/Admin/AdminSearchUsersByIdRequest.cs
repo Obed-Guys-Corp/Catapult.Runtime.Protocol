@@ -3,7 +3,7 @@ using ProtoBuf;
 
 namespace Catapult.Services.Login.Protocol.Client.Requests.Admin;
 
-[Authorize(Roles = new string[] { "Admin", "Super" })]
+[Authorize(Roles = new string[] { CoreRoles.Admin, CoreRoles.Super })]
 [ProtoContract(Name = "Catapult_Login_AdminGetAccountsByIdRequest_V1")]
 public class AdminSearchUsersByIdRequest
 {

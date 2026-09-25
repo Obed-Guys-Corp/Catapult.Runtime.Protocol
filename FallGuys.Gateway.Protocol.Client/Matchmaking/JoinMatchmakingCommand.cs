@@ -6,7 +6,7 @@ using ProtoBuf;
 namespace FallGuys.Gateway.Protocol.Client.Matchmaking;
 
 [Obsolete("Use fn matchmaker")]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 [ProtoContract(Name = "FallGuys_Gateway_JoinMatchmakingCommand_V1")]
 public class JoinMatchmakingCommand
 {

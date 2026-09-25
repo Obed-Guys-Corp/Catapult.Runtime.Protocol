@@ -6,7 +6,7 @@ namespace FallGuys.Gateway.Protocol.Client.Entitlements;
 
 [ProtoContract(Name = "FallGuys_Gateway_DebugSyncEntitlementsForXboxCommand_V1")]
 [DebugMessage]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 public class DebugSyncEntitlementsForXboxCommand : ISyncEntitlementsCommand
 {
 	[ProtoMember(1)]

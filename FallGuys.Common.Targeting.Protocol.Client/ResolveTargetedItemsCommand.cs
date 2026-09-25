@@ -5,7 +5,7 @@ using ProtoBuf;
 namespace FallGuys.Common.Targeting.Protocol.Client;
 
 [ProtoContract(Name = "FallGuys_Player_ResolveTargetedItemsCommand_V1")]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 public class ResolveTargetedItemsCommand
 {
 	[ProtoIgnore]

@@ -5,7 +5,7 @@ using ProtoBuf;
 
 namespace FallGuys.Store.Protocol.Client.Commands.Retrieve;
 
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 [DebugMessage]
 [ProtoContract(Name = "FallGuys_Store_GetAllSymphonyStoresByDateQuery_V1")]
 public class DebugGetAllSymphonyStoresByDateQuery

@@ -4,7 +4,7 @@ using ProtoBuf;
 namespace FallGuys.Lobby.Protocol.Client.LeaveLobby;
 
 [ProtoContract(Name = "FallGuys_Lobby_LeaveLobbyCommand_V1")]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 public class LeaveLobbyCommand
 {
 	[ProtoMember(1)]

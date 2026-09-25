@@ -5,7 +5,7 @@ using ProtoBuf;
 
 namespace FallGuys.Gateway.Protocol.Client.Matchmaking;
 
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 [ProtoContract(Name = "FallGuys_Gateway_CreateGameEntryTokenCommand_V1")]
 public class CreateGameEntryTokenCommand
 {

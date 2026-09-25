@@ -4,7 +4,7 @@ using ProtoBuf;
 namespace FallGuys.Store.Protocol.Client.Commands.Purchase;
 
 [ProtoContract(Name = "FallGuys_Store_PurchaseSymphonyBundleCommand_V1")]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 public class PurchaseSymphonyBundleCommand
 {
 	[ProtoMember(1)]

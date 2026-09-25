@@ -3,7 +3,7 @@ using ProtoBuf;
 
 namespace FallGuys.Store.Protocol.Client.Commands.Purchase;
 
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 [ProtoContract(Name = "FallGuys_Store_SymphonyInitSteamTransactionCommand_V1")]
 public class SymphonyInitSteamTransactionCommand
 {

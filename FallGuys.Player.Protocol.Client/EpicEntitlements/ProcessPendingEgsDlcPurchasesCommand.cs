@@ -4,7 +4,7 @@ using ProtoBuf;
 namespace FallGuys.Player.Protocol.Client.EpicEntitlements;
 
 [ProtoContract(Name = "FallGuys_Player_ProcessPendingEgsDlcPurchasesCommand_V1")]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 public class ProcessPendingEgsDlcPurchasesCommand
 {
 }

@@ -4,7 +4,7 @@ using ProtoBuf;
 namespace FallGuys.Gateway.Protocol.Client.Entitlements;
 
 [ProtoContract(Name = "FallGuys_Gateway_SyncEntitlementsForXboxCommand_V1")]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 public class SyncEntitlementsForXboxCommand : ISyncEntitlementsCommand
 {
 	[ProtoMember(1)]

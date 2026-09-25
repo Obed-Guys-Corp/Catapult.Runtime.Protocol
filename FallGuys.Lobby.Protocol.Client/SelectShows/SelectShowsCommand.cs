@@ -6,7 +6,7 @@ using ProtoBuf;
 namespace FallGuys.Lobby.Protocol.Client.SelectShows;
 
 [ProtoContract(Name = "FallGuys_Lobby_SelectShowsCommand_V1")]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 [Obsolete("Use SelectNextShowCommand instead")]
 public class SelectShowsCommand
 {

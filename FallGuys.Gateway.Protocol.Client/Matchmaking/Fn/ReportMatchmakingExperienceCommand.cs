@@ -5,7 +5,7 @@ using ProtoBuf;
 
 namespace FallGuys.Gateway.Protocol.Client.Matchmaking.Fn;
 
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 [ProtoContract(Name = "FallGuys_Matchmaking_ReportMatchmakingExperienceCommand_V1")]
 public class ReportMatchmakingExperienceCommand
 {

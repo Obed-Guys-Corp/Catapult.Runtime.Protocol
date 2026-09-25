@@ -4,7 +4,7 @@ using ProtoBuf;
 namespace FallGuys.Lobby.Protocol.Client.UnlockLobby;
 
 [ProtoContract(Name = "FallGuys_Lobby_UnlockLobbyCommand_V1")]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 public class UnlockLobbyCommand
 {
 	[ProtoMember(1)]

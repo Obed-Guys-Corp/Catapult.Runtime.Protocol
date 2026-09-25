@@ -6,7 +6,7 @@ using ProtoBuf;
 namespace FallGuys.Gateway.Protocol.Client.Entitlements;
 
 [ProtoContract(Name = "FallGuys_Gateway_SyncEntitlementsForEpicCommand_V1")]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 public class SyncEntitlementsForEpicCommand : ISyncEntitlementsCommand
 {
 	[ProtoMember(1)]

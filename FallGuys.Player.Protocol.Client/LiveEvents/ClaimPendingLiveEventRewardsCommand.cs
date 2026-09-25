@@ -5,7 +5,7 @@ using ProtoBuf;
 namespace FallGuys.Player.Protocol.Client.LiveEvents;
 
 [ProtoContract(Name = "FallGuys_Player_ClaimPendingLiveEventRewardsCommand_V1")]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 [Obsolete("This command is now deprecated. Please use the ClaimRewardsCommand API instead.")]
 public class ClaimPendingLiveEventRewardsCommand
 {

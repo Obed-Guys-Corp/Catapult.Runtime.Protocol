@@ -8,7 +8,7 @@ namespace FallGuys.Player.Protocol.Client.Challenges;
 [ProtoContract(Name = "FallGuys_Player_DebugRefreshAllChallengesCommand_V1")]
 [Obsolete("Use DebugRefreshChallengeGroupsCommand")]
 [DebugMessage]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 public class DebugRefreshAllChallengesCommand
 {
 }

@@ -5,7 +5,7 @@ using ProtoBuf;
 namespace FallGuys.Lobby.Protocol.Client.ChangeMemberStatus;
 
 [ProtoContract(Name = "FallGuys_Lobby_ChangeMemberReadyStatusCommand_V1")]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 public class ChangeMemberStatusCommand
 {
 	[ProtoMember(1)]

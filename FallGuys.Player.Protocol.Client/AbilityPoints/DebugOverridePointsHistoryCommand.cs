@@ -5,7 +5,7 @@ using ProtoBuf;
 namespace FallGuys.Player.Protocol.Client.AbilityPoints;
 
 [ProtoContract(Name = "FallGuys_Player_DebugOverridePointsHistoryCommand_V1")]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 [DebugMessage]
 public class DebugOverridePointsHistoryCommand
 {

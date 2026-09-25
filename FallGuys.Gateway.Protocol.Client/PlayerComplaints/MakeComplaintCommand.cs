@@ -4,7 +4,7 @@ using ProtoBuf;
 namespace FallGuys.Gateway.Protocol.Client.PlayerComplaints;
 
 [ProtoContract(Name = "FallGuys_Gateway_MakeComplaintCommand_V1")]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 public class MakeComplaintCommand
 {
 	[ProtoMember(1)]

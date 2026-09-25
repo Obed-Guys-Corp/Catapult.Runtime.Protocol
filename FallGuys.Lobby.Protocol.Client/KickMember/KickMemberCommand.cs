@@ -3,7 +3,7 @@ using ProtoBuf;
 
 namespace FallGuys.Lobby.Protocol.Client.KickMember;
 
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 [ProtoContract(Name = "FallGuys_Lobby_KickMemberCommand_V1")]
 public class KickMemberCommand
 {

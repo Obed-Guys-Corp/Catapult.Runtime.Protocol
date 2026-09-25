@@ -5,7 +5,7 @@ using ProtoBuf;
 namespace FallGuys.Lobby.Protocol.Client.Matchmaking;
 
 [ProtoContract(Name = "FallGuys_Lobby_StartMatchmakingCommand_V1")]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 public class StartMatchmakingCommand
 {
 	[ProtoMember(1)]

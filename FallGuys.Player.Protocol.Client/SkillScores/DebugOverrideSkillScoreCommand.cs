@@ -4,7 +4,7 @@ using ProtoBuf;
 
 namespace FallGuys.Player.Protocol.Client.SkillScores;
 
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 [ProtoContract(Name = "FallGuys_Player_DebugOverrideSkillScoreCommand_V1")]
 [DebugMessage]
 public class DebugOverrideSkillScoreCommand

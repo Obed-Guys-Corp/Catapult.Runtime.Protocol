@@ -5,7 +5,7 @@ using ProtoBuf;
 namespace FallGuys.Lobby.Protocol.Client.JoinLobby;
 
 [ProtoContract(Name = "FallGuys_Lobby_JoinLobbyCommand_V1")]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 public class JoinLobbyCommand
 {
 	[ProtoMember(1)]

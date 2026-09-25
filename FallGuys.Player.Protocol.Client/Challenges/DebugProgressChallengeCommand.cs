@@ -5,7 +5,7 @@ using ProtoBuf;
 namespace FallGuys.Player.Protocol.Client.Challenges;
 
 [DebugMessage]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 [ProtoContract(Name = "FallGuys_Player_DebugProgressChallengeCommand_V1")]
 public class DebugProgressChallengeCommand
 {

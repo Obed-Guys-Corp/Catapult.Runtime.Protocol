@@ -4,7 +4,7 @@ using ProtoBuf;
 
 namespace FallGuys.Player.Protocol.Client.Cosmetics;
 
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 [ProtoContract(Name = "FallGuys_Player_ConfigureEmotesCommand_V1")]
 public class ConfigureEmotesCommand
 {

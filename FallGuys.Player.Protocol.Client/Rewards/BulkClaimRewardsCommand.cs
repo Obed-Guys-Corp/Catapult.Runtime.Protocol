@@ -4,7 +4,7 @@ using ProtoBuf;
 
 namespace FallGuys.Player.Protocol.Client.Rewards;
 
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 [ProtoContract(Name = "FallGuys_Player_BulkClaimRewardsCommand_V1")]
 public class BulkClaimRewardsCommand
 {

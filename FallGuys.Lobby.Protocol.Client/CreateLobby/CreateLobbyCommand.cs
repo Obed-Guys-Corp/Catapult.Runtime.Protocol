@@ -8,7 +8,7 @@ using ProtoBuf;
 namespace FallGuys.Lobby.Protocol.Client.CreateLobby;
 
 [ProtoContract(Name = "FallGuys_Lobby_CreateLobbyCommand_V1")]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 public class CreateLobbyCommand
 {
 	[ProtoMember(1)]

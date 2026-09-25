@@ -3,7 +3,7 @@ using ProtoBuf;
 
 namespace FallGuys.Player.Protocol.Client.Challenges;
 
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 [ProtoContract(Name = "FallGuys_Player_TryRefreshChallengeGroupsCommand_V2")]
 public class TryRefreshChallengeGroupsCommand
 {

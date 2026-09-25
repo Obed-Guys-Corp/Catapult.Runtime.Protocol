@@ -5,7 +5,7 @@ using ProtoBuf;
 namespace FallGuys.Player.Protocol.Client.SymphonyRewards;
 
 [ProtoContract(Name = "FallGuys_AdminPlayerSymphonyRewardsDto_V1")]
-[Authorize(Roles = new string[] { "Admin" })]
+[Authorize(Roles = new string[] { CoreRoles.Admin })]
 public class AdminPlayerSymphonyRewardsDto
 {
 	[ProtoIgnore]

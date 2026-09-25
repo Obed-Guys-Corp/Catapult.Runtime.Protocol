@@ -4,7 +4,7 @@ using ProtoBuf;
 namespace Catapult.Services.Login.Protocol.Client.Requests.Admin;
 
 [ProtoContract(Name = "Catapult_Login_AdminMigrateAccountRequest_V1")]
-[Authorize(Roles = new string[] { "Admin", "Super" })]
+[Authorize(Roles = new string[] { CoreRoles.Admin, CoreRoles.Super })]
 public class AdminMigrateDeviceIdsRequest
 {
 	[ProtoMember(1)]

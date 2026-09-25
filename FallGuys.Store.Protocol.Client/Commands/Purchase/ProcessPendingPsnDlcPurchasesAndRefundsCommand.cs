@@ -3,7 +3,7 @@ using ProtoBuf;
 
 namespace FallGuys.Store.Protocol.Client.Commands.Purchase;
 
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 [ProtoContract(Name = "Catapult_Store_ProcessPendingPsnDlcPurchasesAndRefundsCommand_V1")]
 public class ProcessPendingPsnDlcPurchasesAndRefundsCommand
 {

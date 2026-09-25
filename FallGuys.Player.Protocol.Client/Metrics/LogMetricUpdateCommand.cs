@@ -6,7 +6,7 @@ using ProtoBuf;
 namespace FallGuys.Player.Protocol.Client.Metrics;
 
 [ProtoContract(Name = "FallGuys_Player_LogMetricUpdateCommand_V1")]
-[Authorize(Roles = new string[] { "User" })]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 public class LogMetricUpdateCommand
 {
 	private List<MetricUpdateCollection>? _metricUpdateCollections;
