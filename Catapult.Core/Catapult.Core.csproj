@@ -2,5 +2,6 @@
   <PropertyGroup>
     <AssemblyName>Catapult.Core</AssemblyName>
 	<AssemblyVersion>89.0.0.0</AssemblyVersion>
+	<Nullable>enable</Nullable>
   </PropertyGroup>
 </Project>
