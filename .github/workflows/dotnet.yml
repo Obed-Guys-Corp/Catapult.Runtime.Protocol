@@ -34,7 +34,7 @@ jobs:
     - name: Test
       run: dotnet test Catapult.Protocol.slnx --configuration Release --no-build --verbosity normal
 
-    - name: Verify version
+    - name: Verify
       shell: bash
       run: |
         PROJECT_VERSION=$(dotnet msbuild Catapult.Protocol.Runtime/Catapult.Protocol.Runtime.csproj -getProperty:Version -nologo -v:q)
@@ -47,7 +47,7 @@ jobs:
         fi
         
     - name: Pack
-      run: dotnet pack Catapult.Protocol.Runtime/Catapult.Protocol.Runtime.csproj --configuration Release --no-build --output ./packages
+      run: dotnet pack Catapult.Protocol.Runtime/Catapult.Protocol.Runtime.csproj --configuration Release --output ./packages
       
     - name: Publish Package
       run: dotnet nuget push "./packages/*.nupkg" --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --api-key "${{ github.token }}" --skip-duplicate
