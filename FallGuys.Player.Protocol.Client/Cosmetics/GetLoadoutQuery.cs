@@ -3,8 +3,8 @@ using ProtoBuf;
 
 namespace FallGuys.Player.Protocol.Client.Cosmetics;
 
-[Authorize(Roles = new string[] { CoreRoles.User })]
 [ProtoContract(Name = "FallGuys_GetLoadoutQuery_V1")]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 public class GetLoadoutQuery
 {
 }

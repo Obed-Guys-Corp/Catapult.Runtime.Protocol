@@ -1,33 +1,23 @@
-using System.Collections.Generic;
 using ProtoBuf;
+using System.Collections.Generic;
 
 namespace Catapult.Modules.Items.Protocol.Dtos;
 
 [ProtoContract(Name = "Catapult_Items_ItemRemoveResultDto_V1")]
 public class ItemRemovedDto
 {
-	[ProtoIgnore]
-	private List<ItemChangedDto>? _changes;
+    [ProtoIgnore]
+    private List<ItemChangedDto>? _changes;
 
-	[ProtoMember(1)]
-	public string? Id { get; set; }
+    [ProtoMember(1)]
+    public string? Id { get; set; }
 
-	[ProtoMember(2)]
-	public string? ContentId { get; set; }
+    [ProtoMember(2)]
+    public string? ContentId { get; set; }
 
-	[ProtoMember(3)]
-	public string? ContentType { get; set; }
+    [ProtoMember(3)]
+    public string? ContentType { get; set; }
 
-	[ProtoMember(4)]
-	public List<ItemChangedDto> Changes
-	{
-		get
-		{
-			return _changes ?? (_changes = new List<ItemChangedDto>());
-		}
-		set
-		{
-			_changes = value;
-		}
-	}
+    [ProtoMember(4)]
+    public List<ItemChangedDto> Changes { get; set; }
 }

@@ -5,11 +5,11 @@ namespace Catapult.Protocol.Headers;
 [ProtoContract(Name = "Catapult_TimestampHeader_V1")]
 public class TimestampHeader : MessageHeader
 {
-	[ProtoMember(1)]
-	public DateTime Utc { get; set; }
+    [ProtoMember(1)]
+    public DateTime Utc { get; set; }
 
-	public override string ToString()
-	{
-		return $"{nameof(TimestampHeader)}<Utc:{Utc}>";
-	}
+    public override string ToString()
+    {
+        return $"{nameof(TimestampHeader)}<Utc:{Utc}>";
+    }
 }

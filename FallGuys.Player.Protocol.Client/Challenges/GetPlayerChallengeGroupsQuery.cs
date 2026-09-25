@@ -1,6 +1,6 @@
-using System;
 using Catapult.Protocol;
 using ProtoBuf;
+using System;
 
 namespace FallGuys.Player.Protocol.Client.Challenges;
 
@@ -8,7 +8,7 @@ namespace FallGuys.Player.Protocol.Client.Challenges;
 [ProtoContract(Name = "FallGuys_Player_GetPlayerChallengeGroupsQuery_V1")]
 public class GetPlayerChallengeGroupsQuery
 {
-	[ProtoMember(1)]
-	[Obsolete("No longer used")]
-	public string? EpisodeId { get; set; }
+    [Obsolete("No longer used")]
+    [ProtoMember(1)]
+    public string? EpisodeId { get; set; }
 }

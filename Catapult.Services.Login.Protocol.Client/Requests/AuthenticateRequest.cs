@@ -7,6 +7,6 @@ namespace Catapult.Services.Login.Protocol.Client.Requests;
 [Authorize(AllowAnonymous = true)]
 public class AuthenticateRequest
 {
-	[ProtoMember(1)]
-	public string? Token { get; set; }
+    [ProtoMember(1)]
+    public string? Token { get; set; }
 }

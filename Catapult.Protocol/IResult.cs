@@ -4,5 +4,5 @@ namespace Catapult.Protocol;
 
 public interface IResult : IContainStatusCode
 {
-	ErrorDescription? Error { get; set; }
+    ErrorDescription? Error { get; set; }
 }

@@ -7,6 +7,6 @@ namespace FallGuys.Lobby.Protocol.Client.ClearLobby;
 [ProtoContract(Name = "FallGuys_Lobby_ClearLobbyCommand_V1")]
 public class ClearLobbyCommand
 {
-	[ProtoMember(1)]
-	public string LobbyId { get; set; }
+    [ProtoMember(1)]
+    public string LobbyId { get; set; }
 }

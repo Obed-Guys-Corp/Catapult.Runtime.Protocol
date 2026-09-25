@@ -7,9 +7,9 @@ namespace Catapult.Services.Login.Protocol.Client.Requests.Admin;
 [Authorize(Roles = new string[] { CoreRoles.Admin, CoreRoles.Super })]
 public class AdminUpdateAccountBucketRequest
 {
-	[ProtoMember(1)]
-	public string? AccountId { get; set; }
+    [ProtoMember(1)]
+    public string? AccountId { get; set; }
 
-	[ProtoMember(2)]
-	public int? Bucket { get; set; }
+    [ProtoMember(2)]
+    public int? Bucket { get; set; }
 }

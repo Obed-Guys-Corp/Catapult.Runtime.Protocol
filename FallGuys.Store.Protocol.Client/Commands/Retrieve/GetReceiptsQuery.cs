@@ -7,6 +7,6 @@ namespace FallGuys.Store.Protocol.Client.Commands.Retrieve;
 [ProtoContract(Name = "Catapult_Store_GetAllReceiptsQuery_V1")]
 public class GetReceiptsQuery
 {
-	[ProtoMember(1)]
-	public string? UserId { get; set; }
+    [ProtoMember(1)]
+    public string? UserId { get; set; }
 }

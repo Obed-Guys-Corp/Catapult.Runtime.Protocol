@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>Catapult.Core</AssemblyName>
-	<AssemblyVersion>81.4.1.0</AssemblyVersion>
+	<AssemblyVersion>89.0.0.0</AssemblyVersion>
   </PropertyGroup>
 </Project>

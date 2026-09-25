@@ -1,38 +1,36 @@
 using ProtoBuf;
-using System;
-using System.Collections.Generic;
 
 namespace Catapult.Protocol.Headers;
 
 [ProtoContract(Name = "Catapult_UserSessionHeader_V1")]
 public class UserSessionHeader : MessageHeader
 {
-	[ProtoMember(1)]
-	public string? UserId { get; set; }
+    [ProtoMember(1)]
+    public string? UserId { get; set; }
 
-	[ProtoMember(2)]
-	public string[]? Roles { get; set; }
+    [ProtoMember(2)]
+    public string[]? Roles { get; set; }
 
-	[ProtoMember(3)]
-	public ContentTargeting? ContentTargeting { get; set; }
+    [ProtoMember(3)]
+    public ContentTargeting? ContentTargeting { get; set; }
 
-	[ProtoMember(4)]
-	public string[]? IdentityTypes { get; set; }
+    [ProtoMember(4)]
+    public string[]? IdentityTypes { get; set; }
 
-	[ProtoMember(5)]
-	[Obsolete("Found inside `ExtraIdentities`.")]
-	public string? AnalyticsId { get; set; }
+    [ProtoMember(5)]
+    [Obsolete("Found inside `ExtraIdentities`.")]
+    public string? AnalyticsId { get; set; }
 
-	[ProtoMember(6)]
-	public Dictionary<string, string>? ExtraIdentities { get; set; }
+    [ProtoMember(6)]
+    public Dictionary<string, string>? ExtraIdentities { get; set; }
 
-	[ProtoMember(7)]
-	public Dictionary<string, string>? AdditionalProperties { get; set; }
+    [ProtoMember(7)]
+    public Dictionary<string, string>? AdditionalProperties { get; set; }
 
-	public override string ToString()
-	{
-		string text = ((Roles != null) ? string.Join(",", Roles) : string.Empty);
-		string? text2 = (ContentTargeting != null) ? ContentTargeting.ContentVersion : string.Empty;
-		return "UserSessionHeader: " + UserId + " (" + text + ") [" + text2 + "]";
-	}
+    public override string ToString()
+    {
+        string text = ((Roles != null) ? string.Join(",", Roles) : string.Empty);
+        string? text2 = (ContentTargeting != null) ? ContentTargeting.ContentVersion : string.Empty;
+        return "UserSessionHeader: " + UserId + " (" + text + ") [" + text2 + "]";
+    }
 }

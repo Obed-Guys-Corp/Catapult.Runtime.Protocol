@@ -7,9 +7,9 @@ namespace Catapult.Services.Login.Protocol.Client.Requests.Admin;
 [Authorize(Roles = new string[] { CoreRoles.Admin, CoreRoles.Super })]
 public class AdminMigrateDeviceIdsRequest
 {
-	[ProtoMember(1)]
-	public string? NewOwningAccount { get; set; }
+    [ProtoMember(1)]
+    public string? NewOwningAccount { get; set; }
 
-	[ProtoMember(2)]
-	public string? PreviousOwningAccount { get; set; }
+    [ProtoMember(2)]
+    public string? PreviousOwningAccount { get; set; }
 }

@@ -7,9 +7,9 @@ namespace Catapult.Services.Login.Protocol.Client.Requests.Admin;
 [ProtoContract(Name = "Catapult_Login_AdminGetAdminAccountsRequest_V1")]
 public class AdminGetAdminAccountsRequest
 {
-	[ProtoMember(1)]
-	public int Page { get; set; }
+    [ProtoMember(1)]
+    public int Page { get; set; }
 
-	[ProtoMember(2)]
-	public int Count { get; set; }
+    [ProtoMember(2)]
+    public int Count { get; set; }
 }

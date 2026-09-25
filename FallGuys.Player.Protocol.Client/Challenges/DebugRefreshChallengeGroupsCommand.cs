@@ -1,28 +1,18 @@
-using System.Collections.Generic;
 using Catapult.Protocol;
 using FallGuys.Common.Debug.Protocol.Client;
 using ProtoBuf;
+using System.Collections.Generic;
 
 namespace FallGuys.Player.Protocol.Client.Challenges;
 
+[ProtoContract(Name = "FallGuys_Player_DebugRefreshChallengeGroupsCommand_V1")]
 [DebugMessage]
 [Authorize(Roles = new string[] { CoreRoles.User })]
-[ProtoContract(Name = "FallGuys_Player_DebugRefreshChallengeGroupsCommand_V1")]
 public class DebugRefreshChallengeGroupsCommand
 {
-	[ProtoIgnore]
-	private List<string>? _challengeGroupIds;
+    [ProtoIgnore]
+    private List<string>? _challengeGroupIds;
 
-	[ProtoMember(1)]
-	public List<string> ChallengeGroupIds
-	{
-		get
-		{
-			return _challengeGroupIds ?? (_challengeGroupIds = new List<string>());
-		}
-		set
-		{
-			_challengeGroupIds = value;
-		}
-	}
+    [ProtoMember(1)]
+    public List<string> ChallengeGroupIds { get; set; }
 }

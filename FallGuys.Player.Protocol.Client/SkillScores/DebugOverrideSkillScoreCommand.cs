@@ -9,9 +9,9 @@ namespace FallGuys.Player.Protocol.Client.SkillScores;
 [DebugMessage]
 public class DebugOverrideSkillScoreCommand
 {
-	[ProtoMember(1)]
-	public int? ScoreOverride { get; set; }
+    [ProtoMember(1)]
+    public int? ScoreOverride { get; set; }
 
-	[ProtoMember(2)]
-	public int? EpisodesCompletedOverride { get; set; }
+    [ProtoMember(2)]
+    public int? EpisodesCompletedOverride { get; set; }
 }

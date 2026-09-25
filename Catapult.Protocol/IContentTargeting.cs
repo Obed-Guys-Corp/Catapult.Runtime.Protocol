@@ -2,15 +2,15 @@ namespace Catapult.Protocol;
 
 public interface IContentTargeting
 {
-	string? ContentVersion { get; }
+    string? ContentVersion { get; }
 
-	string? ContentBranch { get; }
+    string? ContentBranch { get; }
 
-	string? ClientVersion { get; }
+    string? ClientVersion { get; }
 
-	string? Platform { get; }
+    string? Platform { get; }
 
-	string? ContentETag { get; }
+    string? ContentETag { get; }
 
-	string[]? UserSegments { get; }
+    string[]? UserSegments { get; }
 }

@@ -7,6 +7,6 @@ namespace FallGuys.Player.Protocol.Client.Challenges;
 [ProtoContract(Name = "FallGuys_Player_MarkChallengeGroupAsSeenCommand_V1")]
 public class MarkChallengeGroupAsSeenCommand
 {
-	[ProtoMember(1)]
-	public string? ChallengeGroupId { get; set; }
+    [ProtoMember(1)]
+    public string? ChallengeGroupId { get; set; }
 }

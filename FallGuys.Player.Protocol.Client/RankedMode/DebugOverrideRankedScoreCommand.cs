@@ -4,14 +4,14 @@ using ProtoBuf;
 
 namespace FallGuys.Player.Protocol.Client.RankedMode;
 
+[DebugMessage]
 [ProtoContract(Name = "FallGuys_Player_RankedMode_DebugOverrideRankedScoreCommand_V1")]
 [Authorize(Roles = new string[] { CoreRoles.User })]
-[DebugMessage]
 public class DebugOverrideRankedScoreCommand
 {
-	[ProtoMember(1)]
-	public string? Chainkey { get; set; }
+    [ProtoMember(1)]
+    public string? Chainkey { get; set; }
 
-	[ProtoMember(2)]
-	public int ScoreOverride { get; set; }
+    [ProtoMember(2)]
+    public int ScoreOverride { get; set; }
 }

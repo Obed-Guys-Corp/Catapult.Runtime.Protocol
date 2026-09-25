@@ -1,6 +1,6 @@
-using System;
 using Catapult.Protocol;
 using ProtoBuf;
+using System;
 
 namespace FallGuys.Store.Protocol.Client.Commands.Purchase;
 

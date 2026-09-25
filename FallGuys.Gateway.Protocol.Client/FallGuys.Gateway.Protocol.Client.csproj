@@ -7,5 +7,7 @@
     <ProjectReference Include="..\Catapult.Modules.Items.Protocol\Catapult.Modules.Items.Protocol.csproj" />
     <ProjectReference Include="..\Catapult.Protocol\Catapult.Protocol.csproj" />
     <ProjectReference Include="..\FallGuys.Common.Debug.Protocol.Client\FallGuys.Common.Debug.Protocol.Client.csproj" />
+	<ProjectReference Include="..\FallGuys.Client.Protocol\FallGuys.Client.Protocol.csproj" />
+	<ProjectReference Include="..\FallGuys.Player.Protocol.Client\FallGuys.Player.Protocol.Client.csproj" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using Catapult.Protocol;
 using ProtoBuf;
+using System.Collections.Generic;
 
 namespace FallGuys.Common.Targeting.Protocol.Client;
 
@@ -8,19 +8,9 @@ namespace FallGuys.Common.Targeting.Protocol.Client;
 [Authorize(Roles = new string[] { CoreRoles.User })]
 public class ResolveTargetedItemsCommand
 {
-	[ProtoIgnore]
-	private List<string>? _contentIds;
+    [ProtoIgnore]
+    private List<string>? _contentIds;
 
-	[ProtoMember(1)]
-	public List<string> ContentIds
-	{
-		get
-		{
-			return _contentIds ?? (_contentIds = new List<string>());
-		}
-		set
-		{
-			_contentIds = value;
-		}
-	}
+    [ProtoMember(1)]
+    public List<string> ContentIds { get; set; }
 }

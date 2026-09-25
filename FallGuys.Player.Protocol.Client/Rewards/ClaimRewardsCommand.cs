@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using Catapult.Protocol;
 using ProtoBuf;
+using System.Collections.Generic;
 
 namespace FallGuys.Player.Protocol.Client.Rewards;
 
@@ -8,18 +8,8 @@ namespace FallGuys.Player.Protocol.Client.Rewards;
 [Authorize(Roles = new string[] { CoreRoles.User })]
 public class ClaimRewardsCommand
 {
-	private List<string>? _rewardItemIds;
+    private List<string>? _rewardItemIds;
 
-	[ProtoMember(1)]
-	public List<string> RewardItemIds
-	{
-		get
-		{
-			return _rewardItemIds ?? (_rewardItemIds = new List<string>());
-		}
-		set
-		{
-			_rewardItemIds = value;
-		}
-	}
+    [ProtoMember(1)]
+    public List<string> RewardItemIds { get; set; }
 }

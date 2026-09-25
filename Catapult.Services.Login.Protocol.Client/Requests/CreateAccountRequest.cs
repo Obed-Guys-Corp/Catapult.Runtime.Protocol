@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using Catapult.Protocol;
 using ProtoBuf;
+using System.Collections.Generic;
 
 namespace Catapult.Services.Login.Protocol.Client.Requests;
 
@@ -8,24 +8,14 @@ namespace Catapult.Services.Login.Protocol.Client.Requests;
 [Authorize(AllowAnonymous = true)]
 public class CreateAccountRequest
 {
-	private Dictionary<string, string>? _properties;
+    private Dictionary<string, string>? _properties;
 
-	[ProtoMember(1)]
-	public string? IdentityType { get; set; }
+    [ProtoMember(1)]
+    public string? IdentityType { get; set; }
 
-	[ProtoMember(2)]
-	public string? IdentityToken { get; set; }
+    [ProtoMember(2)]
+    public string? IdentityToken { get; set; }
 
-	[ProtoMember(3)]
-	public Dictionary<string, string> Properties
-	{
-		get
-		{
-			return _properties ?? (_properties = new Dictionary<string, string>());
-		}
-		set
-		{
-			_properties = value;
-		}
-	}
+    [ProtoMember(3)]
+    public Dictionary<string, string> Properties { get; set; }
 }

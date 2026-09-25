@@ -3,10 +3,10 @@ using ProtoBuf;
 
 namespace FallGuys.Lobby.Protocol.Client.Matchmaking;
 
-[Authorize(Roles = new string[] { CoreRoles.User })]
 [ProtoContract(Name = "FallGuys_Lobby_CancelMatchmakingCommand_V1")]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 public class CancelMatchmakingCommand
 {
-	[ProtoMember(1)]
-	public string LobbyId { get; set; }
+    [ProtoMember(1)]
+    public string LobbyId { get; set; }
 }

@@ -1,57 +1,25 @@
-using System;
-using System.Collections.Generic;
 using Catapult.Protocol;
 using ProtoBuf;
+using System;
+using System.Collections.Generic;
 
 namespace FallGuys.Player.Protocol.Client.Metrics;
 
-[ProtoContract(Name = "FallGuys_Player_LogMetricUpdateCommand_V1")]
 [Authorize(Roles = new string[] { CoreRoles.User })]
+[ProtoContract(Name = "FallGuys_Player_LogMetricUpdateCommand_V1")]
 public class LogMetricUpdateCommand
 {
-	private List<MetricUpdateCollection>? _metricUpdateCollections;
+    private List<MetricUpdateCollection>? _metricUpdateCollections;
+    private Dictionary<string, MetricUpdateDto>? _metricUpdates;
+    private List<MetricContextType>? _contextTypes;
 
-	private Dictionary<string, MetricUpdateDto>? _metricUpdates;
+    [Obsolete("Use MetricUpdateCollections instead.")]
+    [ProtoMember(1)]
+    public Dictionary<string, MetricUpdateDto> MetricUpdates { get; set; }
 
-	private List<MetricContextType>? _contextTypes;
+    [ProtoMember(2)]
+    public List<MetricContextType> ContextTypes { get; set; }
 
-	[ProtoMember(1)]
-	[Obsolete("Use MetricUpdateCollections instead.")]
-	public Dictionary<string, MetricUpdateDto> MetricUpdates
-	{
-		get
-		{
-			return _metricUpdates ?? (_metricUpdates = new Dictionary<string, MetricUpdateDto>());
-		}
-		set
-		{
-			_metricUpdates = value;
-		}
-	}
-
-	[ProtoMember(2)]
-	public List<MetricContextType> ContextTypes
-	{
-		get
-		{
-			return _contextTypes ?? (_contextTypes = new List<MetricContextType>());
-		}
-		set
-		{
-			_contextTypes = value;
-		}
-	}
-
-	[ProtoMember(3)]
-	public List<MetricUpdateCollection> MetricUpdateCollections
-	{
-		get
-		{
-			return _metricUpdateCollections ?? (_metricUpdateCollections = new List<MetricUpdateCollection>());
-		}
-		set
-		{
-			_metricUpdateCollections = value;
-		}
-	}
+    [ProtoMember(3)]
+    public List<MetricUpdateCollection> MetricUpdateCollections { get; set; }
 }

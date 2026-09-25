@@ -5,10 +5,10 @@ using ProtoBuf;
 namespace FallGuys.Player.Protocol.Client.Challenges;
 
 [Authorize(Roles = new string[] { CoreRoles.User })]
-[ProtoContract(Name = "FallGuys_Player_DebugCompleteChallengeByIdCommand_V1")]
 [DebugMessage]
+[ProtoContract(Name = "FallGuys_Player_DebugCompleteChallengeByIdCommand_V1")]
 public class DebugCompleteChallengeByIdCommand
 {
-	[ProtoMember(1)]
-	public string? ChallengeId { get; set; }
+    [ProtoMember(1)]
+    public string? ChallengeId { get; set; }
 }

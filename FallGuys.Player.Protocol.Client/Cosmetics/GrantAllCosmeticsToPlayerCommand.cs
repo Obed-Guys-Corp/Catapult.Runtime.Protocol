@@ -7,6 +7,6 @@ namespace FallGuys.Player.Protocol.Client.Cosmetics;
 [Authorize(Roles = new string[] { CoreRoles.User })]
 public class GrantAllCosmeticsToPlayerCommand
 {
-	[ProtoMember(1)]
-	public string PlayerId { get; set; }
+    [ProtoMember(1)]
+    public string PlayerId { get; set; }
 }

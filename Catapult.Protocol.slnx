@@ -14,4 +14,5 @@
   <Project Path="FallGuys.Match.Protocol.Client/FallGuys.Match.Protocol.Client.csproj" />
   <Project Path="FallGuys.Player.Protocol.Client/FallGuys.Player.Protocol.Client.csproj" />
   <Project Path="FallGuys.Store.Protocol.Client/FallGuys.Store.Protocol.Client.csproj" />
+  <Project Path="FallGuys.Client.Protocol/FallGuys.Client.Protocol.csproj" />
 </Solution>

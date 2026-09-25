@@ -7,6 +7,6 @@ namespace Catapult.Services.Login.Protocol.Client.Requests.Admin;
 [Authorize(Roles = new string[] { CoreRoles.Admin })]
 public class AdminRemoveIdentityRequest
 {
-	[ProtoMember(1)]
-	public string? IdentityId { get; set; }
+    [ProtoMember(1)]
+    public string? IdentityId { get; set; }
 }

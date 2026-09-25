@@ -7,6 +7,6 @@ namespace Catapult.Services.Login.Protocol.Client.Requests.Admin;
 [Authorize(Roles = new string[] { CoreRoles.Admin, CoreRoles.Super })]
 public class AdminGetIdentitiesRequest
 {
-	[ProtoMember(1)]
-	public string? AccountId { get; set; }
+    [ProtoMember(1)]
+    public string? AccountId { get; set; }
 }

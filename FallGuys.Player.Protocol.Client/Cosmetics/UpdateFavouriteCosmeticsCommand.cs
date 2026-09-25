@@ -1,40 +1,19 @@
-using System.Collections.Generic;
 using Catapult.Protocol;
 using ProtoBuf;
+using System.Collections.Generic;
 
 namespace FallGuys.Player.Protocol.Client.Cosmetics;
 
-[Authorize(Roles = new string[] { CoreRoles.User })]
 [ProtoContract(Name = "FallGuys_Player_UpdateFavouriteCosmeticsCommand_V1")]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 public class UpdateFavouriteCosmeticsCommand
 {
-	private HashSet<string>? _favouriteCosmeticsAdded;
+    private HashSet<string>? _favouriteCosmeticsAdded;
+    private HashSet<string>? _favouriteCosmeticsRemoved;
 
-	private HashSet<string>? _favouriteCosmeticsRemoved;
+    [ProtoMember(1)]
+    public HashSet<string> FavouriteCosmeticsAdded { get; set; }
 
-	[ProtoMember(1)]
-	public HashSet<string> FavouriteCosmeticsAdded
-	{
-		get
-		{
-			return _favouriteCosmeticsAdded ?? (_favouriteCosmeticsAdded = new HashSet<string>());
-		}
-		set
-		{
-			_favouriteCosmeticsAdded = value;
-		}
-	}
-
-	[ProtoMember(2)]
-	public HashSet<string> FavouriteCosmeticsRemoved
-	{
-		get
-		{
-			return _favouriteCosmeticsRemoved ?? (_favouriteCosmeticsRemoved = new HashSet<string>());
-		}
-		set
-		{
-			_favouriteCosmeticsRemoved = value;
-		}
-	}
+    [ProtoMember(2)]
+    public HashSet<string> FavouriteCosmeticsRemoved { get; set; }
 }

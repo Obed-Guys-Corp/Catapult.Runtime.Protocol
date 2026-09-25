@@ -1,7 +1,7 @@
-using System;
 using Catapult.Protocol;
 using FallGuys.Common.Debug.Protocol.Client;
 using ProtoBuf;
+using System;
 
 namespace FallGuys.Player.Protocol.Client.Challenges;
 
@@ -11,6 +11,6 @@ namespace FallGuys.Player.Protocol.Client.Challenges;
 [Obsolete("Use DebugResetChallengeProgressByIdCommand")]
 public class DebugResetChallengeProgressCommand
 {
-	[ProtoMember(1)]
-	public int Slot { get; set; }
+    [ProtoMember(1)]
+    public int Slot { get; set; }
 }

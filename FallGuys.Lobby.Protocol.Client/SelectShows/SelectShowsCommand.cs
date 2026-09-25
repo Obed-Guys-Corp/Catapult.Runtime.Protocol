@@ -1,31 +1,21 @@
-using System;
-using System.Collections.Generic;
 using Catapult.Protocol;
 using ProtoBuf;
+using System;
+using System.Collections.Generic;
 
 namespace FallGuys.Lobby.Protocol.Client.SelectShows;
 
 [ProtoContract(Name = "FallGuys_Lobby_SelectShowsCommand_V1")]
-[Authorize(Roles = new string[] { CoreRoles.User })]
 [Obsolete("Use SelectNextShowCommand instead")]
+[Authorize(Roles = new string[] { CoreRoles.User })]
 public class SelectShowsCommand
 {
-	[ProtoIgnore]
-	private List<string>? _showIds;
+    [ProtoIgnore]
+    private List<string>? _showIds;
 
-	[ProtoMember(1)]
-	public string? LobbyId { get; set; }
+    [ProtoMember(1)]
+    public string? LobbyId { get; set; }
 
-	[ProtoMember(2)]
-	public List<string> ShowIds
-	{
-		get
-		{
-			return _showIds ?? (_showIds = new List<string>());
-		}
-		set
-		{
-			_showIds = value;
-		}
-	}
+    [ProtoMember(2)]
+    public List<string> ShowIds { get; set; }
 }

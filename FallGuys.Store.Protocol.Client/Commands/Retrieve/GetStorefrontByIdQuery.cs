@@ -7,6 +7,6 @@ namespace FallGuys.Store.Protocol.Client.Commands.Retrieve;
 [Authorize(Roles = new string[] { CoreRoles.User })]
 public class GetStorefrontByIdQuery
 {
-	[ProtoMember(1)]
-	public string? StorefrontId { get; set; }
+    [ProtoMember(1)]
+    public string? StorefrontId { get; set; }
 }

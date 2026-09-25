@@ -9,9 +9,9 @@ namespace FallGuys.Player.Protocol.Client.Challenges;
 [DebugMessage]
 public class DebugChallengeProgressByIdCommand
 {
-	[ProtoMember(1)]
-	public string? ChallengeId { get; set; }
+    [ProtoMember(1)]
+    public string? ChallengeId { get; set; }
 
-	[ProtoMember(2)]
-	public int? Value { get; set; }
+    [ProtoMember(2)]
+    public int? Value { get; set; }
 }

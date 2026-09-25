@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using Catapult.Protocol;
 using ProtoBuf;
+using System.Collections.Generic;
 
 namespace FallGuys.Lobby.Protocol.Client.Matchmaking;
 
@@ -8,9 +8,9 @@ namespace FallGuys.Lobby.Protocol.Client.Matchmaking;
 [Authorize(Roles = new string[] { CoreRoles.User })]
 public class StartMatchmakingCommand
 {
-	[ProtoMember(1)]
-	public string LobbyId { get; set; }
+    [ProtoMember(1)]
+    public string LobbyId { get; set; }
 
-	[ProtoMember(2)]
-	public List<string> ShowIds { get; set; }
+    [ProtoMember(2)]
+    public List<string> ShowIds { get; set; }
 }

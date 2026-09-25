@@ -7,7 +7,7 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <PackageId>Catapult.Protocol.Runtime</PackageId>
     <Description>Catapult.Protocol.Runtime</Description>
-    <Version>81.4.1.0</Version>
+    <Version>89.0.0.0</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<RepositoryUrl>https://github.com/floyzi/Catapult.Protocol</RepositoryUrl>
   </PropertyGroup>
@@ -69,6 +69,9 @@
 		  <PrivateAssets>all</PrivateAssets>
 	  </ProjectReference>
 	  <ProjectReference Include="..\FallGuys.Store.Protocol.Client\FallGuys.Store.Protocol.Client.csproj">
+		  <PrivateAssets>all</PrivateAssets>
+	  </ProjectReference>
+	  <ProjectReference Include="..\FallGuys.Client.Protocol\FallGuys.Client.Protocol.csproj">
 		  <PrivateAssets>all</PrivateAssets>
 	  </ProjectReference>
   </ItemGroup>

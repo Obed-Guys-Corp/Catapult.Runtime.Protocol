@@ -3,6 +3,6 @@
     <AssemblyName>Catapult.Protocol</AssemblyName>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<AssemblyVersion>81.4.1.0</AssemblyVersion>
+	<AssemblyVersion>89.0.0.0</AssemblyVersion>
   </PropertyGroup>
 </Project>

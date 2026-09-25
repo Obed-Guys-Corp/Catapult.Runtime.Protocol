@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using Catapult.Protocol;
 using ProtoBuf;
+using System.Collections.Generic;
 
 namespace FallGuys.Player.Protocol.Client.Achievements;
 
@@ -8,18 +8,8 @@ namespace FallGuys.Player.Protocol.Client.Achievements;
 [Authorize(Roles = new string[] { CoreRoles.User })]
 public class TrackAchievementsProgressionCommand
 {
-	private List<AchievementProgressDto>? _achievementProgressList;
+    private List<AchievementProgressDto>? _achievementProgressList;
 
-	[ProtoMember(1)]
-	public List<AchievementProgressDto> AchievementProgressList
-	{
-		get
-		{
-			return _achievementProgressList ?? (_achievementProgressList = new List<AchievementProgressDto>());
-		}
-		set
-		{
-			_achievementProgressList = value;
-		}
-	}
+    [ProtoMember(1)]
+    public List<AchievementProgressDto> AchievementProgressList { get; set; }
 }

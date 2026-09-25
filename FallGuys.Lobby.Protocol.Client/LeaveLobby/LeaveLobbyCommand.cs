@@ -3,10 +3,10 @@ using ProtoBuf;
 
 namespace FallGuys.Lobby.Protocol.Client.LeaveLobby;
 
-[ProtoContract(Name = "FallGuys_Lobby_LeaveLobbyCommand_V1")]
 [Authorize(Roles = new string[] { CoreRoles.User })]
+[ProtoContract(Name = "FallGuys_Lobby_LeaveLobbyCommand_V1")]
 public class LeaveLobbyCommand
 {
-	[ProtoMember(1)]
-	public string LobbyId { get; set; }
+    [ProtoMember(1)]
+    public string LobbyId { get; set; }
 }
