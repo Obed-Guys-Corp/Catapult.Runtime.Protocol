@@ -8,16 +8,12 @@ namespace FallGuys.Gateway.Protocol.Client.Entitlements;
 [ProtoContract(Name = "FallGuys_Gateway_EntitlementsSyncResult_V1")]
 public class SyncEntitlementsResult
 {
-    private List<ItemAddedDto>? _itemsGained;
-    private List<ItemRemovedDto>? _itemsLost;
-    private List<RewardDto>? _rewards;
-
     [ProtoMember(1)]
-    public List<ItemAddedDto> ItemsGained { get; set; }
+    public List<ItemAddedDto> ItemsGained { get; set; } = null!;
 
     [ProtoMember(2)]
-    public List<ItemRemovedDto> ItemsLost { get; set; }
+    public List<ItemRemovedDto> ItemsLost { get; set; } = null!;
 
     [ProtoMember(3)]
-    public List<RewardDto> Rewards { get; set; }
+    public List<RewardDto> Rewards { get; set; } = null!;
 }

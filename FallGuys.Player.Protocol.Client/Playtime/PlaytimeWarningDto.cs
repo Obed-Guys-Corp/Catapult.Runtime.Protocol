@@ -6,5 +6,5 @@ namespace FallGuys.Player.Protocol.Client.Playtime;
 public class PlaytimeWarningDto
 {
     [ProtoMember(1)]
-    public string MonitoringTierId { get; set; }
+    public string MonitoringTierId { get; set; } = null!;
 }

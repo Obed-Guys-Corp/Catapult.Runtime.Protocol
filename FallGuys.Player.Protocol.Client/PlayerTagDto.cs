@@ -6,8 +6,8 @@ namespace FallGuys.Player.Protocol.Client;
 public class PlayerTagDto
 {
     [ProtoMember(1)]
-    public string Value { get; set; }
+    public string Value { get; set; } = null!;
 
     [ProtoMember(2)]
-    public string Description { get; set; }
+    public string Description { get; set; } = null!;
 }

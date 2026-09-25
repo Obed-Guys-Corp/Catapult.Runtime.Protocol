@@ -8,9 +8,6 @@ namespace Catapult.Services.Login.Protocol.Client.Requests;
 [ProtoContract(Name = "Catapult_Login_LoginRequest_V1")]
 public class LoginRequest
 {
-    private Dictionary<string, string>? _properties;
-    private Dictionary<string, string>? _userParameters;
-
     [ProtoMember(1)]
     public string? IdentityType { get; set; }
 
@@ -27,10 +24,10 @@ public class LoginRequest
     public string? Platform { get; set; }
 
     [ProtoMember(6)]
-    public Dictionary<string, string> UserParameters { get; set; }
+    public Dictionary<string, string> UserParameters { get; set; } = null!;
 
     [ProtoMember(7)]
-    public Dictionary<string, string> Properties { get; set; }
+    public Dictionary<string, string> Properties { get; set; } = null!;
 
     [ProtoMember(8)]
     public string? ClientVersionSignature { get; set; }

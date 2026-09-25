@@ -6,11 +6,9 @@ namespace FallGuys.Store.Protocol.Client.Dtos;
 [ProtoContract(Name = "Catapult_Store_StoreDto_V2")]
 public class StoreDto
 {
-    private List<StoreSectionDto>? _sections;
-
     [ProtoMember(2)]
     public string? Id { get; set; }
 
     [ProtoMember(1)]
-    public List<StoreSectionDto> Sections { get; set; }
+    public List<StoreSectionDto> Sections { get; set; } = null!;
 }

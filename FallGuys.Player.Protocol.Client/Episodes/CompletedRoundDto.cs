@@ -19,29 +19,29 @@ public class CompletedRoundDto
     public bool Qualified { get; set; }
 
     [ProtoMember(5)]
-    public ItemAddedDto BonusKudos { get; set; }
+    public ItemAddedDto BonusKudos { get; set; } = null!;
 
     [ProtoMember(6)]
-    public ItemAddedDto FameEarned { get; set; }
+    public ItemAddedDto FameEarned { get; set; } = null!;
 
     [ProtoMember(7)]
-    public ItemAddedDto KudosEarned { get; set; }
+    public ItemAddedDto KudosEarned { get; set; } = null!;
 
     [ProtoMember(8)]
     public int? TeamPosition { get; set; }
 
     [ProtoMember(9)]
-    public ItemAddedDto BonusFameEarned { get; set; }
+    public ItemAddedDto BonusFameEarned { get; set; } = null!;
 
     [ProtoMember(10)]
     public int? FinishedInPositionBracket { get; set; }
 
     [ProtoMember(11)]
-    public string BadgeId { get; set; }
+    public string BadgeId { get; set; } = null!;
 
     [ProtoMember(12)]
     public int? BonusTierIndex { get; set; }
 
     [ProtoMember(13)]
-    public string LevelId { get; set; }
+    public string LevelId { get; set; } = null!;
 }

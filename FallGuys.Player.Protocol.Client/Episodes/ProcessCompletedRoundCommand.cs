@@ -11,9 +11,6 @@ namespace FallGuys.Player.Protocol.Client.Episodes;
 [Authorize(Roles = new string[] { CoreRoles.User })]
 public class ProcessCompletedRoundCommand
 {
-    private List<MetricUpdateCollection>? _metricUpdateCollections;
-    private Dictionary<string, PlayerMetricUpdateDto>? _metricUpdates;
-
     [ProtoMember(1)]
     public string? EpisodeId { get; set; }
 
@@ -41,7 +38,7 @@ public class ProcessCompletedRoundCommand
 
     [Obsolete("Use MetricUpdateCollections instead.")]
     [ProtoMember(9)]
-    public Dictionary<string, PlayerMetricUpdateDto> MetricUpdates { get; set; }
+    public Dictionary<string, PlayerMetricUpdateDto> MetricUpdates { get; set; } = null!;
 
     [ProtoMember(10)]
     public string? LevelId { get; set; }
@@ -105,7 +102,7 @@ public class ProcessCompletedRoundCommand
     public int? TimeSurvived { get; set; }
 
     [ProtoMember(30)]
-    public List<MetricUpdateCollection> MetricUpdateCollections { get; set; }
+    public List<MetricUpdateCollection> MetricUpdateCollections { get; set; } = null!;
 
     [ProtoMember(31)]
     public UgcLevelDto? UgcLevel { get; set; }

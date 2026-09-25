@@ -9,5 +9,5 @@ namespace FallGuys.Player.Protocol.Client.Rewards;
 public class BulkClaimRewardsCommand
 {
     [ProtoMember(1)]
-    public List<string> RewardIds { get; set; }
+    public List<string> RewardIds { get; set; } = null!;
 }

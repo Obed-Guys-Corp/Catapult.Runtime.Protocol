@@ -7,16 +7,16 @@ namespace FallGuys.Player.Protocol.Client.Receipts;
 public class PsnReceiptDto
 {
     [ProtoMember(8)]
-    public string Id { get; set; }
+    public string Id { get; set; } = null!;
 
     [ProtoMember(1)]
-    public string ItemId { get; set; }
+    public string ItemId { get; set; } = null!;
 
     [ProtoMember(2)]
     public ulong UseCount { get; set; }
 
     [ProtoMember(3)]
-    public string AccountId { get; set; }
+    public string AccountId { get; set; } = null!;
 
     [ProtoMember(4)]
     public bool IsNonConsumable { get; set; }

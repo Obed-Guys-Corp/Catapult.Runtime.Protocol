@@ -9,17 +9,13 @@ namespace FallGuys.Player.Protocol.Client.Metrics;
 [ProtoContract(Name = "FallGuys_Player_LogMetricUpdateCommand_V1")]
 public class LogMetricUpdateCommand
 {
-    private List<MetricUpdateCollection>? _metricUpdateCollections;
-    private Dictionary<string, MetricUpdateDto>? _metricUpdates;
-    private List<MetricContextType>? _contextTypes;
-
     [Obsolete("Use MetricUpdateCollections instead.")]
     [ProtoMember(1)]
-    public Dictionary<string, MetricUpdateDto> MetricUpdates { get; set; }
+    public Dictionary<string, MetricUpdateDto> MetricUpdates { get; set; } = null!;
 
     [ProtoMember(2)]
-    public List<MetricContextType> ContextTypes { get; set; }
+    public List<MetricContextType> ContextTypes { get; set; } = null!;
 
     [ProtoMember(3)]
-    public List<MetricUpdateCollection> MetricUpdateCollections { get; set; }
+    public List<MetricUpdateCollection> MetricUpdateCollections { get; set; } = null!;
 }

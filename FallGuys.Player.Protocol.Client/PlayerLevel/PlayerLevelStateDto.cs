@@ -16,7 +16,7 @@ public class PlayerLevelStateDto
     public DateTime? UnlockedAt { get; set; }
 
     [ProtoMember(4)]
-    public string RewardId { get; set; }
+    public string RewardId { get; set; } = null!;
 
     [ProtoMember(5)]
     public bool IsAcknowledged { get; set; }

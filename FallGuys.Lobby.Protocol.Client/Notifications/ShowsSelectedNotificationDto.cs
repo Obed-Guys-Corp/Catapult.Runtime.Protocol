@@ -9,15 +9,12 @@ namespace FallGuys.Lobby.Protocol.Client.Notifications;
 [ProtoContract(Name = "FallGuys_Lobby_ShowsSelectedNotificationDto_V1")]
 public class ShowsSelectedNotificationDto
 {
-    [ProtoIgnore]
-    private List<string>? _showIds;
-
     [ProtoMember(1)]
     public string? LobbyId { get; set; }
 
     [Obsolete("use PrivateLobbyConfigDto or DebugLobbyConfigDto instead")]
     [ProtoMember(2)]
-    public List<string> ShowIds { get; set; }
+    public List<string> ShowIds { get; set; } = null!;
 
     [ProtoMember(3)]
     public int NotificationId { get; set; }

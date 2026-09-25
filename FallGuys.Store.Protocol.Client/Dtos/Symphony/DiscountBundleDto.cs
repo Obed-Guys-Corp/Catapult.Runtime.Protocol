@@ -7,9 +7,6 @@ namespace FallGuys.Store.Protocol.Client.Dtos.Symphony;
 [ProtoContract(Name = "FallGuys_Store_DiscountBundleDto_V1")]
 public class DiscountBundleDto : SymphonyStoreBundleDto
 {
-    private IEnumerable<SymphonyStoreBundleItemDto>? _cosmetics;
-    private IEnumerable<SymphonyStoreBundleItemDto>? _extra;
-
     [ProtoMember(1)]
     public int Discount { get; set; }
 
@@ -17,10 +14,10 @@ public class DiscountBundleDto : SymphonyStoreBundleDto
     public PurchaseDto? PurchaseOption { get; set; }
 
     [ProtoMember(3)]
-    public IEnumerable<SymphonyStoreBundleItemDto> Cosmetics { get; set; }
+    public IEnumerable<SymphonyStoreBundleItemDto> Cosmetics { get; set; } = null!;
 
     [ProtoMember(4)]
-    public IEnumerable<SymphonyStoreBundleItemDto> Extra { get; set; }
+    public IEnumerable<SymphonyStoreBundleItemDto> Extra { get; set; } = null!;
 
     [ProtoMember(5)]
     public int CostWithoutDiscount { get; set; }

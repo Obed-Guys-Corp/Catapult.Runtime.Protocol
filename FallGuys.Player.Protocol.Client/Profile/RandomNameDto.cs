@@ -6,8 +6,8 @@ namespace FallGuys.Player.Protocol.Client.Profile;
 public class RandomNameDto
 {
     [ProtoMember(1)]
-    public PlayerNameDto PlayerNameDto { get; set; }
+    public PlayerNameDto PlayerNameDto { get; set; } = null!;
 
     [ProtoMember(2)]
-    public string TokenisedName { get; set; }
+    public string TokenisedName { get; set; } = null!;
 }

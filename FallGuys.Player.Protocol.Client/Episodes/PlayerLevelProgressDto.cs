@@ -8,5 +8,5 @@ namespace FallGuys.Player.Protocol.Client.Episodes;
 public class PlayerLevelProgressDto
 {
     [ProtoMember(1)]
-    public Dictionary<int, RewardDto> LevelsUnlocked { get; set; }
+    public Dictionary<int, RewardDto> LevelsUnlocked { get; set; } = null!;
 }

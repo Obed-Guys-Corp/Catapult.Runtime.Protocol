@@ -8,5 +8,5 @@ namespace FallGuys.Player.Protocol.Client.Seasons;
 public class GetSeasonProgressQuery
 {
     [ProtoMember(1)]
-    public string SeasonId { get; set; }
+    public string SeasonId { get; set; } = null!;
 }

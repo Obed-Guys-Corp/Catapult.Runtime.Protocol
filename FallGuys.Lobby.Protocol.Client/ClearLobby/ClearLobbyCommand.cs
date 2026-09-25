@@ -8,5 +8,5 @@ namespace FallGuys.Lobby.Protocol.Client.ClearLobby;
 public class ClearLobbyCommand
 {
     [ProtoMember(1)]
-    public string LobbyId { get; set; }
+    public string LobbyId { get; set; } = null!;
 }

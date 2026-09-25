@@ -5,9 +5,6 @@ namespace FallGuys.Level.Protocol.AuthTokens;
 
 public class LevelMetadataDto
 {
-    [JsonIgnore]
-    private IReadOnlyCollection<string>? _tags;
-
     [JsonProperty("levelId")]
     public string? LevelId { get; set; }
 
@@ -33,7 +30,7 @@ public class LevelMetadataDto
     public string? LevelJsonUrl { get; set; }
 
     [JsonProperty("tags")]
-    public IReadOnlyCollection<string> Tags { get; set; }
+    public IReadOnlyCollection<string> Tags { get; set; } = null!;
 
     [JsonProperty("playerBadge")]
     public PlayerBadgeDto? PlayerBadge { get; set; }

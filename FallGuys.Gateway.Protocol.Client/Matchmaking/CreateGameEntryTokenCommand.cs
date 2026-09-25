@@ -10,15 +10,15 @@ namespace FallGuys.Gateway.Protocol.Client.Matchmaking;
 public class CreateGameEntryTokenCommand
 {
     [ProtoMember(1)]
-    public string ServerIp { get; set; }
+    public string ServerIp { get; set; } = null!;
 
     [ProtoMember(2)]
     public int ServerPort { get; set; }
 
     [ProtoMember(3)]
-    public List<string> CompanionIdentities { get; set; }
+    public List<string> CompanionIdentities { get; set; } = null!;
 
     [ProtoMember(4)]
     [Obsolete("This is not needed to directly connect to a game-server.")]
-    public QosResultsDto QosResults { get; set; }
+    public QosResultsDto QosResults { get; set; } = null!;
 }

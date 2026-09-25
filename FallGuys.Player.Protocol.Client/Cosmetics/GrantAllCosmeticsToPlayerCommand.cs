@@ -8,5 +8,5 @@ namespace FallGuys.Player.Protocol.Client.Cosmetics;
 public class GrantAllCosmeticsToPlayerCommand
 {
     [ProtoMember(1)]
-    public string PlayerId { get; set; }
+    public string PlayerId { get; set; } = null!;
 }

@@ -5,8 +5,6 @@ namespace FallGuys.Store.Protocol.Client.Commands.Purchase;
 [ProtoContract(Name = "Catapult_Store_PurchaseBundleCommand_ItemPaymentOption_V2")]
 public class ItemPaymentOption : PaymentOption
 {
-    private ItemPaymentLine[]? _lines;
-
     [ProtoMember(1)]
     public string? StoreId { get; set; }
 
@@ -17,5 +15,5 @@ public class ItemPaymentOption : PaymentOption
     public string? StoreBundleId { get; set; }
 
     [ProtoMember(4)]
-    public ItemPaymentLine[] Lines { get; set; }
+    public ItemPaymentLine[] Lines { get; set; } = null!;
 }

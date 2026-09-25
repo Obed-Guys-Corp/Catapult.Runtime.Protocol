@@ -7,7 +7,7 @@ namespace FallGuys.Gateway.Protocol.Client.PlayerDisconnected;
 public class GameServerDisconnectNotification
 {
     [ProtoMember(1)]
-    public string PlayerId { get; set; }
+    public string PlayerId { get; set; } = null!;
 
     [ProtoMember(2)]
     public int ErrorCode { get; set; }
@@ -16,5 +16,5 @@ public class GameServerDisconnectNotification
     public DateTime TimeStamp { get; set; }
 
     [ProtoMember(4)]
-    public string EpisodeId { get; set; }
+    public string EpisodeId { get; set; } = null!;
 }

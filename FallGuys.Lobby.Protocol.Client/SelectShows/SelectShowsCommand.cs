@@ -10,12 +10,9 @@ namespace FallGuys.Lobby.Protocol.Client.SelectShows;
 [Authorize(Roles = new string[] { CoreRoles.User })]
 public class SelectShowsCommand
 {
-    [ProtoIgnore]
-    private List<string>? _showIds;
-
     [ProtoMember(1)]
     public string? LobbyId { get; set; }
 
     [ProtoMember(2)]
-    public List<string> ShowIds { get; set; }
+    public List<string> ShowIds { get; set; } = null!;
 }

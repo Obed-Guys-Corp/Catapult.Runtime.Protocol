@@ -7,9 +7,6 @@ namespace FallGuys.Player.Protocol.Client.Challenges;
 [ProtoContract(Name = "FallGuys_Player_ChallengeGroupDto_V1")]
 public class ChallengeGroupDto
 {
-    [ProtoIgnore]
-    private List<ChallengeDto>? _challenges;
-
     [ProtoMember(1)]
     public string? Id { get; set; }
 
@@ -21,7 +18,7 @@ public class ChallengeGroupDto
     public string? ChallengeGroupContentId { get; set; }
 
     [ProtoMember(3)]
-    public List<ChallengeDto> Challenges { get; set; }
+    public List<ChallengeDto> Challenges { get; set; } = null!;
 
     [ProtoMember(4)]
     public DateTime? NextRefreshDate { get; set; }

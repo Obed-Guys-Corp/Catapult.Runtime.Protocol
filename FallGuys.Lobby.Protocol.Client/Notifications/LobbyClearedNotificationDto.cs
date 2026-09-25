@@ -6,7 +6,7 @@ namespace FallGuys.Lobby.Protocol.Client.Notifications;
 public class LobbyClearedNotificationDto
 {
     [ProtoMember(1)]
-    public string LobbyId { get; set; }
+    public string LobbyId { get; set; } = null!;
 
     [ProtoMember(2)]
     public int NotificationId { get; set; }

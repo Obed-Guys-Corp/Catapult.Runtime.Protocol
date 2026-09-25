@@ -18,14 +18,14 @@ public class SeasonFameTierDto
 
     [Obsolete("please use Rewards")]
     [ProtoMember(4)]
-    public string RewardId { get; set; }
+    public string RewardId { get; set; } = null!;
 
     [ProtoMember(5)]
     public bool IsAcknowledged { get; set; }
 
     [ProtoMember(6)]
-    public List<UnlockedRewardDto> UnlockedRewards { get; set; }
+    public List<UnlockedRewardDto> UnlockedRewards { get; set; } = null!;
 
     [ProtoMember(7)]
-    public List<LockedRewardDto> LockedRewards { get; set; }
+    public List<LockedRewardDto> LockedRewards { get; set; } = null!;
 }

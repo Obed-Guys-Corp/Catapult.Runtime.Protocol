@@ -9,5 +9,5 @@ namespace FallGuys.Player.Protocol.Client.Settings;
 public class DeleteSettingsCommand
 {
     [ProtoMember(1)]
-    public List<string> Keys { get; set; }
+    public List<string> Keys { get; set; } = null!;
 }

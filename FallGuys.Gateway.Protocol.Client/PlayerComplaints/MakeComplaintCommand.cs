@@ -8,8 +8,8 @@ namespace FallGuys.Gateway.Protocol.Client.PlayerComplaints;
 public class MakeComplaintCommand
 {
     [ProtoMember(1)]
-    public string ComplaintType { get; set; }
+    public string ComplaintType { get; set; } = null!;
 
     [ProtoMember(2)]
-    public string ReportedId { get; set; }
+    public string ReportedId { get; set; } = null!;
 }

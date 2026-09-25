@@ -7,8 +7,8 @@ namespace FallGuys.Player.Protocol.Client.Achievements;
 public class AchievementsCompletedNotificationDto
 {
     [ProtoMember(1)]
-    public string Id { get; set; }
+    public string Id { get; set; } = null!;
 
     [ProtoMember(2)]
-    public List<AchievementDto> Achievements { get; set; }
+    public List<AchievementDto> Achievements { get; set; } = null!;
 }

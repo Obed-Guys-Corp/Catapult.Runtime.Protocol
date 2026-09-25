@@ -9,26 +9,26 @@ namespace FallGuys.Player.Protocol.Client.Episodes;
 public class CompletedEpisodeDto
 {
     [ProtoMember(1)]
-    public string EpisodeId { get; set; }
+    public string EpisodeId { get; set; } = null!;
 
     [ProtoMember(2)]
-    public ItemAddedDto CrownsEarned { get; set; }
+    public ItemAddedDto CrownsEarned { get; set; } = null!;
 
     [ProtoMember(8)]
     public int CurrentCrownShards { get; set; }
 
     [ProtoMember(3)]
-    public List<CompletedRoundDto> Rounds { get; set; }
+    public List<CompletedRoundDto> Rounds { get; set; } = null!;
 
     [ProtoMember(4)]
-    public SeasonProgressDto SeasonProgress { get; set; }
+    public SeasonProgressDto SeasonProgress { get; set; } = null!;
 
     [ProtoMember(7)]
-    public PlayerLevelProgressDto PlayerLevelProgress { get; set; }
+    public PlayerLevelProgressDto PlayerLevelProgress { get; set; } = null!;
 
     [ProtoMember(9)]
-    public List<ItemAddedDto> ItemsAwarded { get; set; }
+    public List<ItemAddedDto> ItemsAwarded { get; set; } = null!;
 
     [ProtoMember(10)]
-    public RankedScoreChangesDto RankedScoreChanges { get; set; }
+    public RankedScoreChangesDto RankedScoreChanges { get; set; } = null!;
 }

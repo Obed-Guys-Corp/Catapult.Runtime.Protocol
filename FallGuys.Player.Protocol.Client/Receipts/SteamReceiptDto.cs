@@ -7,7 +7,7 @@ namespace FallGuys.Player.Protocol.Client.Receipts;
 public class SteamReceiptDto
 {
     [ProtoMember(8)]
-    public string Id { get; set; }
+    public string Id { get; set; } = null!;
 
     [ProtoMember(1)]
     public ulong ItemId { get; set; }

@@ -12,8 +12,8 @@ public class LegacyPsnTrophyDto
     public bool Earned { get; set; }
 
     [ProtoMember(3)]
-    public string TrophyType { get; set; }
+    public string TrophyType { get; set; } = null!;
 
     [ProtoMember(4)]
-    public string TrophyName { get; set; }
+    public string TrophyName { get; set; } = null!;
 }

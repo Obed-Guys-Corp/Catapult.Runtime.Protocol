@@ -8,12 +8,9 @@ namespace FallGuys.Player.Protocol.Client.Cosmetics;
 [Authorize(Roles = new string[] { CoreRoles.User })]
 public class UpdateFavouriteCosmeticsCommand
 {
-    private HashSet<string>? _favouriteCosmeticsAdded;
-    private HashSet<string>? _favouriteCosmeticsRemoved;
-
     [ProtoMember(1)]
-    public HashSet<string> FavouriteCosmeticsAdded { get; set; }
+    public HashSet<string> FavouriteCosmeticsAdded { get; set; } = null!;
 
     [ProtoMember(2)]
-    public HashSet<string> FavouriteCosmeticsRemoved { get; set; }
+    public HashSet<string> FavouriteCosmeticsRemoved { get; set; } = null!;
 }

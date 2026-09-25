@@ -18,5 +18,5 @@ public class PlayerNameDto
     public PlayerNameLanguage Language { get; set; }
 
     [ProtoMember(5)]
-    public string PlayerName { get; set; }
+    public string PlayerName { get; set; } = null!;
 }

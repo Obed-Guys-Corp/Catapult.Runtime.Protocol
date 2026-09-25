@@ -9,8 +9,6 @@ namespace FallGuys.Lobby.Protocol.Client.SelectShows;
 [ProtoContract(Name = "FallGuys_Lobby_Client_SelectNextShowCommand_V1")]
 public class SelectNextShowCommand
 {
-    private PrivateLobbyConfigDto? _privateLobbyConfig;
-
     [ProtoMember(1)]
     public string? LobbyId { get; set; }
 

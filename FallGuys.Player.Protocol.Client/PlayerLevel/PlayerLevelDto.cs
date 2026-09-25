@@ -10,5 +10,5 @@ public class PlayerLevelDto
     public int EarnedCrowns { get; set; }
 
     [ProtoMember(2)]
-    public List<PlayerLevelStateDto> Levels { get; set; }
+    public List<PlayerLevelStateDto> Levels { get; set; } = null!;
 }

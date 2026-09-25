@@ -8,8 +8,6 @@ namespace FallGuys.Match.Protocol.Client.MatchStatus;
 [ProtoContract(Name = "FallGuys_Match_MatchStatusDto_V1")]
 public class MatchStatusDto
 {
-    private PollingStrategyDto? _gameServerInfoPollingStrat;
-
     [ProtoMember(1)]
     public MatchStatus MatchStatus { get; set; }
 
@@ -35,7 +33,7 @@ public class MatchStatusDto
     public string? BucketId { get; set; }
 
     [ProtoMember(9)]
-    public PollingStrategyDto GameServerInfoPollingStrat { get; set; }
+    public PollingStrategyDto GameServerInfoPollingStrat { get; set; } = null!;
 
     [ProtoMember(10)]
     public GameServerConnectionDto? GameServerInfo { get; set; }

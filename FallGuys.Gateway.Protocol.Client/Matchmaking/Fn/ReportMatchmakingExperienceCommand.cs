@@ -9,9 +9,6 @@ namespace FallGuys.Gateway.Protocol.Client.Matchmaking.Fn;
 [Authorize(Roles = new string[] { CoreRoles.User })]
 public class ReportMatchmakingExperienceCommand
 {
-    [ProtoIgnore]
-    private List<EventDto>? _events;
-
     [ProtoMember(1)]
     public string? MetaDataToken { get; set; }
 
@@ -28,5 +25,5 @@ public class ReportMatchmakingExperienceCommand
     public SessionStartResult? SessionStartResult { get; set; }
 
     [ProtoMember(6)]
-    public List<EventDto> Events { get; set; }
+    public List<EventDto> Events { get; set; } = null!;
 }

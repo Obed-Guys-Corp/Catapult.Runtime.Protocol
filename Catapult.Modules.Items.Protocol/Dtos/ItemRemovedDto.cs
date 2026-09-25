@@ -6,9 +6,6 @@ namespace Catapult.Modules.Items.Protocol.Dtos;
 [ProtoContract(Name = "Catapult_Items_ItemRemoveResultDto_V1")]
 public class ItemRemovedDto
 {
-    [ProtoIgnore]
-    private List<ItemChangedDto>? _changes;
-
     [ProtoMember(1)]
     public string? Id { get; set; }
 
@@ -19,5 +16,5 @@ public class ItemRemovedDto
     public string? ContentType { get; set; }
 
     [ProtoMember(4)]
-    public List<ItemChangedDto> Changes { get; set; }
+    public List<ItemChangedDto> Changes { get; set; } = null!;
 }

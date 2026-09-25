@@ -9,10 +9,10 @@ public class RoundReportDto
     public int RoundIndex { get; set; }
 
     [ProtoMember(2)]
-    public string BadgeId { get; set; }
+    public string BadgeId { get; set; } = null!;
 
     [ProtoMember(3)]
-    public string LevelId { get; set; }
+    public string LevelId { get; set; } = null!;
 
     [ProtoMember(4)]
     public int? BonusTierIndex { get; set; }

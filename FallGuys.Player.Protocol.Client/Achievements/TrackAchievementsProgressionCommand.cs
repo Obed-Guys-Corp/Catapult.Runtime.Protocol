@@ -8,8 +8,6 @@ namespace FallGuys.Player.Protocol.Client.Achievements;
 [Authorize(Roles = new string[] { CoreRoles.User })]
 public class TrackAchievementsProgressionCommand
 {
-    private List<AchievementProgressDto>? _achievementProgressList;
-
     [ProtoMember(1)]
-    public List<AchievementProgressDto> AchievementProgressList { get; set; }
+    public List<AchievementProgressDto> AchievementProgressList { get; set; } = null!;
 }

@@ -6,5 +6,5 @@ namespace FallGuys.Gateway.Protocol.Client.Matchmaking.Identity;
 public class MatchmakingIdentityTokenDto
 {
     [ProtoMember(1)]
-    public string Value { get; set; }
+    public string Value { get; set; } = null!;
 }

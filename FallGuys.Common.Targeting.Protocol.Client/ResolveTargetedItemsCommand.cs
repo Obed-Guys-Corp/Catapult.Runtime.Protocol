@@ -8,9 +8,6 @@ namespace FallGuys.Common.Targeting.Protocol.Client;
 [Authorize(Roles = new string[] { CoreRoles.User })]
 public class ResolveTargetedItemsCommand
 {
-    [ProtoIgnore]
-    private List<string>? _contentIds;
-
     [ProtoMember(1)]
-    public List<string> ContentIds { get; set; }
+    public List<string> ContentIds { get; set; } = null!;
 }

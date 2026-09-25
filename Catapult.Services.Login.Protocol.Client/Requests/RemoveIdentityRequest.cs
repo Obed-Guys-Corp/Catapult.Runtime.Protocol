@@ -8,8 +8,6 @@ namespace Catapult.Services.Login.Protocol.Client.Requests;
 [ProtoContract(Name = "Catapult_Login_RemoveIdentityRequest_V1")]
 public class RemoveIdentityRequest
 {
-    private Dictionary<string, string>? _identityProperties;
-
     [ProtoMember(1)]
     public string? IdentityType { get; set; }
 
@@ -17,7 +15,7 @@ public class RemoveIdentityRequest
     public string? IdentityToken { get; set; }
 
     [ProtoMember(3)]
-    public Dictionary<string, string> IdentityProperties { get; set; }
+    public Dictionary<string, string> IdentityProperties { get; set; } = null!;
 
     [ProtoMember(4)]
     public string? IdentityTypeToRemove { get; set; }

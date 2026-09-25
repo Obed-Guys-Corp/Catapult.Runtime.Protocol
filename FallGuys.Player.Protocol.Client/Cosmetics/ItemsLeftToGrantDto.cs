@@ -11,5 +11,5 @@ public class ItemsLeftToGrantDto
     public int ItemsLeftToGrant { get; set; }
 
     [ProtoMember(2)]
-    public List<ItemAddedDto> ItemsGranted { get; set; }
+    public List<ItemAddedDto> ItemsGranted { get; set; } = null!;
 }

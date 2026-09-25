@@ -6,9 +6,6 @@ namespace FallGuys.Player.Protocol.Client.Wallet;
 [ProtoContract(Name = "FallGuys_AdminPlayerWalletDto_V1")]
 public class AdminPlayerWalletDto
 {
-    private Dictionary<string, PlatformPocketDto>? _platformsPockets;
-    private Dictionary<string, CurrencyDto>? _currenciesByContentItemId;
-
     [ProtoMember(1)]
     public int Kudos { get; set; }
 
@@ -25,11 +22,11 @@ public class AdminPlayerWalletDto
     public bool IsWalletMigrationCompleted { get; set; }
 
     [ProtoMember(6)]
-    public Dictionary<string, PlatformPocketDto> PlatformPockets { get; set; }
+    public Dictionary<string, PlatformPocketDto> PlatformPockets { get; set; } = null!;
 
     [ProtoMember(7)]
     public bool IsCrownToKudosConversionCompleted { get; set; }
 
     [ProtoMember(8)]
-    public Dictionary<string, CurrencyDto> CurrenciesByContentItemId { get; set; }
+    public Dictionary<string, CurrencyDto> CurrenciesByContentItemId { get; set; } = null!;
 }

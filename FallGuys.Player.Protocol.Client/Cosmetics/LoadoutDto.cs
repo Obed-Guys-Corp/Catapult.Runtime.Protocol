@@ -6,9 +6,6 @@ namespace FallGuys.Player.Protocol.Client.Cosmetics;
 [ProtoContract(Name = "FallGuys_LoadoutDto_V1")]
 public class LoadoutDto
 {
-    private Dictionary<int, EmoteDto>? _emotes;
-    private List<SocialWheelDto>? _socialWheels;
-
     [ProtoMember(1)]
     public UpperCostumePieceDto? Upper { get; set; }
 
@@ -31,7 +28,7 @@ public class LoadoutDto
     public MonolithicCostumeDto? MonolithicCostume { get; set; }
 
     [ProtoMember(8)]
-    public Dictionary<int, EmoteDto> Emotes { get; set; }
+    public Dictionary<int, EmoteDto> Emotes { get; set; } = null!;
 
     [ProtoMember(9)]
     public NameplateDto? Nameplate { get; set; }
@@ -43,5 +40,5 @@ public class LoadoutDto
     public PlinthDto? Plinth { get; set; }
 
     [ProtoMember(12)]
-    public List<SocialWheelDto> SocialWheels { get; set; }
+    public List<SocialWheelDto> SocialWheels { get; set; } = null!;
 }

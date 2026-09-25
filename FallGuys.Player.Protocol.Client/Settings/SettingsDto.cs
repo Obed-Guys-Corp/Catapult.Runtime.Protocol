@@ -7,5 +7,5 @@ namespace FallGuys.Player.Protocol.Client.Settings;
 public class SettingsDto
 {
     [ProtoMember(1)]
-    public Dictionary<string, string> Values { get; set; }
+    public Dictionary<string, string> Values { get; set; } = null!;
 }

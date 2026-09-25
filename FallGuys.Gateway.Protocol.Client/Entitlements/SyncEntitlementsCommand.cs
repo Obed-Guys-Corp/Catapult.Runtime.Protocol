@@ -8,14 +8,11 @@ namespace FallGuys.Gateway.Protocol.Client.Entitlements;
 [Authorize(Roles = new string[] { CoreRoles.User })]
 public class SyncEntitlementsCommand
 {
-    [ProtoIgnore]
-    private Dictionary<string, string>? _data;
-
     [ProtoMember(1)]
     public string? ProviderId { get; set; }
 
     [ProtoMember(2)]
-    public Dictionary<string, string> Data { get; set; }
+    public Dictionary<string, string> Data { get; set; } = null!;
 
     [ProtoMember(3)]
     public EntitlementsSyncAnalyticsDto? Analytics { get; set; }

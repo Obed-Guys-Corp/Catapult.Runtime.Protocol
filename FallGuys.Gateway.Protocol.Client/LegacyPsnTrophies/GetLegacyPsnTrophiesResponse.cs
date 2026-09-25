@@ -7,5 +7,5 @@ namespace FallGuys.Gateway.Protocol.Client.LegacyPsnTrophies;
 public class GetLegacyPsnTrophiesResponse
 {
     [ProtoMember(1)]
-    public List<LegacyPsnTrophyDto> LegacyPsnTrophies { get; set; }
+    public List<LegacyPsnTrophyDto> LegacyPsnTrophies { get; set; } = null!;
 }

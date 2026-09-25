@@ -7,9 +7,6 @@ namespace Catapult.Services.Login.Protocol.Client.Responses;
 [ProtoContract(Name = "Catapult_Login_SessionTokenResponse_V1")]
 public class SessionTokenResponse
 {
-    private Dictionary<string, string>? _extraIdentities;
-    private string[]? _roles;
-
     [ProtoMember(1)]
     public string? SessionToken { get; set; }
 
@@ -21,10 +18,10 @@ public class SessionTokenResponse
     public string? AnalyticsId { get; set; }
 
     [ProtoMember(8)]
-    public Dictionary<string, string> ExtraIdentities { get; set; }
+    public Dictionary<string, string> ExtraIdentities { get; set; } = null!;
 
     [ProtoMember(3)]
-    public string[] Roles { get; set; }
+    public string[] Roles { get; set; } = null!;
 
     [ProtoMember(4)]
     public string? ContentUrl { get; set; }

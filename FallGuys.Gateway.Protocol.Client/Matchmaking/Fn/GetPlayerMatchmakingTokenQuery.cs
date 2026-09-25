@@ -8,11 +8,8 @@ namespace FallGuys.Gateway.Protocol.Client.Matchmaking.Fn;
 [Authorize(Roles = new string[] { CoreRoles.User })]
 public class GetPlayerMatchmakingTokenQuery
 {
-    private List<string>? _showIds;
-    private List<PartyMemberDto>? _otherPartyMembers;
-
     [ProtoMember(1)]
-    public List<string> ShowIds { get; set; }
+    public List<string> ShowIds { get; set; } = null!;
 
     [ProtoMember(2)]
     public string? PoolId { get; set; }
@@ -27,7 +24,7 @@ public class GetPlayerMatchmakingTokenQuery
     public string? ProfileId { get; set; }
 
     [ProtoMember(8)]
-    public List<PartyMemberDto> OtherPartyMembers { get; set; }
+    public List<PartyMemberDto> OtherPartyMembers { get; set; } = null!;
 
     [ProtoMember(9)]
     public string? PartyLeaderAccountId { get; set; }

@@ -8,5 +8,5 @@ namespace FallGuys.Player.Protocol.Client.Profile;
 public class UpdatePlayerNameCommand
 {
     [ProtoMember(1)]
-    public string RandomNameToken { get; set; }
+    public string RandomNameToken { get; set; } = null!;
 }

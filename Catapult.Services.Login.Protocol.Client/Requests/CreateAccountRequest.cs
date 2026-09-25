@@ -8,8 +8,6 @@ namespace Catapult.Services.Login.Protocol.Client.Requests;
 [Authorize(AllowAnonymous = true)]
 public class CreateAccountRequest
 {
-    private Dictionary<string, string>? _properties;
-
     [ProtoMember(1)]
     public string? IdentityType { get; set; }
 
@@ -17,5 +15,5 @@ public class CreateAccountRequest
     public string? IdentityToken { get; set; }
 
     [ProtoMember(3)]
-    public Dictionary<string, string> Properties { get; set; }
+    public Dictionary<string, string> Properties { get; set; } = null!;
 }

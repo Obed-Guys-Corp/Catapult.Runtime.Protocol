@@ -7,13 +7,13 @@ namespace FallGuys.Player.Protocol.Client.Receipts;
 public class AmazonEntitlementReceiptDto
 {
     [ProtoMember(1)]
-    public string Id { get; set; }
+    public string Id { get; set; } = null!;
 
     [ProtoMember(2)]
-    public string EntitlementId { get; set; }
+    public string EntitlementId { get; set; } = null!;
 
     [ProtoMember(3)]
-    public string AccountId { get; set; }
+    public string AccountId { get; set; } = null!;
 
     [ProtoMember(4)]
     public DateTime? PurchaseDate { get; set; }

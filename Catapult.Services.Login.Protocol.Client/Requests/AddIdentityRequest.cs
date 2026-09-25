@@ -8,9 +8,6 @@ namespace Catapult.Services.Login.Protocol.Client.Requests;
 [ProtoContract(Name = "Catapult_Login_AddIdentityRequest_V1")]
 public class AddIdentityRequest
 {
-    private Dictionary<string, string>? _existingIdentityProperties;
-    private Dictionary<string, string>? _newIdentityProperties;
-
     [ProtoMember(1)]
     public string? ExistingIdentityType { get; set; }
 
@@ -18,7 +15,7 @@ public class AddIdentityRequest
     public string? ExistingIdentityToken { get; set; }
 
     [ProtoMember(3)]
-    public Dictionary<string, string> ExistingIdentityProperties { get; set; }
+    public Dictionary<string, string> ExistingIdentityProperties { get; set; } = null!;
 
     [ProtoMember(4)]
     public string? NewIdentityType { get; set; }
@@ -27,5 +24,5 @@ public class AddIdentityRequest
     public string? NewIdentityToken { get; set; }
 
     [ProtoMember(6)]
-    public Dictionary<string, string> NewIdentityProperties { get; set; }
+    public Dictionary<string, string> NewIdentityProperties { get; set; } = null!;
 }

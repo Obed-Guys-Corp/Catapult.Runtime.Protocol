@@ -10,8 +10,6 @@ namespace FallGuys.Lobby.Protocol.Client.Lobbies;
 [ProtoContract(Name = "FallGuys_Lobby_LobbyDto_V1")]
 public class LobbyDto
 {
-    private List<LobbyMemberDto>? _members;
-
     [ProtoMember(1)]
     public string? Id { get; set; }
 
@@ -19,7 +17,7 @@ public class LobbyDto
     public LobbyState State { get; set; }
 
     [ProtoMember(3)]
-    public List<LobbyMemberDto> Members { get; set; }
+    public List<LobbyMemberDto> Members { get; set; } = null!;
 
     [ProtoMember(4)]
     public LobbyType LobbyType { get; set; }

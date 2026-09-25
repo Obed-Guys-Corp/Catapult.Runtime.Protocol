@@ -7,13 +7,11 @@ namespace FallGuys.Store.Protocol.Client.Dtos;
 [ProtoContract(Name = "Catapult_Store_StoreBundleDto_V1")]
 public class StoreBundleDto
 {
-    private List<PaymentDto>? _paymentOptions;
-
     [ProtoMember(1)]
     public string? Id { get; set; }
 
     [ProtoMember(2)]
-    public List<PaymentDto> PaymentOptions { get; set; }
+    public List<PaymentDto> PaymentOptions { get; set; } = null!;
 
     [ProtoMember(3)]
     public StoreBundleRewardDto? Reward { get; set; }

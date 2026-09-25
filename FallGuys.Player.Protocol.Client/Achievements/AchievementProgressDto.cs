@@ -6,7 +6,7 @@ namespace FallGuys.Player.Protocol.Client.Achievements;
 public class AchievementProgressDto
 {
     [ProtoMember(1)]
-    public string AchievementId { get; set; }
+    public string AchievementId { get; set; } = null!;
 
     [ProtoMember(2)]
     public int Increment { get; set; }

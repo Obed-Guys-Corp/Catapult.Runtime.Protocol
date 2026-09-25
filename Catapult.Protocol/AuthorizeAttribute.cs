@@ -5,7 +5,7 @@ public class AuthorizeAttribute : Attribute
 {
     public bool AllowAnonymous { get; set; }
 
-    public string[] Roles { get; set; }
+    public string[] Roles { get; set; } = null!;
 
     public AuthorizeAttribute()
     {

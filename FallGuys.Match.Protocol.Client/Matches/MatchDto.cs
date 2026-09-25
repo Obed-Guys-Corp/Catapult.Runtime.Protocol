@@ -6,8 +6,6 @@ namespace FallGuys.Match.Protocol.Client.Matches;
 [ProtoContract(Name = "FallGuys_Match_MatchDto_V1")]
 public class MatchDto
 {
-    private List<PartyDto>? _parties;
-
     [ProtoMember(7)]
     public string? FortniteMatchId { get; set; }
 
@@ -21,7 +19,7 @@ public class MatchDto
     public int? MedianAbilityScore { get; set; }
 
     [ProtoMember(4)]
-    public List<PartyDto> Parties { get; set; }
+    public List<PartyDto> Parties { get; set; } = null!;
 
     [ProtoMember(5)]
     public int NumBots { get; set; }

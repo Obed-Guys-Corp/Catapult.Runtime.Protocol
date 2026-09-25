@@ -7,8 +7,6 @@ namespace FallGuys.Store.Protocol.Client.Commands.Purchase;
 [ProtoContract(Name = "FallGuys_Store_SymphonyCostumeSetPaymentOption_V1")]
 public class SymphonyCostumeSetPaymentOption : PaymentOption
 {
-    private List<string>? _itemsIds;
-
     [ProtoMember(1)]
     public string? StoreId { get; set; }
 
@@ -25,7 +23,7 @@ public class SymphonyCostumeSetPaymentOption : PaymentOption
     public string? BundleId { get; set; }
 
     [ProtoMember(6)]
-    public List<string> ItemsIds { get; set; }
+    public List<string> ItemsIds { get; set; } = null!;
 
     [Obsolete("Use Line instead")]
     [ProtoMember(7)]

@@ -8,22 +8,22 @@ namespace FallGuys.Gateway.Protocol.Client.Entitlements;
 public class SyncEpicEntitlementsForThirdPartyPlatformCommand : ISyncEntitlementsCommand
 {
     [ProtoMember(1)]
-    public string CurrencyCode { get; set; }
+    public string CurrencyCode { get; set; } = null!;
 
     [ProtoMember(2)]
-    public string StoreId { get; set; }
+    public string StoreId { get; set; } = null!;
 
     [ProtoMember(3)]
-    public string StorefrontId { get; set; }
+    public string StorefrontId { get; set; } = null!;
 
     [ProtoMember(4)]
-    public string SectionId { get; set; }
+    public string SectionId { get; set; } = null!;
 
     [ProtoMember(5)]
-    public string IapId { get; set; }
+    public string IapId { get; set; } = null!;
 
     [ProtoMember(6)]
-    public string StoreSessionId { get; set; }
+    public string StoreSessionId { get; set; } = null!;
 
     [ProtoMember(7)]
     public SyncPointType SyncPoint { get; set; }
@@ -32,14 +32,14 @@ public class SyncEpicEntitlementsForThirdPartyPlatformCommand : ISyncEntitlement
     public PlatformType PlatformType { get; set; }
 
     [ProtoMember(9)]
-    public string CostDisplayLocal { get; set; }
+    public string CostDisplayLocal { get; set; } = null!;
 
     [ProtoMember(10)]
-    public string CostUsd { get; set; }
+    public string CostUsd { get; set; } = null!;
 
     [ProtoMember(11)]
-    public string CurrencyDisplayLocal { get; set; }
+    public string CurrencyDisplayLocal { get; set; } = null!;
 
     [ProtoMember(12)]
-    public string EntryPoint { get; set; }
+    public string EntryPoint { get; set; } = null!;
 }

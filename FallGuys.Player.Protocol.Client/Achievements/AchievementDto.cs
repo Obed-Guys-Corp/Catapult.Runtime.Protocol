@@ -7,10 +7,10 @@ namespace FallGuys.Player.Protocol.Client.Achievements;
 public class AchievementDto
 {
     [ProtoMember(1)]
-    public string Id { get; set; }
+    public string Id { get; set; } = null!;
 
     [ProtoMember(2)]
-    public string AchievementId { get; set; }
+    public string AchievementId { get; set; } = null!;
 
     [ProtoMember(3)]
     public DateTime? CompletedAt { get; set; }

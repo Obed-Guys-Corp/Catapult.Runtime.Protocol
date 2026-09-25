@@ -6,8 +6,6 @@ namespace FallGuys.Player.Protocol.Client.Wallet;
 [ProtoContract(Name = "FallGuys_Player_Wallet_CurrencyDetailsDto_V1")]
 public class CurrencyDetailsDto
 {
-    private Dictionary<string, int>? _purchaseBalanceByPocketId;
-
     [ProtoMember(1)]
     public string? ContentItemId { get; set; }
 
@@ -18,5 +16,5 @@ public class CurrencyDetailsDto
     public int EarnedBalance { get; set; }
 
     [ProtoMember(4)]
-    public Dictionary<string, int> PurchaseBalanceByPocketId { get; set; }
+    public Dictionary<string, int> PurchaseBalanceByPocketId { get; set; } = null!;
 }

@@ -6,11 +6,11 @@ namespace FallGuys.Gateway.Protocol.Client.Entitlements;
 public class EpicEntitlement
 {
     [ProtoMember(1)]
-    public string EntitlementId { get; set; }
+    public string EntitlementId { get; set; } = null!;
 
     [ProtoMember(2)]
-    public string EntitlementName { get; set; }
+    public string EntitlementName { get; set; } = null!;
 
     [ProtoMember(3)]
-    public string CatalogItemId { get; set; }
+    public string CatalogItemId { get; set; } = null!;
 }

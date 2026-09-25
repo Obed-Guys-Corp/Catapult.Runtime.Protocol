@@ -7,16 +7,16 @@ namespace FallGuys.Player.Protocol.Client.Receipts;
 public class SteamDlcReceiptDto
 {
     [ProtoMember(7)]
-    public string Id { get; set; }
+    public string Id { get; set; } = null!;
 
     [ProtoMember(1)]
     public ulong DlcId { get; set; }
 
     [ProtoMember(2)]
-    public string SteamId { get; set; }
+    public string SteamId { get; set; } = null!;
 
     [ProtoMember(3)]
-    public string AccountId { get; set; }
+    public string AccountId { get; set; } = null!;
 
     [ProtoMember(4)]
     public DateTime? PurchaseDate { get; set; }

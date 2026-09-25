@@ -8,7 +8,7 @@ namespace FallGuys.Gateway.Protocol.Client.LegacyPsnTrophies;
 public class GetLegacyPsnTrophiesQuery
 {
     [ProtoMember(1)]
-    public string AuthCode { get; set; }
+    public string AuthCode { get; set; } = null!;
 
     [ProtoMember(2)]
     public int? PsnEnvironment { get; set; }

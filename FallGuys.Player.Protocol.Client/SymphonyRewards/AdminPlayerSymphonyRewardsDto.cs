@@ -8,11 +8,8 @@ namespace FallGuys.Player.Protocol.Client.SymphonyRewards;
 [ProtoContract(Name = "FallGuys_AdminPlayerSymphonyRewardsDto_V1")]
 public class AdminPlayerSymphonyRewardsDto
 {
-    [ProtoIgnore]
-    private List<SymphonyRewardDto>? _rewards;
-
     [ProtoMember(1)]
-    public List<SymphonyRewardDto> Rewards { get; set; }
+    public List<SymphonyRewardDto> Rewards { get; set; } = null!;
 
     [ProtoMember(2)]
     public SymphonyConversionDto? SymphonyConversion { get; set; }

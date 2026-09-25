@@ -8,8 +8,6 @@ namespace FallGuys.Player.Protocol.Client.Rewards;
 [Authorize(Roles = new string[] { CoreRoles.User })]
 public class ClaimRewardsCommand
 {
-    private List<string>? _rewardItemIds;
-
     [ProtoMember(1)]
-    public List<string> RewardItemIds { get; set; }
+    public List<string> RewardItemIds { get; set; } = null!;
 }

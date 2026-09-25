@@ -8,9 +8,6 @@ namespace Catapult.Services.Gateway.Protocol.Client;
 [Authorize(AllowAnonymous = true)]
 public class LogAnalyticsEventsCommand
 {
-    [ProtoIgnore]
-    private List<LogAnalyticsEventCommand>? _analyticsEventCommands;
-
     [ProtoMember(1)]
-    public List<LogAnalyticsEventCommand> AnalyticsEventCommands { get; set; }
+    public List<LogAnalyticsEventCommand> AnalyticsEventCommands { get; set; } = null!;
 }

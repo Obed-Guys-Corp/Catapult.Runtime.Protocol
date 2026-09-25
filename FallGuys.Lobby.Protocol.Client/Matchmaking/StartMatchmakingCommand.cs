@@ -9,8 +9,8 @@ namespace FallGuys.Lobby.Protocol.Client.Matchmaking;
 public class StartMatchmakingCommand
 {
     [ProtoMember(1)]
-    public string LobbyId { get; set; }
+    public string LobbyId { get; set; } = null!;
 
     [ProtoMember(2)]
-    public List<string> ShowIds { get; set; }
+    public List<string> ShowIds { get; set; } = null!;
 }

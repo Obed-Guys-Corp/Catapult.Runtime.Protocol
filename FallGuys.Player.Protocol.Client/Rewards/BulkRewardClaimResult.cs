@@ -7,11 +7,11 @@ namespace FallGuys.Player.Protocol.Client.Rewards;
 public class BulkRewardClaimResult
 {
     [ProtoMember(1)]
-    public Dictionary<string, RewardClaimedDto> ClaimedRewards { get; set; }
+    public Dictionary<string, RewardClaimedDto> ClaimedRewards { get; set; } = null!;
 
     [ProtoMember(2)]
-    public List<RewardDto> UnclaimedRewards { get; set; }
+    public List<RewardDto> UnclaimedRewards { get; set; } = null!;
 
     [ProtoMember(3)]
-    public List<RewardDto> UnclaimedChoiceRewards { get; set; }
+    public List<RewardDto> UnclaimedChoiceRewards { get; set; } = null!;
 }

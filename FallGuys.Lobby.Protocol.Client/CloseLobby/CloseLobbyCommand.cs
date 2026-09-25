@@ -10,5 +10,5 @@ namespace FallGuys.Lobby.Protocol.Client.CloseLobby;
 public class CloseLobbyCommand
 {
     [ProtoMember(1)]
-    public string LobbyId { get; set; }
+    public string LobbyId { get; set; } = null!;
 }

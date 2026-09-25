@@ -10,10 +10,10 @@ public class JoinLobbyCommand
 {
     [ProtoMember(1)]
     [Obsolete("Use 'EntryCode' instead")]
-    public string LobbyId { get; set; }
+    public string LobbyId { get; set; } = null!;
 
     [ProtoMember(2)]
-    public string EntryCode { get; set; }
+    public string EntryCode { get; set; } = null!;
 
     [ProtoMember(3)]
     public bool CrossPlayEnabled { get; set; }

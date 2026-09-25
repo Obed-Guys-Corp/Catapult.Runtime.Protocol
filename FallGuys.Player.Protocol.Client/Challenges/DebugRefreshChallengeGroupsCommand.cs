@@ -10,9 +10,6 @@ namespace FallGuys.Player.Protocol.Client.Challenges;
 [Authorize(Roles = new string[] { CoreRoles.User })]
 public class DebugRefreshChallengeGroupsCommand
 {
-    [ProtoIgnore]
-    private List<string>? _challengeGroupIds;
-
     [ProtoMember(1)]
-    public List<string> ChallengeGroupIds { get; set; }
+    public List<string> ChallengeGroupIds { get; set; } = null!;
 }

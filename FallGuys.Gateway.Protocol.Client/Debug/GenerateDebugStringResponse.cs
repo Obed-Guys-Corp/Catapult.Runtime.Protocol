@@ -6,5 +6,5 @@ namespace FallGuys.Gateway.Protocol.Client.Debug;
 public class GenerateDebugStringResponse
 {
     [ProtoMember(1)]
-    public string Data { get; set; }
+    public string Data { get; set; } = null!;
 }

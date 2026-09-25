@@ -7,10 +7,8 @@ namespace FallGuys.Player.Protocol.Client.Rounds;
 [ProtoContract(Name = "FallGuys_Player_Rounds_RoundResult_V1")]
 public class RoundResultDto
 {
-    private List<RoundRewardDto>? _rewards;
-
     [ProtoMember(1)]
-    public List<RoundRewardDto> Rewards { get; set; }
+    public List<RoundRewardDto> Rewards { get; set; } = null!;
 
     [ProtoMember(2)]
     public RoundCorrelationDto? SessionCorrelation { get; set; }

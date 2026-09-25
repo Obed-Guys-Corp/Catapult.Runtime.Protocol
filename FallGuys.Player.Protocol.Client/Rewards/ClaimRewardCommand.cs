@@ -8,8 +8,8 @@ namespace FallGuys.Player.Protocol.Client.Rewards;
 public class ClaimRewardCommand
 {
     [ProtoMember(1)]
-    public string RewardId { get; set; }
+    public string RewardId { get; set; } = null!;
 
     [ProtoMember(2)]
-    public string Choice { get; set; }
+    public string Choice { get; set; } = null!;
 }

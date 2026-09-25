@@ -8,8 +8,6 @@ namespace Catapult.Services.Login.Protocol.Client.Requests;
 [Authorize(AllowAnonymous = true)]
 public class ForgetAccountRequest
 {
-    private Dictionary<string, string>? _identityProperties;
-
     [ProtoMember(1)]
     public string? IdentityType { get; set; }
 
@@ -17,5 +15,5 @@ public class ForgetAccountRequest
     public string? IdentityToken { get; set; }
 
     [ProtoMember(3)]
-    public Dictionary<string, string> IdentityProperties { get; set; }
+    public Dictionary<string, string> IdentityProperties { get; set; } = null!;
 }

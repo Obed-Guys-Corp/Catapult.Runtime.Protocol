@@ -8,8 +8,6 @@ namespace FallGuys.Store.Protocol.Client.Dtos.Symphony;
 [ProtoContract(Name = "FallGuys_Store_StoreSectionDto_V1")]
 public class SymphonyStoreSectionDto
 {
-    private List<SymphonyStoreBundleDto>? _bundles;
-
     [ProtoMember(1)]
     public string? Id { get; set; }
 
@@ -17,7 +15,7 @@ public class SymphonyStoreSectionDto
     public DateTime? NextRefreshAt { get; set; }
 
     [ProtoMember(5)]
-    public List<SymphonyStoreBundleDto> Bundles { get; set; }
+    public List<SymphonyStoreBundleDto> Bundles { get; set; } = null!;
 
     [ProtoMember(6)]
     public TargetingResultDto? TargetingResult { get; set; }

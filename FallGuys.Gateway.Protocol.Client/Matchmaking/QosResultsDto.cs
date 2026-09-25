@@ -7,5 +7,5 @@ namespace FallGuys.Gateway.Protocol.Client.Matchmaking;
 public class QosResultsDto
 {
     [ProtoMember(1)]
-    public List<QosResultDto> QoSResults { get; set; }
+    public List<QosResultDto> QoSResults { get; set; } = null!;
 }
