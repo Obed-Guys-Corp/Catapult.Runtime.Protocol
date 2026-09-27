@@ -85,6 +85,7 @@ namespace Catapult.Protocol.Runtime
 #endif
         }
 
+        public static Message? ReadMessage(MemoryStream stream) => ReadMessage(stream.ToArray());
         public static Message? ReadMessage(byte[] data)
         {
             if (data == null || data.Length == 0) return null!;
@@ -121,13 +122,9 @@ namespace Catapult.Protocol.Runtime
                                 var header = SerializersInstances.Access(headerSerializer).Read(reader, hType);
 
                                 var h = header as MessageHeader;
-                                if (res != null)
-                                    res.AttachHeader(h);
-                                else
-                                {
-                                    headers ??= [];
-                                    headers.Add(h!);
-                                }
+
+                                headers ??= [];
+                                headers.Add(h!);
 
                                 ProtoReader.EndSubItem(hToken, reader);
                             }
@@ -176,17 +173,20 @@ namespace Catapult.Protocol.Runtime
 
                     ProtoReader.EndSubItem(bToken, reader);
 
-                    if (inst is Message msgInst)
-                        res = msgInst;
-                    else
-                        res = new Message<object>(inst);
-
-                    if (headers != null)
+                    if (!hasBody)
                     {
-                        foreach (var h in headers) res.AttachHeader(h);
-                        headers = null!;
+                        var bodyType = bType.IsGenericType ? bType.GetGenericArguments()[0] : bType;
+                        inst = Activator.CreateInstance(bodyType)!;
                     }
+
+                    if (bType.IsGenericType)
+                        res = (Message)Activator.CreateInstance(bType, inst)!;
+                    else
+                        res = (Message)inst;
                 }
+
+                res.Headers = headers;
+               
                 return res;
             }
             catch (Exception e)
