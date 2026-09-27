@@ -9,7 +9,6 @@ using Catapult.Services.Login.Protocol.Client;
 using FallGuys.Client.Protocol;
 using FallGuys.Common.Targeting.Protocol.Client;
 using FallGuys.Gateway.Protocol.Client;
-using FallGuys.Level.Protocol.AuthTokens;
 using FallGuys.Lobby.Protocol.Client;
 using FallGuys.Lobby.Protocol.Common;
 using FallGuys.Match.Protocol.Client;
@@ -202,38 +201,53 @@ namespace Catapult.Protocol.Runtime
 
         public static byte[] CreateReply<T>(Result<T> response, Guid replyId)
         {
-            return WriteReplyBytes(response, replyId, writer =>
+            AttachReplyHeaders(response, replyId);
+
+            return Write(response, writer =>
             {
-                var bToken = WriteResultBody<T>(response.Body, writer);
-                WriteResultError(response.Error, 2, writer);
+                var bToken = WriteBody<T>(response.Body, typeof(Result<>), writer);
+                WriteField(2, response.Error, writer);
                 ProtoWriter.EndSubItem(bToken, writer);
             });
         }
 
         public static byte[] CreateReply(Result response, Guid replyId)
         {
-            return WriteReplyBytes(response, replyId, writer =>
+            AttachReplyHeaders(response, replyId);
+
+            return Write(response, writer =>
             {
-                var bToken = WriteResultBody<Result>(null, writer);
-                WriteResultError(response.Error, 1, writer);
+                var bToken = WriteBody<Result>(null, null!, writer);
+                WriteField(1, response.Error, writer);
                 ProtoWriter.EndSubItem(bToken, writer);
             });
         }
 
         public static byte[] CreateReply(ErrorMessage response, Guid replyId)
         {
-            return WriteReplyBytes(response, replyId, writer =>
+            AttachReplyHeaders(response, replyId);
+
+            return Write(response, writer =>
             {
-                var bToken = WriteResultBody<ErrorMessage>(null, writer);
-                WriteResultError(response.Error, 1, writer);
+                var bToken = WriteBody<ErrorMessage>(null, null!, writer);
+                WriteField(1, response.Error, writer);
                 ProtoWriter.EndSubItem(bToken, writer);
             });
         }
 
-        private static byte[] WriteReplyBytes(Message response, Guid replyId, Action<ProtoWriter> doWrite)
+        public static byte[] CreateMessage<T>(Message<T> message)
         {
-            AttachReplyHeaders(response, replyId);
+            AttachRequestHeaders(message);
 
+            return Write(message, writer =>
+            {
+                var bToken = WriteBody<T>(message.Body, typeof(Message<>), writer);
+                ProtoWriter.EndSubItem(bToken, writer);
+            }!);
+        }
+
+        private static byte[] Write(Message response, Action<ProtoWriter> doWrite)
+        {
             using var ms = new MemoryStream();
            
             using (var writer = ProtoWriter.Create(ms, null, null))
@@ -281,6 +295,20 @@ namespace Catapult.Protocol.Runtime
             });
         }
 
+        static void AttachRequestHeaders(Message res)
+        {
+            res.AttachHeader(new CorrelationHeader
+            {
+                ActivityId = Guid.NewGuid(),
+            });
+
+            res.AttachHeader(new OperationHeader
+            {
+                RequestId = Guid.NewGuid(),
+                Type = OperationType.Request,
+            });
+        }
+
         static void WriteMessageHeaders(List<MessageHeader> headers, ProtoWriter writer)
         {
             if (headers == null) return;
@@ -305,23 +333,24 @@ namespace Catapult.Protocol.Runtime
             }
         }
 
-        static void WriteResultError(object? error, int fNum, ProtoWriter writer)
+        static void WriteField(int fNum, object? body, ProtoWriter writer)
         {
-            if (error == null) return;
+            if (body == null) return;
 
-            var ser = error.GetType().GetCustomAttribute<SerializerAttribute>()?.Serializer ?? typeof(BasicSerializer);
+            var ser = body.GetType().GetCustomAttribute<SerializerAttribute>()?.Serializer ?? typeof(BasicSerializer);
 
             ProtoWriter.WriteFieldHeader(fNum, WireType.String, writer);
-            var eToken = ProtoWriter.StartSubItem(error, writer);
 
-            SerializersInstances.Access(ser).Write(error, writer);
+            var eToken = ProtoWriter.StartSubItem(body, writer);
+
+            SerializersInstances.Access(ser).Write(body, writer);
 
             ProtoWriter.EndSubItem(eToken, writer);
         }
 
-        static SubItemToken WriteResultBody<T>(object? body, ProtoWriter writer)
+        static SubItemToken WriteBody<T>(object? body, Type msgIn, ProtoWriter writer)
         {
-            var resultId = MarkMessage($"{(body != null ? typeof(Result<>).GetCustomAttribute<ProtoContractAttribute>()?.Name : "")}{typeof(T).GetCustomAttribute<ProtoContractAttribute>()?.Name}");
+            var resultId = MarkMessage($"{(body != null ? msgIn.GetCustomAttribute<ProtoContractAttribute>()?.Name : "")}{typeof(T).GetCustomAttribute<ProtoContractAttribute>()?.Name}");
 
             if (!_knownMessages.TryGetValue(resultId, out _))
                 throw new InvalidOperationException($"Message body {typeof(T).Name} is not registred");
