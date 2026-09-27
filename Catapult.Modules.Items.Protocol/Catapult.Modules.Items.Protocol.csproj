@@ -3,4 +3,7 @@
     <AssemblyName>Catapult.Modules.Items.Protocol</AssemblyName>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Catapult.Protocol\Catapult.Protocol.csproj" />
+  </ItemGroup>
 </Project>

@@ -3,4 +3,7 @@
     <AssemblyName>FallGuys.Lobby.Protocol.Common</AssemblyName>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Catapult.Protocol\Catapult.Protocol.csproj" />
+  </ItemGroup>
 </Project>

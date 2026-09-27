@@ -1,8 +1,20 @@
-﻿using Catapult.Protocol.Headers;
+﻿using Catapult.Modules.Items.Protocol;
+using Catapult.Protocol.Headers;
 using Catapult.Protocol.Internal;
 using Catapult.Protocol.Runtime.Attributes;
 using Catapult.Protocol.Runtime.Serializers;
 using Catapult.Protocol.Runtime.Serializers.Core;
+using Catapult.Services.Gateway.Protocol.Client;
+using Catapult.Services.Login.Protocol.Client;
+using FallGuys.Client.Protocol;
+using FallGuys.Common.Targeting.Protocol.Client;
+using FallGuys.Gateway.Protocol.Client;
+using FallGuys.Level.Protocol.AuthTokens;
+using FallGuys.Lobby.Protocol.Client;
+using FallGuys.Lobby.Protocol.Common;
+using FallGuys.Match.Protocol.Client;
+using FallGuys.Player.Protocol.Client;
+using FallGuys.Store.Protocol.Client;
 using ProtoBuf;
 using System.Buffers.Binary;
 using System.Reflection;
@@ -13,13 +25,32 @@ namespace Catapult.Protocol.Runtime
 {
     public static class RuntimeProtocol
     {
-        static readonly Dictionary<uint, Type> KnownMessages;
+        //this forces load of assemblies so they can be identified
+        //i don't like this design in general and should probably move the whole identification process into the build process
+        //cuz there's no reason to have it in runtime
+        static readonly Assembly[] _assemblies = 
+        [
+            typeof(ItemsProtocolMarker).Assembly,
+            typeof(NetworkingProtocolMarker).Assembly,
+            typeof(CatapultGatewayProtocolMarker).Assembly,
+            typeof(CatapultLoginProtocolMarker).Assembly,
+            typeof(ClientProtocolMarker).Assembly,
+            typeof(TargetingProtocolMarker).Assembly,
+            typeof(GatewayProtocolMarker).Assembly,
+            typeof(LobbyProtocolClientMarker).Assembly,
+            typeof(LobbyProtocolCommonMarker).Assembly,
+            typeof(MatchProtocolMarker).Assembly,
+            typeof(PlayerProtocolMarker).Assembly,
+            typeof(StoreProtocolMarker).Assembly,
+        ];
+
+        static readonly Dictionary<uint, Type> _knownMessages;
 
         static RuntimeProtocol()
         {
-            KnownMessages = [];
+            _knownMessages = [];
 
-            foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+            foreach (var asm in _assemblies)
             {
                 foreach (var contract in asm.GetTypes().Where(t => t.GetCustomAttribute<ProtoContractAttribute>() != null))
                 {
@@ -35,22 +66,22 @@ namespace Catapult.Protocol.Runtime
 
                     if (contract == typeof(Result) || typeof(MessageHeader).IsAssignableFrom(contract))
                     {
-                        KnownMessages[MarkMessage(name)] = contract;
+                        _knownMessages[MarkMessage(name)] = contract;
                         continue;
                     }
 
-                    KnownMessages[MarkMessage(name)] = contract;
+                    _knownMessages[MarkMessage(name)] = contract;
 
                     var msgName = typeof(Message<>).GetCustomAttribute<ProtoContractAttribute>()!.Name;
-                    KnownMessages[MarkMessage(msgName + name)] = typeof(Message<>).MakeGenericType(contract);
+                    _knownMessages[MarkMessage(msgName + name)] = typeof(Message<>).MakeGenericType(contract);
 
                     var resName = typeof(Result<>).GetCustomAttribute<ProtoContractAttribute>()!.Name;
-                    KnownMessages[MarkMessage(resName + name)] = typeof(Result<>).MakeGenericType(contract);
+                    _knownMessages[MarkMessage(resName + name)] = typeof(Result<>).MakeGenericType(contract);
                 }
             }
 
 #if DEBUG
-            foreach (var ms in KnownMessages)
+            foreach (var ms in _knownMessages)
                 Console.WriteLine(ms.Key + " " + ms.Value);
 #endif
         }
@@ -78,7 +109,7 @@ namespace Catapult.Protocol.Runtime
                             int hField;
                             while ((hField = reader.ReadFieldHeader()) > 0)
                             {
-                                if (!KnownMessages.TryGetValue((uint)hField, out var hType))
+                                if (!_knownMessages.TryGetValue((uint)hField, out var hType))
                                 {
                                     LogLineWarn(typeof(RuntimeProtocol), $"Unknown message header with id={f}");
                                     reader.SkipField();
@@ -109,7 +140,7 @@ namespace Catapult.Protocol.Runtime
                         continue;
                     }
 
-                    if (!KnownMessages.TryGetValue((uint)f, out var bType))
+                    if (!_knownMessages.TryGetValue((uint)f, out var bType))
                     {
                         LogLineWarn(typeof(RuntimeProtocol), $"Unknown message with id={f}");
                         reader.SkipField();
@@ -166,10 +197,10 @@ namespace Catapult.Protocol.Runtime
             }
         }
 
-        public static byte[] ReplyToMessage<T>(Result<T> response, Message replyTo) => GetReplyID(replyTo, out var id) ? ReplyToMessage(response, id) : null!;
-        public static byte[] ReplyToMessage(Message response, Message replyTo) => GetReplyID(replyTo, out var id) ? ReplyToMessage((dynamic)response, id) : null!;
+        public static byte[] CreateReply<T>(Result<T> response, Message replyTo) => GetReplyID(replyTo, out var id) ? CreateReply(response, id) : null!;
+        public static byte[] CreateReply(Message response, Message replyTo) => GetReplyID(replyTo, out var id) ? CreateReply((dynamic)response, id) : null!;
 
-        public static byte[] ReplyToMessage<T>(Result<T> response, Guid replyId)
+        public static byte[] CreateReply<T>(Result<T> response, Guid replyId)
         {
             return WriteReplyBytes(response, replyId, writer =>
             {
@@ -179,7 +210,7 @@ namespace Catapult.Protocol.Runtime
             });
         }
 
-        public static byte[] ReplyToMessage(Result response, Guid replyId)
+        public static byte[] CreateReply(Result response, Guid replyId)
         {
             return WriteReplyBytes(response, replyId, writer =>
             {
@@ -189,7 +220,7 @@ namespace Catapult.Protocol.Runtime
             });
         }
 
-        public static byte[] ReplyToMessage(ErrorMessage response, Guid replyId)
+        public static byte[] CreateReply(ErrorMessage response, Guid replyId)
         {
             return WriteReplyBytes(response, replyId, writer =>
             {
@@ -260,7 +291,7 @@ namespace Catapult.Protocol.Runtime
                 var fToken = ProtoWriter.StartSubItem(null, writer);
 
                 var headerId = MarkMessage(header.GetType().GetCustomAttribute<ProtoContractAttribute>()?.Name!);
-                if (!KnownMessages.TryGetValue(headerId, out var hType))
+                if (!_knownMessages.TryGetValue(headerId, out var hType))
                     throw new InvalidOperationException($"Message header {header.GetType().Name} is not registred");
 
                 var headerSerializer = (hType.GetCustomAttribute<SerializerAttribute>()?.Serializer) ?? typeof(BasicSerializer);
@@ -292,7 +323,7 @@ namespace Catapult.Protocol.Runtime
         {
             var resultId = MarkMessage($"{(body != null ? typeof(Result<>).GetCustomAttribute<ProtoContractAttribute>()?.Name : "")}{typeof(T).GetCustomAttribute<ProtoContractAttribute>()?.Name}");
 
-            if (!KnownMessages.TryGetValue(resultId, out _))
+            if (!_knownMessages.TryGetValue(resultId, out _))
                 throw new InvalidOperationException($"Message body {typeof(T).Name} is not registred");
 
             ProtoWriter.WriteFieldHeader((int)resultId, WireType.String, writer);
