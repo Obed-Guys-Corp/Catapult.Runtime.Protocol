@@ -374,7 +374,7 @@ namespace Catapult.Protocol.Runtime
 
         static SubItemToken WriteBody<T>(object? body, Type msgIn, ProtoWriter writer)
         {
-            var resultId = MarkMessage($"{(body != null ? msgIn.GetCustomAttribute<ProtoContractAttribute>()?.Name : "")}{typeof(T).GetCustomAttribute<ProtoContractAttribute>()?.Name}");
+            var resultId = MarkMessage($"{(msgIn != null ? msgIn.GetCustomAttribute<ProtoContractAttribute>()?.Name : "")}{typeof(T).GetCustomAttribute<ProtoContractAttribute>()?.Name}");
 
             if (!_knownMessages.TryGetValue(resultId, out _))
                 throw new InvalidOperationException($"Message body {typeof(T).Name} is not registred");
