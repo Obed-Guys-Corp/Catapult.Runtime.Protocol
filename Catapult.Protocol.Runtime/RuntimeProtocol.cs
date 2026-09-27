@@ -246,6 +246,26 @@ namespace Catapult.Protocol.Runtime
             }!);
         }
 
+        public static byte[] CreateMessage(KeepAliveMessage message)
+        {
+            message.AttachHeader(new CorrelationHeader
+            {
+                ActivityId = Guid.NewGuid(),
+            });
+
+            message.AttachHeader(new OperationHeader
+            {
+                RequestId = Guid.NewGuid(),
+                Type = OperationType.OneWay,
+            });
+
+            return Write(message, writer =>
+            {
+                var bToken = WriteBody<KeepAliveMessage>(null, null!, writer);
+                ProtoWriter.EndSubItem(bToken, writer);
+            }!);
+        }
+
         private static byte[] Write(Message response, Action<ProtoWriter> doWrite)
         {
             using var ms = new MemoryStream();
