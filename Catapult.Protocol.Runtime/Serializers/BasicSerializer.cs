@@ -19,8 +19,8 @@ namespace Catapult.Protocol.Runtime.Serializers
 
             int field;
 
-            var attrs = inst!.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(x => x.GetCustomAttribute<ProtoMemberAttribute>() != null).ToDictionary(x => x.GetCustomAttribute<ProtoMemberAttribute>()!.Tag);
-
+            var attrs = inst!.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).Where(x => x.GetCustomAttribute<ProtoMemberAttribute>() != null).ToDictionary(x => x.GetCustomAttribute<ProtoMemberAttribute>()!.Tag);
+            
             while ((field = reader.ReadFieldHeader()) > 0)
             {
                 if (!attrs.TryGetValue(field, out var prop))

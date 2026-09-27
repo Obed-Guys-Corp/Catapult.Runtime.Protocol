@@ -111,90 +111,94 @@ namespace Catapult.Protocol.Runtime
                             {
                                 if (!_knownMessages.TryGetValue((uint)hField, out var hType))
                                 {
-                                    LogLineWarn(typeof(RuntimeProtocol), $"Unknown message header with id={f}");
+                                    LogLineWarn(typeof(RuntimeProtocol), $"Unknown message header with id={hField}");
                                     reader.SkipField();
                                     continue;
                                 }
 
-                                var headerSerializer = (hType.GetCustomAttribute<SerializerAttribute>()?.Serializer) ?? typeof(BasicSerializer);
+                                var headerSerializer = hType.GetCustomAttribute<SerializerAttribute>()?.Serializer ?? typeof(BasicSerializer);
 
                                 var hToken = ProtoReader.StartSubItem(reader);
                                 var header = SerializersInstances.Access(headerSerializer).Read(reader, hType);
-
-                                var h = header as MessageHeader;
-
-                                headers ??= [];
-                                headers.Add(h!);
-
                                 ProtoReader.EndSubItem(hToken, reader);
+
+                                if (header is MessageHeader h)
+                                {
+                                    headers ??= [];
+                                    headers.Add(h);
+                                }
                             }
 
                             ProtoReader.EndSubItem(mToken, reader);
-
-                        } while (reader.TryReadFieldHeader(1));
+                        }
+                        while (reader.TryReadFieldHeader(1));
 
                         continue;
                     }
 
                     if (!_knownMessages.TryGetValue((uint)f, out var bType))
                     {
-                        LogLineWarn(typeof(RuntimeProtocol), $"Unknown message with id={f}");
+                        LogLineWarn(typeof(RuntimeProtocol), $"Unknown message body with id={f}");
                         reader.SkipField();
                         continue;
                     }
 
+                    var bodySerializer = bType.GetCustomAttribute<SerializerAttribute>()?.Serializer ?? typeof(BasicSerializer);
                     var bToken = ProtoReader.StartSubItem(reader);
-                    int bField;
 
-                    object inst = null!;
-                    bool hasBody = false;
-
-                    while ((bField = reader.ReadFieldHeader()) > 0)
-                    {
-                        if (bField == 1)
-                        {
-                            var bcToken = ProtoReader.StartSubItem(reader);
-
-                            var bodySerializer = (bType.GetCustomAttribute<SerializerAttribute>()?.Serializer) ?? typeof(BasicSerializer);
-
-                            inst = SerializersInstances.Access(bodySerializer!).Read(reader, bType.IsGenericType ? bType.GetGenericArguments()[0] : bType);
-
-                            hasBody = true;
-                            ProtoReader.EndSubItem(bcToken, reader);
-                        }
-                        else
-                        {
-                            reader.SkipField();
-                        }
-                    }
-
-                    if (!hasBody)
-                        inst = Activator.CreateInstance(bType)!;
-
-                    ProtoReader.EndSubItem(bToken, reader);
-
-                    if (!hasBody)
-                    {
-                        var bodyType = bType.IsGenericType ? bType.GetGenericArguments()[0] : bType;
-                        inst = Activator.CreateInstance(bodyType)!;
-                    }
+                    Message inst;
 
                     if (bType.IsGenericType)
-                        res = (Message)Activator.CreateInstance(bType, inst)!;
+                    {
+                        var bodyType = bType.GetGenericArguments()[0];
+
+                        int bField;
+                        bool hasBody = false;
+                        object? body = null;
+
+                        while ((bField = reader.ReadFieldHeader()) > 0)
+                        {
+                            if (bField != 1)
+                            {
+                                reader.SkipField();
+                                continue;
+                            }
+
+                            var bcToken = ProtoReader.StartSubItem(reader);
+                            body = SerializersInstances.Access(bodySerializer).Read(reader, bodyType);
+                            ProtoReader.EndSubItem(bcToken, reader);
+
+                            hasBody = true;
+                            break;
+                        }
+
+                        if (!hasBody)
+                            body = Activator.CreateInstance(bodyType)!;
+
+                        ProtoReader.EndSubItem(bToken, reader);
+
+                        inst = (Message)Activator.CreateInstance(bType, body)!;
+                    }
                     else
-                        res = (Message)inst;
+                    {
+                        inst = (Message)SerializersInstances.Access(bodySerializer).Read(reader, bType);
+                        ProtoReader.EndSubItem(bToken, reader);
+                    }
+
+                    res = inst;
                 }
 
-                res.Headers = headers;
-               
+                res?.Headers = headers!;
+
                 return res;
             }
             catch (Exception e)
             {
                 LogLineError(typeof(RuntimeProtocol), $"Unable to read message!\n{e}");
-                return null!;
+                return null;
             }
         }
+
 
         public static byte[] CreateReply<T>(Result<T> response, Message replyTo) => GetReplyID(replyTo, out var id) ? CreateReply(response, id) : null!;
         public static byte[] CreateReply(Message response, Message replyTo) => GetReplyID(replyTo, out var id) ? CreateReply((dynamic)response, id) : null!;
