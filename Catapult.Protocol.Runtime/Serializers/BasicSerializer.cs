@@ -1,5 +1,6 @@
 ﻿using Catapult.Protocol.Runtime.Attributes;
 using Catapult.Protocol.Runtime.Serializers.Core;
+using FallGuys.Store.Protocol.Client.Dtos.Symphony;
 using ProtoBuf;
 using System.Collections;
 using System.Reflection;
@@ -23,6 +24,16 @@ namespace Catapult.Protocol.Runtime.Serializers
             
             while ((field = reader.ReadFieldHeader()) > 0)
             {
+                if (RuntimeProtocol._knownMessages.TryGetValue((uint)field, out var msgType))
+                {
+                    Console.WriteLine(msgType);
+                    var token = ProtoReader.StartSubItem(reader);
+                    var nest = Read(reader, msgType);
+                    ProtoReader.EndSubItem(token, reader);
+                    inst = nest;
+                    continue;
+                }
+
                 if (!attrs.TryGetValue(field, out var prop))
                 {
                     LogLineWarn(GetType(), $"Property {field} lacks {nameof(ProtoMemberAttribute)}!!! Ensure all properties has correctly setted up {nameof(ProtoMemberAttribute)} in {inst.GetType().Name}. If you sure that attribute is set ensure that this is not a field");
@@ -97,7 +108,10 @@ namespace Catapult.Protocol.Runtime.Serializers
                 return true;
             }
 
-            switch (Type.GetTypeCode(type))
+            var underlying = Nullable.GetUnderlyingType(type);
+            var code = Type.GetTypeCode(underlying ?? type);
+
+            switch (code)
             {
                 case TypeCode.String:
                     res = reader.ReadString();
@@ -142,7 +156,7 @@ namespace Catapult.Protocol.Runtime.Serializers
                     res = BclHelpers.ReadDecimal(reader);
                     return true;
                 case TypeCode.Object:
-                    if (type == typeof(Guid))
+                    if (type == typeof(Guid) || type == typeof(Guid?))
                     {
                         res = BclHelpers.ReadGuid(reader);
                         return true;
@@ -174,22 +188,19 @@ namespace Catapult.Protocol.Runtime.Serializers
                         return true;
                     }
 
-
                     if (type.IsGenericType)
                     {
                         var genTypeDef = type.GetGenericTypeDefinition();
 
-                        if (genTypeDef == typeof(List<>))
+                        if (genTypeDef == typeof(List<>) || genTypeDef == typeof(IEnumerable<>))
                         {
-                            var list = (IList)Activator.CreateInstance(type)!;
                             var itemType = type.GetGenericArguments()[0];
 
-                            do
-                            {
-                                if (ReadValue(itemType, out var item, reader))
-                                    list.Add(item);
-                            }
-                            while (reader.TryReadFieldHeader(reader.FieldNumber));
+                            var listType = typeof(List<>).MakeGenericType(itemType);
+                            var list = (IList)Activator.CreateInstance(listType)!;
+
+                            if (ReadValue(itemType, out var item, reader))
+                                list.Add(item);
 
                             res = list;
                             return true;
@@ -269,7 +280,10 @@ namespace Catapult.Protocol.Runtime.Serializers
                 return;
             }
 
-            switch (Type.GetTypeCode(type))
+            var underlying = Nullable.GetUnderlyingType(type);
+            var code = Type.GetTypeCode(underlying ?? type);
+
+            switch (code)
             {
                 case TypeCode.String:
                     ProtoWriter.WriteFieldHeader(tag, WireType.String, writer);
@@ -316,8 +330,6 @@ namespace Catapult.Protocol.Runtime.Serializers
                     BclHelpers.WriteDateTime((DateTime)val, writer);
                     return;
                 case TypeCode.Object:
-                    if (Nullable.GetUnderlyingType(type) != null) LogLineWarn(GetType(), $"Property \"{type}\" declared as nullable, this may result in incorrect behaviour");
-
                     if (type.IsEnum)
                     {
                         ProtoWriter.WriteFieldHeader(tag, WireType.Variant, writer);
@@ -325,7 +337,7 @@ namespace Catapult.Protocol.Runtime.Serializers
                         return;
                     }
 
-                    if (type == typeof(Guid))
+                    if (type == typeof(Guid) || type == typeof(Guid?))
                     {
                         ProtoWriter.WriteFieldHeader(tag, WireType.String, writer);
                         BclHelpers.WriteGuid((Guid)val, writer);

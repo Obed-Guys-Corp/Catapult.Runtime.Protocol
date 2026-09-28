@@ -43,7 +43,7 @@ namespace Catapult.Protocol.Runtime
             typeof(StoreProtocolMarker).Assembly,
         ];
 
-        static readonly Dictionary<uint, Type> _knownMessages;
+        internal static readonly Dictionary<uint, Type> _knownMessages;
 
         static RuntimeProtocol()
         {
