@@ -1,6 +1,5 @@
 ﻿using Catapult.Protocol.Runtime.Attributes;
 using Catapult.Protocol.Runtime.Serializers.Core;
-using FallGuys.Store.Protocol.Client.Dtos.Symphony;
 using ProtoBuf;
 using System.Collections;
 using System.Reflection;
@@ -24,9 +23,8 @@ namespace Catapult.Protocol.Runtime.Serializers
             
             while ((field = reader.ReadFieldHeader()) > 0)
             {
-                if (RuntimeProtocol._knownMessages.TryGetValue((uint)field, out var msgType))
+                if (RuntimeProtocol.KnownMessages.TryGetValue((uint)field, out var msgType))
                 {
-                    Console.WriteLine(msgType);
                     var token = ProtoReader.StartSubItem(reader);
                     var nest = Read(reader, msgType);
                     ProtoReader.EndSubItem(token, reader);

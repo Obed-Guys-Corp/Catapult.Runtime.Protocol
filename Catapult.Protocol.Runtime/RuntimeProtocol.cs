@@ -43,11 +43,11 @@ namespace Catapult.Protocol.Runtime
             typeof(StoreProtocolMarker).Assembly,
         ];
 
-        internal static readonly Dictionary<uint, Type> _knownMessages;
+        internal static readonly Dictionary<uint, Type> KnownMessages;
 
         static RuntimeProtocol()
         {
-            _knownMessages = [];
+            KnownMessages = [];
 
             foreach (var asm in _assemblies)
             {
@@ -65,22 +65,22 @@ namespace Catapult.Protocol.Runtime
 
                     if (contract == typeof(Result) || typeof(MessageHeader).IsAssignableFrom(contract))
                     {
-                        _knownMessages[MarkMessage(name)] = contract;
+                        KnownMessages[MarkMessage(name)] = contract;
                         continue;
                     }
 
-                    _knownMessages[MarkMessage(name)] = contract;
+                    KnownMessages[MarkMessage(name)] = contract;
 
                     var msgName = typeof(Message<>).GetCustomAttribute<ProtoContractAttribute>()!.Name;
-                    _knownMessages[MarkMessage(msgName + name)] = typeof(Message<>).MakeGenericType(contract);
+                    KnownMessages[MarkMessage(msgName + name)] = typeof(Message<>).MakeGenericType(contract);
 
                     var resName = typeof(Result<>).GetCustomAttribute<ProtoContractAttribute>()!.Name;
-                    _knownMessages[MarkMessage(resName + name)] = typeof(Result<>).MakeGenericType(contract);
+                    KnownMessages[MarkMessage(resName + name)] = typeof(Result<>).MakeGenericType(contract);
                 }
             }
 
 #if DEBUG
-            foreach (var ms in _knownMessages)
+            foreach (var ms in KnownMessages)
                 Console.WriteLine(ms.Key + " " + ms.Value);
 #endif
         }
@@ -109,7 +109,7 @@ namespace Catapult.Protocol.Runtime
                             int hField;
                             while ((hField = reader.ReadFieldHeader()) > 0)
                             {
-                                if (!_knownMessages.TryGetValue((uint)hField, out var hType))
+                                if (!KnownMessages.TryGetValue((uint)hField, out var hType))
                                 {
                                     LogLineWarn(typeof(RuntimeProtocol), $"Unknown message header with id={hField}");
                                     reader.SkipField();
@@ -136,7 +136,7 @@ namespace Catapult.Protocol.Runtime
                         continue;
                     }
 
-                    if (!_knownMessages.TryGetValue((uint)f, out var bType))
+                    if (!KnownMessages.TryGetValue((uint)f, out var bType))
                     {
                         LogLineWarn(typeof(RuntimeProtocol), $"Unknown message body with id={f}");
                         reader.SkipField();
@@ -343,7 +343,7 @@ namespace Catapult.Protocol.Runtime
                 var fToken = ProtoWriter.StartSubItem(null, writer);
 
                 var headerId = MarkMessage(header.GetType().GetCustomAttribute<ProtoContractAttribute>()?.Name!);
-                if (!_knownMessages.TryGetValue(headerId, out var hType))
+                if (!KnownMessages.TryGetValue(headerId, out var hType))
                     throw new InvalidOperationException($"Message header {header.GetType().Name} is not registred");
 
                 var headerSerializer = (hType.GetCustomAttribute<SerializerAttribute>()?.Serializer) ?? typeof(BasicSerializer);
@@ -376,7 +376,7 @@ namespace Catapult.Protocol.Runtime
         {
             var resultId = MarkMessage($"{(msgIn != null ? msgIn.GetCustomAttribute<ProtoContractAttribute>()?.Name : "")}{typeof(T).GetCustomAttribute<ProtoContractAttribute>()?.Name}");
 
-            if (!_knownMessages.TryGetValue(resultId, out _))
+            if (!KnownMessages.TryGetValue(resultId, out _))
                 throw new InvalidOperationException($"Message body {typeof(T).Name} is not registred");
 
             ProtoWriter.WriteFieldHeader((int)resultId, WireType.String, writer);
