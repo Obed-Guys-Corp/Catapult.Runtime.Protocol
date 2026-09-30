@@ -10,6 +10,8 @@ namespace Catapult.Protocol.Runtime.Serializers
     {
         public object Read(ProtoReader reader, Type msg)
         {
+            if (RuntimeProtocol.KnownMessages == null || RuntimeProtocol.KnownMessages.Count == 0) throw new InvalidOperationException($"{nameof(RuntimeProtocol.KnownMessages)} is not initialized!");
+
             object inst;
             if (msg is Type t)
                 inst = Activator.CreateInstance(t)!;
@@ -33,7 +35,7 @@ namespace Catapult.Protocol.Runtime.Serializers
 
                 if (!attrs.TryGetValue(field, out var prop))
                 {
-                    Console.WriteLine($"[{typeof(BasicSerializer).Name}] Property {field} lacks {nameof(ProtoMemberAttribute)}!!! Ensure all properties has correctly setted up {nameof(ProtoMemberAttribute)} in {inst.GetType().Name}. If you sure that attribute is set ensure that this is not a field");
+                    if (RuntimeProtocol.VerboseLog) Console.WriteLine($"[{typeof(BasicSerializer).Name}] Property {field} lacks {nameof(ProtoMemberAttribute)}!!! Ensure all properties has correctly setted up {nameof(ProtoMemberAttribute)} in {inst.GetType().Name}. If you sure that attribute is set ensure that this is not a field");
                     reader.SkipField();
                     continue;
                 }
@@ -82,7 +84,7 @@ namespace Catapult.Protocol.Runtime.Serializers
                     }
                 }
                 else
-                    Console.WriteLine($"[{typeof(BasicSerializer).Name}] Value of {prop.Name} remains null after reading, is this intended?");
+                    if (RuntimeProtocol.VerboseLog) Console.WriteLine($"[{typeof(BasicSerializer).Name}] Value of {prop.Name} remains null after reading, is this intended?");
             }
 
             return inst;
@@ -92,7 +94,7 @@ namespace Catapult.Protocol.Runtime.Serializers
         {
             res = null;
 
-            Console.WriteLine($"[{typeof(BasicSerializer).Name}] R: {type} - {Type.GetTypeCode(type)}");
+            if (RuntimeProtocol.VerboseLog) Console.WriteLine($"[{typeof(BasicSerializer).Name}] R: {type} - {Type.GetTypeCode(type)}");
 
             var ser = type.GetCustomAttribute<SerializerAttribute>();
             if (ser != null || type.GetCustomAttribute<ProtoContractAttribute>() != null)
@@ -233,11 +235,11 @@ namespace Catapult.Protocol.Runtime.Serializers
                         }
                     }
 
-                    Console.WriteLine($"[{typeof(BasicSerializer).Name}] Property of type \"{type}\" (reading as {TypeCode.Object}) IS NOT SUPPORTED!!! Implement custom {nameof(ISerializer)} for this message to read this property.");
+                    if (RuntimeProtocol.VerboseLog) Console.WriteLine($"[{typeof(BasicSerializer).Name}] Property of type \"{type}\" (reading as {TypeCode.Object}) IS NOT SUPPORTED!!! Implement custom {nameof(ISerializer)} for this message to read this property.");
                     reader.SkipField();
                     break;
                 default:
-                    Console.WriteLine($"[{typeof(BasicSerializer).Name}] Property of type \"{type}\" (reading as {Type.GetTypeCode(type)}) IS NOT SUPPORTED!!! Implement custom {nameof(ISerializer)} for this message to read this property.");
+                    if (RuntimeProtocol.VerboseLog) Console.WriteLine($"[{typeof(BasicSerializer).Name}] Property of type \"{type}\" (reading as {Type.GetTypeCode(type)}) IS NOT SUPPORTED!!! Implement custom {nameof(ISerializer)} for this message to read this property.");
                     reader.SkipField();
                     break;
             }
@@ -410,7 +412,7 @@ namespace Catapult.Protocol.Runtime.Serializers
             var contract = bodyType.GetCustomAttribute<ProtoContractAttribute>();
             if (contract == null)
             {
-                Console.WriteLine($"[{typeof(BasicSerializer).Name}] Body {contract} lacks {nameof(ProtoContractAttribute)}!!!");
+                if (RuntimeProtocol.VerboseLog) Console.WriteLine($"[{typeof(BasicSerializer).Name}] Body {contract} lacks {nameof(ProtoContractAttribute)}!!!");
                 return;
             }
 

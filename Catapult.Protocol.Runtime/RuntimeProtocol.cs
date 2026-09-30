@@ -42,11 +42,13 @@ namespace Catapult.Protocol.Runtime
             typeof(StoreProtocolMarker).Assembly,
         ];
 
-        internal static readonly Dictionary<uint, Type> KnownMessages;
+        internal static Dictionary<uint, Type>? KnownMessages;
 
-        static RuntimeProtocol()
+        internal static bool VerboseLog;
+        public static void Initialize(bool verbose)
         {
             KnownMessages = [];
+            VerboseLog = verbose;
 
             foreach (var asm in _assemblies)
             {
@@ -58,7 +60,7 @@ namespace Catapult.Protocol.Runtime
 
                     if (string.IsNullOrEmpty(name))
                     {
-                        Console.WriteLine($"[{typeof(RuntimeProtocol).Name}] Model {contract.Name} lacks {nameof(ProtoContractAttribute)} name, it CANNOT be used in messaging!!");
+                        if (VerboseLog) Console.WriteLine($"[{typeof(RuntimeProtocol).Name}] Model {contract.Name} lacks {nameof(ProtoContractAttribute)} name, it CANNOT be used in messaging!!");
                         continue;
                     }
 
@@ -83,10 +85,11 @@ namespace Catapult.Protocol.Runtime
                 Console.WriteLine(ms.Key + " " + ms.Value);
 #endif
         }
-
         public static Message? ReadMessage(MemoryStream stream) => ReadMessage(stream.ToArray());
         public static Message? ReadMessage(byte[] data)
         {
+            if (KnownMessages == null || KnownMessages.Count == 0) throw new InvalidOperationException($"{nameof(KnownMessages)} is not initialized!");
+
             if (data == null || data.Length == 0) return null!;
 
             try
@@ -110,7 +113,7 @@ namespace Catapult.Protocol.Runtime
                             {
                                 if (!KnownMessages.TryGetValue((uint)hField, out var hType))
                                 {
-                                    Console.WriteLine($"[{typeof(RuntimeProtocol).Name}] Unknown message header with id={hField}");
+                                    if (VerboseLog) Console.WriteLine($"[{typeof(RuntimeProtocol).Name}] Unknown message header with id={hField}");
                                     reader.SkipField();
                                     continue;
                                 }
@@ -137,7 +140,7 @@ namespace Catapult.Protocol.Runtime
 
                     if (!KnownMessages.TryGetValue((uint)f, out var bType))
                     {
-                        Console.WriteLine($"[{typeof(RuntimeProtocol).Name}] Unknown message body with id={f}");
+                        if (VerboseLog) Console.WriteLine($"[{typeof(RuntimeProtocol).Name}] Unknown message body with id={f}");
                         reader.SkipField();
                         continue;
                     }
@@ -193,7 +196,7 @@ namespace Catapult.Protocol.Runtime
             }
             catch (Exception e)
             {
-                Console.WriteLine($"[{typeof(RuntimeProtocol).Name}] Unable to read message!\n{e}");
+                if (VerboseLog) Console.WriteLine($"[{typeof(RuntimeProtocol).Name}] Unable to read message!\n{e}");
                 return null;
             }
         }
@@ -289,14 +292,14 @@ namespace Catapult.Protocol.Runtime
             id = Guid.Empty;
             if (replyTo.Headers == null || replyTo.Headers.Count == 0)
             {
-                Console.WriteLine($"[{typeof(RuntimeProtocol).Name}] Attempt to reply to {replyTo.GetTypeName()} but message doesn't contain headers!");
+                if (VerboseLog) Console.WriteLine($"[{typeof(RuntimeProtocol).Name}] Attempt to reply to {replyTo.GetTypeName()} but message doesn't contain headers!");
                 return false;
             }
 
             if (replyTo.TryGetHeader<OperationHeader>(out var h))
             {
                 if (h.Type != OperationType.Request)
-                    Console.WriteLine($"[{typeof(RuntimeProtocol).Name}] Attempt to reply to a message that is not a request but {h.Type} instead ({replyTo.GetTypeName()})! Is this intended?");
+                    if (VerboseLog) Console.WriteLine($"[{typeof(RuntimeProtocol).Name}] Attempt to reply to a message that is not a request but {h.Type} instead ({replyTo.GetTypeName()})! Is this intended?");
 
                 id = h.RequestId;
             }
@@ -334,6 +337,8 @@ namespace Catapult.Protocol.Runtime
 
         static void WriteMessageHeaders(List<MessageHeader> headers, ProtoWriter writer)
         {
+            if (KnownMessages == null || KnownMessages.Count == 0) throw new InvalidOperationException($"{nameof(KnownMessages)} is not initialized!");
+
             if (headers == null) return;
 
             foreach (var header in headers)
@@ -373,6 +378,8 @@ namespace Catapult.Protocol.Runtime
 
         static SubItemToken WriteBody<T>(object? body, Type msgIn, ProtoWriter writer)
         {
+            if (KnownMessages == null || KnownMessages.Count == 0) throw new InvalidOperationException($"{nameof(KnownMessages)} is not initialized!");
+
             var resultId = MarkMessage($"{(msgIn != null ? msgIn.GetCustomAttribute<ProtoContractAttribute>()?.Name : "")}{typeof(T).GetCustomAttribute<ProtoContractAttribute>()?.Name}");
 
             if (!KnownMessages.TryGetValue(resultId, out _))
