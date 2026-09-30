@@ -188,9 +188,9 @@ namespace Catapult.Protocol.Runtime.Serializers
 
                     if (type.IsGenericType)
                     {
-                        var genTypeDef = type.GetGenericTypeDefinition();
+                        var gDef = type.GetGenericTypeDefinition();
 
-                        if (genTypeDef == typeof(List<>) || genTypeDef == typeof(IEnumerable<>))
+                        if (gDef == typeof(List<>) || gDef == typeof(IEnumerable<>) || gDef == typeof(IReadOnlyCollection<>))
                         {
                             var itemType = type.GetGenericArguments()[0];
 
@@ -204,7 +204,7 @@ namespace Catapult.Protocol.Runtime.Serializers
                             return true;
                         }
 
-                        if (genTypeDef == typeof(Dictionary<,>))
+                        if (gDef == typeof(Dictionary<,>))
                         {
                             var dict = (IDictionary)Activator.CreateInstance(type)!;
                             var args = type.GetGenericArguments();
@@ -258,11 +258,22 @@ namespace Catapult.Protocol.Runtime.Serializers
             }
         }
 
-        private void WriteValue(Type type, object val, int tag, ProtoWriter writer)
+        void WriteValue(Type type, object val, int tag, ProtoWriter writer)
         {
             if (val == null) return;
 
-            LogLineDebug(GetType(), $"W: {type} - {tag} {Type.GetTypeCode(type)}");
+            var bodyType = val.GetType();
+
+            if (bodyType != type)
+            {
+                var contract = bodyType.GetCustomAttribute<ProtoContractAttribute>();
+
+                if (contract != null && type.GetCustomAttribute<ProtoContractAttribute>() != null)
+                {
+                    WriteBody(type, bodyType, val, tag, writer);
+                    return;
+                }
+            }
 
             var intefaces = type.GetInterfaces();
             var ser = intefaces.Select(x => x.GetCustomAttribute<SerializerAttribute>()).FirstOrDefault(x => x != null) ?? type.GetCustomAttribute<SerializerAttribute>();
@@ -342,13 +353,6 @@ namespace Catapult.Protocol.Runtime.Serializers
                         return;
                     }
 
-                    if (type.IsEnum)
-                    {
-                        ProtoWriter.WriteFieldHeader(tag, WireType.Variant, writer);
-                        ProtoWriter.WriteInt32((int)val, writer);
-                        return;
-                    }
-
                     if (type.IsArray)
                     {
                         var arr = (Array)val;
@@ -363,11 +367,11 @@ namespace Catapult.Protocol.Runtime.Serializers
 
                     if (type.IsGenericType)
                     {
-                        var gdef = type.GetGenericTypeDefinition();
+                        var gDef = type.GetGenericTypeDefinition();
 
-                        if (gdef == typeof(List<>))
+                        if (gDef == typeof(List<>) || gDef == typeof(IEnumerable<>) || gDef == typeof(IReadOnlyCollection<>))
                         {
-                            var list = (IList)val;
+                            var list = (IEnumerable)val;
                             var itemType = type.GetGenericArguments()[0];
                             foreach (var item in list)
                             {
@@ -377,7 +381,7 @@ namespace Catapult.Protocol.Runtime.Serializers
                             return;
                         }
 
-                        if (gdef == typeof(Dictionary<,>))
+                        if (gDef == typeof(Dictionary<,>))
                         {
                             var dict = (IDictionary)val;
                             var args = type.GetGenericArguments();
@@ -402,5 +406,41 @@ namespace Catapult.Protocol.Runtime.Serializers
             }
         }
 
+        void WriteBody(Type baseType, Type bodyType, object val, int tag, ProtoWriter writer)
+        {
+            var contract = bodyType.GetCustomAttribute<ProtoContractAttribute>();
+            if (contract == null)
+            {
+                LogLineWarn(GetType(), $"Body {contract} lacks {nameof(ProtoContractAttribute)}!!!");
+                return;
+            }
+
+            ProtoWriter.WriteFieldHeader(tag, WireType.String, writer);
+
+            var token1 = ProtoWriter.StartSubItem(null, writer);
+
+            var id = (int)RuntimeProtocol.MarkMessage(contract.Name);
+            ProtoWriter.WriteFieldHeader(id, WireType.String, writer);
+
+            var token2 = ProtoWriter.StartSubItem(null, writer);
+            WriteProps(bodyType, val, writer);
+            ProtoWriter.EndSubItem(token2, writer);
+
+            WriteProps(baseType, val, writer);
+
+            ProtoWriter.EndSubItem(token1, writer);
+        }
+
+        void WriteProps(Type type, object val, ProtoWriter writer)
+        {
+            foreach (var prop in type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).Where(x => x.GetCustomAttribute<ProtoMemberAttribute>() != null).OrderBy(x => x.GetCustomAttribute<ProtoMemberAttribute>()!.Tag))
+            {
+                var value = prop.GetValue(val);
+                if (value == null) continue;
+
+                var attr = prop.GetCustomAttribute<ProtoMemberAttribute>()!;
+                WriteValue(prop.PropertyType, value, attr.Tag, writer);
+            }
+        }
     }
 }

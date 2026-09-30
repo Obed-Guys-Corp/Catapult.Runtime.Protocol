@@ -14,6 +14,7 @@ using FallGuys.Lobby.Protocol.Common;
 using FallGuys.Match.Protocol.Client;
 using FallGuys.Player.Protocol.Client;
 using FallGuys.Store.Protocol.Client;
+using FallGuys.Store.Protocol.Client.Dtos.Symphony;
 using ProtoBuf;
 using System.Buffers.Binary;
 using System.Reflection;
@@ -24,7 +25,7 @@ namespace Catapult.Protocol.Runtime
 {
     public static class RuntimeProtocol
     {
-        //this forces load of assemblies so they can be identified
+        //this forces load of assemblies so messages in them can be identified
         //i don't like this design in general and should probably move the whole identification process into the build process
         //cuz there's no reason to have it in runtime
         static readonly Assembly[] _assemblies = 
@@ -270,7 +271,7 @@ namespace Catapult.Protocol.Runtime
             }!);
         }
 
-        private static byte[] Write(Message response, Action<ProtoWriter> doWrite)
+        static byte[] Write(Message response, Action<ProtoWriter> doWrite)
         {
             using var ms = new MemoryStream();
            
@@ -394,7 +395,7 @@ namespace Catapult.Protocol.Runtime
 
                 ProtoWriter.EndSubItem(cToken, writer);
             }
-
+            
             return bToken;
         }
 
