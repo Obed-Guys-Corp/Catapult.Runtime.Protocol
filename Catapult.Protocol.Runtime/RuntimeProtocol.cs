@@ -14,12 +14,10 @@ using FallGuys.Lobby.Protocol.Common;
 using FallGuys.Match.Protocol.Client;
 using FallGuys.Player.Protocol.Client;
 using FallGuys.Store.Protocol.Client;
-using FallGuys.Store.Protocol.Client.Dtos.Symphony;
 using ProtoBuf;
 using System.Buffers.Binary;
 using System.Reflection;
 using System.Text;
-using static Catapult.Protocol.Runtime.Logger;
 
 namespace Catapult.Protocol.Runtime
 {
@@ -60,7 +58,7 @@ namespace Catapult.Protocol.Runtime
 
                     if (string.IsNullOrEmpty(name))
                     {
-                        LogLineWarn(typeof(RuntimeProtocol), $"Model {contract.Name} lacks {nameof(ProtoContractAttribute)} name, it CANNOT be used in messaging!!");
+                        Console.WriteLine($"[{typeof(RuntimeProtocol).Name}] Model {contract.Name} lacks {nameof(ProtoContractAttribute)} name, it CANNOT be used in messaging!!");
                         continue;
                     }
 
@@ -112,7 +110,7 @@ namespace Catapult.Protocol.Runtime
                             {
                                 if (!KnownMessages.TryGetValue((uint)hField, out var hType))
                                 {
-                                    LogLineWarn(typeof(RuntimeProtocol), $"Unknown message header with id={hField}");
+                                    Console.WriteLine($"[{typeof(RuntimeProtocol).Name}] Unknown message header with id={hField}");
                                     reader.SkipField();
                                     continue;
                                 }
@@ -139,7 +137,7 @@ namespace Catapult.Protocol.Runtime
 
                     if (!KnownMessages.TryGetValue((uint)f, out var bType))
                     {
-                        LogLineWarn(typeof(RuntimeProtocol), $"Unknown message body with id={f}");
+                        Console.WriteLine($"[{typeof(RuntimeProtocol).Name}] Unknown message body with id={f}");
                         reader.SkipField();
                         continue;
                     }
@@ -195,7 +193,7 @@ namespace Catapult.Protocol.Runtime
             }
             catch (Exception e)
             {
-                LogLineError(typeof(RuntimeProtocol), $"Unable to read message!\n{e}");
+                Console.WriteLine($"[{typeof(RuntimeProtocol).Name}] Unable to read message!\n{e}");
                 return null;
             }
         }
@@ -291,14 +289,14 @@ namespace Catapult.Protocol.Runtime
             id = Guid.Empty;
             if (replyTo.Headers == null || replyTo.Headers.Count == 0)
             {
-                LogLineError(typeof(RuntimeProtocol), $"Attempt to reply to {replyTo.GetTypeName()} but message doesn't contain headers!");
+                Console.WriteLine($"[{typeof(RuntimeProtocol).Name}] Attempt to reply to {replyTo.GetTypeName()} but message doesn't contain headers!");
                 return false;
             }
 
             if (replyTo.TryGetHeader<OperationHeader>(out var h))
             {
                 if (h.Type != OperationType.Request)
-                    LogLineWarn(typeof(RuntimeProtocol), $"Attempt to reply to a message that is not a request but {h.Type} instead ({replyTo.GetTypeName()})! Is this intended?");
+                    Console.WriteLine($"[{typeof(RuntimeProtocol).Name}] Attempt to reply to a message that is not a request but {h.Type} instead ({replyTo.GetTypeName()})! Is this intended?");
 
                 id = h.RequestId;
             }

@@ -3,7 +3,6 @@ using Catapult.Protocol.Runtime.Serializers.Core;
 using ProtoBuf;
 using System.Collections;
 using System.Reflection;
-using static Catapult.Protocol.Runtime.Logger;
 
 namespace Catapult.Protocol.Runtime.Serializers
 {
@@ -34,7 +33,7 @@ namespace Catapult.Protocol.Runtime.Serializers
 
                 if (!attrs.TryGetValue(field, out var prop))
                 {
-                    LogLineWarn(GetType(), $"Property {field} lacks {nameof(ProtoMemberAttribute)}!!! Ensure all properties has correctly setted up {nameof(ProtoMemberAttribute)} in {inst.GetType().Name}. If you sure that attribute is set ensure that this is not a field");
+                    Console.WriteLine($"[{typeof(BasicSerializer).Name}] Property {field} lacks {nameof(ProtoMemberAttribute)}!!! Ensure all properties has correctly setted up {nameof(ProtoMemberAttribute)} in {inst.GetType().Name}. If you sure that attribute is set ensure that this is not a field");
                     reader.SkipField();
                     continue;
                 }
@@ -83,7 +82,7 @@ namespace Catapult.Protocol.Runtime.Serializers
                     }
                 }
                 else
-                    LogLineWarn(GetType(), $"Value of {prop.Name} remains null after reading, is this intended?");
+                    Console.WriteLine($"[{typeof(BasicSerializer).Name}] Value of {prop.Name} remains null after reading, is this intended?");
             }
 
             return inst;
@@ -93,7 +92,7 @@ namespace Catapult.Protocol.Runtime.Serializers
         {
             res = null;
 
-            LogLineDebug(GetType(), $"R: {type} - {Type.GetTypeCode(type)}");
+            Console.WriteLine($"[{typeof(BasicSerializer).Name}] R: {type} - {Type.GetTypeCode(type)}");
 
             var ser = type.GetCustomAttribute<SerializerAttribute>();
             if (ser != null || type.GetCustomAttribute<ProtoContractAttribute>() != null)
@@ -234,11 +233,11 @@ namespace Catapult.Protocol.Runtime.Serializers
                         }
                     }
 
-                    LogLineWarn(GetType(), $"Property of type \"{type}\" (reading as {TypeCode.Object}) IS NOT SUPPORTED!!! Implement custom {nameof(ISerializer)} for this message to read this property.");
+                    Console.WriteLine($"[{typeof(BasicSerializer).Name}] Property of type \"{type}\" (reading as {TypeCode.Object}) IS NOT SUPPORTED!!! Implement custom {nameof(ISerializer)} for this message to read this property.");
                     reader.SkipField();
                     break;
                 default:
-                    LogLineWarn(GetType(), $"Property of type \"{type}\" (reading as {Type.GetTypeCode(type)}) IS NOT SUPPORTED!!! Implement custom {nameof(ISerializer)} for this message to read this property.");
+                    Console.WriteLine($"[{typeof(BasicSerializer).Name}] Property of type \"{type}\" (reading as {Type.GetTypeCode(type)}) IS NOT SUPPORTED!!! Implement custom {nameof(ISerializer)} for this message to read this property.");
                     reader.SkipField();
                     break;
             }
@@ -411,7 +410,7 @@ namespace Catapult.Protocol.Runtime.Serializers
             var contract = bodyType.GetCustomAttribute<ProtoContractAttribute>();
             if (contract == null)
             {
-                LogLineWarn(GetType(), $"Body {contract} lacks {nameof(ProtoContractAttribute)}!!!");
+                Console.WriteLine($"[{typeof(BasicSerializer).Name}] Body {contract} lacks {nameof(ProtoContractAttribute)}!!!");
                 return;
             }
 
