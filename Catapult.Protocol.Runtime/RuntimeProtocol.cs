@@ -43,9 +43,13 @@ namespace Catapult.Protocol.Runtime
         ];
 
         internal static Dictionary<uint, Type>? KnownMessages;
-
         internal static bool VerboseLog;
-        public static void Initialize(bool verbose)
+        
+        /// <summary>
+        /// Initializes protobuf message ids 
+        /// </summary>
+        /// <param name="verbose">Verbose logs</param>
+        public static void Initialize(bool verbose = false)
         {
             KnownMessages = [];
             VerboseLog = verbose;
@@ -85,16 +89,30 @@ namespace Catapult.Protocol.Runtime
                 Console.WriteLine(ms.Key + " " + ms.Value);
 #endif
         }
+
+        /// <summary>
+        /// Reads protobuf bytes from <see cref="MemoryStream"/> and deserializes them into a <see cref="Message"/> object
+        /// </summary>
+        /// <param name="stream"><see cref="MemoryStream"/> that contains protobuf bytes</param>
+        /// <returns><see cref="Message"/> object that represents actual message</returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public static Message? ReadMessage(MemoryStream stream) => ReadMessage(stream.ToArray());
-        public static Message? ReadMessage(byte[] data)
+
+        /// <summary>
+        /// Reads protobuf bytes and deserializes them into a <see cref="Message"/> object
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns><see cref="Message"/> object that represents actual message</returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public static Message? ReadMessage(byte[] message)
         {
             if (KnownMessages == null || KnownMessages.Count == 0) throw new InvalidOperationException($"{nameof(KnownMessages)} is not initialized!");
 
-            if (data == null || data.Length == 0) return null!;
+            if (message == null || message.Length == 0) return null!;
 
             try
             {
-                using var reader = ProtoReader.Create(new MemoryStream(data, 0, data.Length), null, null);
+                using var reader = ProtoReader.Create(new MemoryStream(message, 0, message.Length), null, null);
 
                 Message? res = null!;
                 List<MessageHeader>? headers = null!;
@@ -201,10 +219,30 @@ namespace Catapult.Protocol.Runtime
             }
         }
 
-
+        /// <summary>
+        /// Writes <see cref="Result{T}"/> protobuf bytes
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="response"></param>
+        /// <param name="replyTo"><see cref="Message"/> that represent request</param>
+        /// <returns>Protobuf bytes that represent <see cref="Result{T}"/> object</returns>
         public static byte[] CreateReply<T>(Result<T> response, Message replyTo) => GetReplyID(replyTo, out var id) ? CreateReply(response, id) : null!;
+
+        /// <summary>
+        /// Writes <see cref="Result"/> protobuf bytes
+        /// </summary>
+        /// <param name="response"></param>
+        /// <param name="replyTo"><see cref="Message"/> that represent request</param>
+        /// <returns>Protobuf bytes that represent <see cref="Result"/> object</returns>
         public static byte[] CreateReply(Message response, Message replyTo) => GetReplyID(replyTo, out var id) ? CreateReply((dynamic)response, id) : null!;
 
+        /// <summary>
+        /// Writes <see cref="Result{T}"/> protobuf bytes
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="response"></param>
+        /// <param name="replyId">ID of request from <see cref="OperationHeader"/></param>
+        /// <returns>Protobuf bytes that represent <see cref="Result{T}"/> object</returns>
         public static byte[] CreateReply<T>(Result<T> response, Guid replyId)
         {
             AttachReplyHeaders(response, replyId);
@@ -217,6 +255,12 @@ namespace Catapult.Protocol.Runtime
             });
         }
 
+        /// <summary>
+        /// Writes <see cref="Result"/> protobuf bytes
+        /// </summary>
+        /// <param name="response"></param>
+        /// <param name="replyId">ID of request from <see cref="OperationHeader"/></param>
+        /// <returns>Protobuf bytes that represent <see cref="Result"/> object</returns>
         public static byte[] CreateReply(Result response, Guid replyId)
         {
             AttachReplyHeaders(response, replyId);
@@ -229,6 +273,12 @@ namespace Catapult.Protocol.Runtime
             });
         }
 
+        /// <summary>
+        /// Writes <see cref="ErrorMessage"/> protobuf bytes
+        /// </summary>
+        /// <param name="response"></param>
+        /// <param name="replyId">ID of request from <see cref="OperationHeader"/></param>
+        /// <returns>Protobuf bytes that represent <see cref="ErrorMessage"/> object</returns>
         public static byte[] CreateReply(ErrorMessage response, Guid replyId)
         {
             AttachReplyHeaders(response, replyId);
@@ -241,6 +291,12 @@ namespace Catapult.Protocol.Runtime
             });
         }
 
+        /// <summary>
+        /// Writes <see cref="Message{T}"/> protobuf bytes
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="message"></param>
+        /// <returns>Protobuf bytes that represent <see cref="Message{T}"/> object</returns>
         public static byte[] CreateMessage<T>(Message<T> message)
         {
             AttachRequestHeaders(message);
@@ -252,6 +308,12 @@ namespace Catapult.Protocol.Runtime
             }!);
         }
 
+        /// <summary>
+        /// Writes <see cref="KeepAliveMessage"/> protobuf bytes
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="message"></param>
+        /// <returns>Protobuf bytes that represent <see cref="KeepAliveMessage"/> object</returns>
         public static byte[] CreateMessage(KeepAliveMessage message)
         {
             message.AttachHeader(new CorrelationHeader
