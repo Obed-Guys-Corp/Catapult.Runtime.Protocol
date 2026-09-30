@@ -237,6 +237,14 @@ namespace Catapult.Protocol.Runtime
         public static byte[] CreateReply(Message response, Message replyTo) => GetReplyID(replyTo, out var id) ? CreateReply((dynamic)response, id) : null!;
 
         /// <summary>
+        /// Writes <see cref="ErrorMessage"/> protobuf bytes
+        /// </summary>
+        /// <param name="response"></param>
+        /// <param name="replyTo"><see cref="ErrorMessage"/> that represent request</param>
+        /// <returns>Protobuf bytes that represent <see cref="ErrorMessage"/> object</returns>
+        public static byte[] CreateReply(ErrorMessage response, Message replyTo) => GetReplyID(replyTo, out var id) ? CreateReply(response, id) : null!;
+
+        /// <summary>
         /// Writes <see cref="Result{T}"/> protobuf bytes
         /// </summary>
         /// <typeparam name="T"></typeparam>
