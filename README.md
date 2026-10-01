@@ -22,7 +22,7 @@ Console.WriteLine($"<-- {msg?.GetTypeName()}");
 Console.WriteLine(JsonConvert.SerializeObject(msg, Formatting.Indented));
 ```
 Output
-```json
+```
 <-- Result<AuthenticationResponse>
 {
     "Body": { "UserId": "e261c82b-957b-4d5c-af18-9529ab3469a2" },
@@ -56,6 +56,7 @@ var bytes = RuntimeProtocol.CreateMessage(new Message<AuthenticationRequest>()
 
 Console.WriteLine(Convert.ToHexString(bytes));
 ```
+
 Output
 ```
 E2B4F6B4020E0A0C0A032E2E2E120331303220000A19E2ADEF78140A12099D97218CE3B2314E11BE7402A5881B8E690A1CE2A9FCC201160A12095561604C2D6F1941118E73F488236DE2791002
@@ -86,8 +87,9 @@ switch (msg)
         throw new NotSupportedException();
 }
 ```
+
 Output
-```json
+```
 <-- Result<AuthenticationResponse>
 We authenticated with account: e261c82b-957b-4d5c-af18-9529ab3469a2
 Auth time (UTC): 3/9/2026 3:26:07 AM
@@ -115,8 +117,9 @@ if (msg is ErrorMessage err)
 
 Console.WriteLine("No errors!");
 ```
+
 Output
-```json
+```
 <-- ErrorMessage
 Fall Guys returned error: {
     "Error": {
