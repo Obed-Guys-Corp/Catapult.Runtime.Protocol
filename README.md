@@ -6,16 +6,17 @@ Runtime implementation of Fall Guys Catapult protocol
 ```csharp
 using Catapult.Protocol;
 using Catapult.Runtime.Protocol;
+using Newtonsoft.Json;
 
 RuntimeProtocol.Initialize(); //initialize messages
 
-//sample protobuf bytes
+//sample protobuf bytes you get via websocket
 var bytes = Convert.FromHexString("AAA9D2F902280A260A2465323631633832622D393537622D346435632D616631382D3935323961623334363961320A1CE2A9FCC201160A12093FFB295CC4BD644E118EE5C6A23654574310030A13AA9FF6D3020D0A0B08FCA6E7ACB4E5FE3E1005");
 
 var msg = RuntimeProtocol.ReadMessage(bytes);
 
 Console.WriteLine($"<-- {msg?.GetTypeName()}");
-Console.WriteLine(JsonConvert.SerializeObject(msg));
+Console.WriteLine(JsonConvert.SerializeObject(msg, Formatting.Indented));
 
 //output
 <-- Result<AuthenticationResponse>
@@ -32,6 +33,8 @@ Console.WriteLine(JsonConvert.SerializeObject(msg));
 ```
 
 ### Writing a message
+> [!NOTE]
+> CorrelationHeader and OperationHeader attached to the message in RuntimeProtocol.CreateMessage(), no need to attach them manually
 ```csharp
 using Catapult.Protocol;
 using Catapult.Runtime.Protocol;
@@ -52,6 +55,80 @@ Console.WriteLine(Convert.ToHexString(bytes));
 
 //output
 E2B4F6B4020E0A0C0A032E2E2E120331303220000A19E2ADEF78140A12099D97218CE3B2314E11BE7402A5881B8E690A1CE2A9FCC201160A12095561604C2D6F1941118E73F488236DE2791002
+```
+> [!TIP]
+> You can inspect raw protobuf bytes via [Protobuf Decoder](https://protobuf-decoder.netlify.app/)
+
+### Handling messages
+```csharp
+using Catapult.Protocol;
+using Catapult.Runtime.Protocol;
+using Catapult.Services.Gateway.Protocol.Client;
+
+RuntimeProtocol.Initialize(); //initialize messages
+
+//sample protobuf bytes you get via websocket
+var bytes = Convert.FromHexString("AAA9D2F902280A260A2465323631633832622D393537622D346435632D616631382D3935323961623334363961320A1CE2A9FCC201160A12093FFB295CC4BD644E118EE5C6A23654574310030A13AA9FF6D3020D0A0B08FCA6E7ACB4E5FE3E1005");
+
+var msg = RuntimeProtocol.ReadMessage(bytes);
+
+Console.WriteLine($"<-- {msg?.GetTypeName()}");
+
+switch (msg)
+{
+    case Result<AuthenticationResponse> authResp:
+        Console.WriteLine($"We authenticated with account: {authResp.Body?.UserId}");
+        Console.WriteLine($"Auth time (UTC): {authResp.GetHeader<TimestampHeader>()?.Utc}");
+        break;
+    default:
+        throw new NotSupportedException();
+}
+
+//output
+<-- Result<AuthenticationResponse>
+We authenticated with account: e261c82b-957b-4d5c-af18-9529ab3469a2
+Auth time (UTC): 3/9/2026 3:26:07 AM
+```
+
+### Handling errors
+```csharp
+using Catapult.Protocol;
+using Catapult.Runtime.Protocol;
+using Newtonsoft.Json;
+
+RuntimeProtocol.Initialize(); //initialize messages
+
+//sample protobuf bytes you get via websocket
+var bytes = Convert.FromHexString("EAE6E80B270A25089003120A426164526571756573741A0A54657374206572726F72220808661204546573740A19E2ADEF78140A1209BDC26A242B6955451186669AA2B649851F0A1CE2A9FCC201160A1209E0BCF20E0202974E1183348EAADA9BBFCF1003");
+
+var msg = RuntimeProtocol.ReadMessage(bytes);
+
+Console.WriteLine($"<-- {msg?.GetTypeName()}");
+
+if (msg is ErrorMessage err)
+{
+    Console.WriteLine($"Fall Guys returned error: {JsonConvert.SerializeObject(err, Formatting.Indented)}");
+    return;
+}
+
+Console.WriteLine("No errors!");
+
+//output
+<-- ErrorMessage
+Fall Guys returned error: {
+    "Error": {
+        "errorCode": 400,
+        "ErrorString": "BadRequest",
+        "Message": "Test error",
+        "Details": { "ServerCode": 102, "Reason": "Test", "TechnicalMessage": null, "Inner": null }
+    },
+    "IsSuccess": false,
+    "Headers": [
+        { "ActivityId": "246ac2bd-692b-4555-8666-9aa2b649851f" },
+        { "RequestId": "0ef2bce0-0202-4e97-8334-8eaada9bbfcf", "Type": 3 }
+    ]
+}
+
 ```
 
 ## Obtaining protobuf models
