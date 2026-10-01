@@ -1,7 +1,7 @@
-﻿using Catapult.Protocol.Runtime.Serializers;
-using Catapult.Protocol.Runtime.Serializers.Core;
+﻿using Catapult.Runtime.Protocol.Serializers;
+using Catapult.Runtime.Protocol.Serializers.Core;
 
-namespace Catapult.Protocol.Runtime.Attributes
+namespace Catapult.Runtime.Protocol.Attributes
 {
     /// <summary>
     /// Marks a class of protobuf message to be using custom serializer instead of <see cref="BasicSerializer"/>

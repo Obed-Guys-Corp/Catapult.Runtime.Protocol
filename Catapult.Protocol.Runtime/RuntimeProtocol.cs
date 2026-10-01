@@ -1,9 +1,10 @@
 ﻿using Catapult.Modules.Items.Protocol;
+using Catapult.Protocol;
 using Catapult.Protocol.Headers;
 using Catapult.Protocol.Internal;
-using Catapult.Protocol.Runtime.Attributes;
-using Catapult.Protocol.Runtime.Serializers;
-using Catapult.Protocol.Runtime.Serializers.Core;
+using Catapult.Runtime.Protocol.Attributes;
+using Catapult.Runtime.Protocol.Serializers;
+using Catapult.Runtime.Protocol.Serializers.Core;
 using Catapult.Services.Gateway.Protocol.Client;
 using Catapult.Services.Login.Protocol.Client;
 using FallGuys.Client.Protocol;
@@ -19,7 +20,7 @@ using System.Buffers.Binary;
 using System.Reflection;
 using System.Text;
 
-namespace Catapult.Protocol.Runtime
+namespace Catapult.Runtime.Protocol
 {
     /// <summary>
     /// Provides basic operations for reading and writing protobuf messages at runtime
