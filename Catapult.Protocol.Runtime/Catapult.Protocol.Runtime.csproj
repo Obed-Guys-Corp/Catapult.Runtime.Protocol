@@ -10,6 +10,7 @@
     <Version>89.0.0.0</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<RepositoryUrl>https://github.com/floyzi/Catapult.Protocol</RepositoryUrl>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

@@ -21,6 +21,9 @@ using System.Text;
 
 namespace Catapult.Protocol.Runtime
 {
+    /// <summary>
+    /// Provides basic operations for reading and writing protobuf messages at runtime
+    /// </summary>
     public static class RuntimeProtocol
     {
         //this forces load of assemblies so messages in them can be identified
@@ -220,44 +223,44 @@ namespace Catapult.Protocol.Runtime
         }
 
         /// <summary>
-        /// Writes <see cref="Result{T}"/> protobuf bytes
+        /// Writes <see cref="Result{TResultMessage}"/> protobuf bytes
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TResultMessage">The type of the result body</typeparam>
         /// <param name="response"></param>
         /// <param name="replyTo"><see cref="Message"/> that represent request</param>
-        /// <returns>Protobuf bytes that represent <see cref="Result{T}"/> object</returns>
-        public static byte[] CreateReply<T>(Result<T> response, Message replyTo) => GetReplyID(replyTo, out var id) ? CreateReply(response, id) : null!;
+        /// <returns>Protobuf bytes that represent <see cref="Result{TResultMessage}"/> object</returns>
+        public static byte[] CreateReply<TResultMessage>(Result<TResultMessage> response, Message replyTo) => GetReplyID(replyTo, out var id) ? CreateReply(response, id) : null!;
 
         /// <summary>
-        /// Writes <see cref="Result"/> protobuf bytes
+        /// Writes <see cref="Message"/> protobuf bytes
         /// </summary>
         /// <param name="response"></param>
         /// <param name="replyTo"><see cref="Message"/> that represent request</param>
-        /// <returns>Protobuf bytes that represent <see cref="Result"/> object</returns>
+        /// <returns>Protobuf bytes that represent <see cref="Message"/> object</returns>
         public static byte[] CreateReply(Message response, Message replyTo) => GetReplyID(replyTo, out var id) ? CreateReply((dynamic)response, id) : null!;
 
         /// <summary>
         /// Writes <see cref="ErrorMessage"/> protobuf bytes
         /// </summary>
         /// <param name="response"></param>
-        /// <param name="replyTo"><see cref="ErrorMessage"/> that represent request</param>
+        /// <param name="replyTo"><see cref="Message"/> that represent request</param>
         /// <returns>Protobuf bytes that represent <see cref="ErrorMessage"/> object</returns>
         public static byte[] CreateReply(ErrorMessage response, Message replyTo) => GetReplyID(replyTo, out var id) ? CreateReply(response, id) : null!;
 
         /// <summary>
-        /// Writes <see cref="Result{T}"/> protobuf bytes
+        /// Writes <see cref="Result{TResultMessage}"/> protobuf bytes
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TResultMessage">The type of the result body</typeparam>
         /// <param name="response"></param>
         /// <param name="replyId">ID of request from <see cref="OperationHeader"/></param>
-        /// <returns>Protobuf bytes that represent <see cref="Result{T}"/> object</returns>
-        public static byte[] CreateReply<T>(Result<T> response, Guid replyId)
+        /// <returns>Protobuf bytes that represent <see cref="Result{TResultMessage}"/> object</returns>
+        public static byte[] CreateReply<TResultMessage>(Result<TResultMessage> response, Guid replyId)
         {
             AttachReplyHeaders(response, replyId);
 
             return Write(response, writer =>
             {
-                var bToken = WriteBody<T>(response.Body, typeof(Result<>), writer);
+                var bToken = WriteBody<TResultMessage>(response.Body, typeof(Result<TResultMessage>), writer);
                 WriteField(2, response.Error, writer);
                 ProtoWriter.EndSubItem(bToken, writer);
             });
@@ -300,18 +303,18 @@ namespace Catapult.Protocol.Runtime
         }
 
         /// <summary>
-        /// Writes <see cref="Message{T}"/> protobuf bytes
+        /// Writes <see cref="Message{TBody}"/> protobuf bytes
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TBody">The type of the message body</typeparam>
         /// <param name="message"></param>
-        /// <returns>Protobuf bytes that represent <see cref="Message{T}"/> object</returns>
-        public static byte[] CreateMessage<T>(Message<T> message)
+        /// <returns>Protobuf bytes that represent <see cref="Message{TBody}"/> object</returns>
+        public static byte[] CreateMessage<TBody>(Message<TBody> message)
         {
             AttachRequestHeaders(message);
 
             return Write(message, writer =>
             {
-                var bToken = WriteBody<T>(message.Body, typeof(Message<>), writer);
+                var bToken = WriteBody<TBody>(message.Body, typeof(Message<>), writer);
                 ProtoWriter.EndSubItem(bToken, writer);
             }!);
         }
@@ -319,7 +322,6 @@ namespace Catapult.Protocol.Runtime
         /// <summary>
         /// Writes <see cref="KeepAliveMessage"/> protobuf bytes
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="message"></param>
         /// <returns>Protobuf bytes that represent <see cref="KeepAliveMessage"/> object</returns>
         public static byte[] CreateMessage(KeepAliveMessage message)
