@@ -1,0 +1,65 @@
+# Catapult.Runtime.Protocol
+Runtime implementation of Fall Guys Catapult protocol
+
+## Examples
+### Reading a message
+```csharp
+using Catapult.Protocol;
+using Catapult.Runtime.Protocol;
+
+RuntimeProtocol.Initialize(); //initialize messages
+
+//sample protobuf bytes
+var bytes = Convert.FromHexString("AAA9D2F902280A260A2465323631633832622D393537622D346435632D616631382D3935323961623334363961320A1CE2A9FCC201160A12093FFB295CC4BD644E118EE5C6A23654574310030A13AA9FF6D3020D0A0B08FCA6E7ACB4E5FE3E1005");
+
+var msg = RuntimeProtocol.ReadMessage(bytes);
+
+Console.WriteLine($"<-- {msg?.GetTypeName()}");
+Console.WriteLine(JsonConvert.SerializeObject(msg));
+
+//output
+<-- Result<AuthenticationResponse>
+{
+    "Body": { "UserId": "e261c82b-957b-4d5c-af18-9529ab3469a2" },
+    "Error": null,
+    "IsSuccess": true,
+    "Headers": [
+        { "RequestId": "5c29fb3f-bdc4-4e64-8ee5-c6a236545743", "Type": 3 },
+        { "Utc": "2026-03-09T03:26:07.9353278" }
+    ]
+}
+
+```
+
+### Writing a message
+```csharp
+using Catapult.Protocol;
+using Catapult.Runtime.Protocol;
+using Catapult.Services.Gateway.Protocol.Client;
+
+RuntimeProtocol.Initialize(); //initialize messages
+
+var bytes = RuntimeProtocol.CreateMessage(new Message<AuthenticationRequest>()
+{
+    Body = new()
+    {
+        Token = "...",
+        ContentEtag = "102"
+    }
+});
+
+Console.WriteLine(Convert.ToHexString(bytes));
+
+//output
+E2B4F6B4020E0A0C0A032E2E2E120331303220000A19E2ADEF78140A12099D97218CE3B2314E11BE7402A5881B8E690A1CE2A9FCC201160A12095561604C2D6F1941118E73F488236DE2791002
+```
+
+## Obtaining protobuf models
+TODO
+
+## License
+[![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)
+
+<div align="center">
+<sub>© Mediatonic Limited Fall Guys and all related characters and elements are trademarks of Mediatonic Limited</sub>
+</div>
