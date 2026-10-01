@@ -1,7 +1,7 @@
 <Solution>
   <Project Path="Catapult.Core/Catapult.Core.csproj" />
   <Project Path="Catapult.Modules.Items.Protocol/Catapult.Modules.Items.Protocol.csproj" />
-  <Project Path="Catapult.Protocol.Runtime/Catapult.Protocol.Runtime.csproj" Id="e9c18f37-7264-4105-b8e5-e7ba50798c40" />
+  <Project Path="Catapult.Protocol.Runtime/Catapult.Runtime.Protocol.csproj" Id="e9c18f37-7264-4105-b8e5-e7ba50798c40" />
   <Project Path="Catapult.Protocol/Catapult.Protocol.csproj" />
   <Project Path="Catapult.Services.Gateway.Protocol.Client/Catapult.Services.Gateway.Protocol.Client.csproj" />
   <Project Path="Catapult.Services.Login.Protocol.Client/Catapult.Services.Login.Protocol.Client.csproj" />
