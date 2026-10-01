@@ -4,17 +4,23 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Company>Obed Guys Corp.</Company>
+	<Authors>Floyzi</Authors>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <PackageId>Catapult.Protocol.Runtime</PackageId>
-    <Description>Catapult.Protocol.Runtime</Description>
+    <PackageId>Catapult.Runtime.Protocol</PackageId>
+    <Description>Runtime implementation of Fall Guys Catapult protocol</Description>
     <Version>89.0.0.0</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	<RepositoryUrl>https://github.com/floyzi/Catapult.Protocol</RepositoryUrl>
+	<RepositoryUrl>https://github.com/floyzi/Catapult.Runtime.Protocol</RepositoryUrl>
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.IO.Hashing" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <None Include="../README.md" Pack="true" PackagePath="README.md" />
   </ItemGroup>
 
   <PropertyGroup>
