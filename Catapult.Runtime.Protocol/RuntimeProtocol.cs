@@ -23,7 +23,7 @@ using System.Text;
 namespace Catapult.Runtime.Protocol
 {
     /// <summary>
-    /// Provides basic operations for reading and writing protobuf messages at runtime
+    /// Provides basic operations for reading and writing catapult protobuf messages at runtime
     /// </summary>
     public static class RuntimeProtocol
     {
