@@ -20,7 +20,7 @@ using Newtonsoft.Json;
 
 RuntimeProtocol.Initialize(); //initialize messages
 
-//sample of protobuf bytes that you get via websocket
+//sample of protobuf bytes that you get over websocket
 var bytes = Convert.FromHexString("AAA9D2F902280A260A2465323631633832622D393537622D346435632D616631382D3935323961623334363961320A1CE2A9FCC201160A12093FFB295CC4BD644E118EE5C6A23654574310030A13AA9FF6D3020D0A0B08FCA6E7ACB4E5FE3E1005");
 
 var msg = RuntimeProtocol.ReadMessage(bytes);
@@ -77,7 +77,7 @@ using Catapult.Services.Gateway.Protocol.Client;
 
 RuntimeProtocol.Initialize(); //initialize messages
 
-//sample of protobuf bytes that you get via websocket
+//sample of protobuf bytes that you get over websocket
 var bytes = Convert.FromHexString("AAA9D2F902280A260A2465323631633832622D393537622D346435632D616631382D3935323961623334363961320A1CE2A9FCC201160A12093FFB295CC4BD644E118EE5C6A23654574310030A13AA9FF6D3020D0A0B08FCA6E7ACB4E5FE3E1005");
 
 var msg = RuntimeProtocol.ReadMessage(bytes);
@@ -110,7 +110,7 @@ using Newtonsoft.Json;
 
 RuntimeProtocol.Initialize(); //initialize messages
 
-//sample of protobuf bytes that you get via websocket
+//sample of protobuf bytes that you get over websocket
 var bytes = Convert.FromHexString("EAE6E80B270A25089003120A426164526571756573741A0A54657374206572726F72220808661204546573740A19E2ADEF78140A1209BDC26A242B6955451186669AA2B649851F0A1CE2A9FCC201160A1209E0BCF20E0202974E1183348EAADA9BBFCF1003");
 
 var msg = RuntimeProtocol.ReadMessage(bytes);
