@@ -3,6 +3,11 @@ Runtime implementation of Fall Guys Catapult protocol
 
 Fall Guys uses Protobuf to communicate with servers over websockets. The only problem is that on the client side all protocol implementation is generated into a single large file that is hard to maintain. This project solves this problem by working with messages completely in the runtime
 
+## Installation
+```
+dotnet add package Catapult.Runtime.Protocol
+```
+
 ## Usage Examples
 > [!TIP]
 > You can inspect raw protobuf bytes via [Protobuf Decoder](https://protobuf-decoder.netlify.app/)
@@ -96,6 +101,7 @@ Output
 We authenticated with account: e261c82b-957b-4d5c-af18-9529ab3469a2
 Auth time (UTC): 3/9/2026 3:26:07 AM
 ```
+
 ### Handling errors
 ```csharp
 using Catapult.Protocol;
