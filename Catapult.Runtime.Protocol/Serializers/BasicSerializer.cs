@@ -97,7 +97,7 @@ namespace Catapult.Runtime.Protocol.Serializers
             if (RuntimeProtocol.VerboseLog) Console.WriteLine($"[{typeof(BasicSerializer).Name}] R: {type} - {Type.GetTypeCode(type)}");
 
             var ser = type.GetCustomAttribute<SerializerAttribute>();
-            if (ser != null || type.GetCustomAttribute<ProtoContractAttribute>() != null)
+            if (ser != null || type.GetCustomAttribute<ProtoContractAttribute>() != null && !type.IsEnum)
             {
                 var serializer = ser?.Serializer ?? typeof(BasicSerializer);
 
